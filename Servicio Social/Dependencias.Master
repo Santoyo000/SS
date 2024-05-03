@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Dependencias.master.cs" Inherits="Servicio_Social.Dependencias" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="Scripts/bootstrap.min.css" />
+    <script src="Scripts/query.min.js"></script>
+    <script src="Scripts/popper.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="../css/sweetalert.min.cache.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="Scripts/font-awesome.min.css" />
+    <style type="text/css" media="screen">  
+    </style>
+    <link rel="stylesheet" type="text/css" href="Estilos.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"/>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body runat="server">
+        <form id="form1" runat="server">
+         <asp:ContentPlaceHolder ID="titulo" runat="server" ></asp:ContentPlaceHolder>                
+     <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"> </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
