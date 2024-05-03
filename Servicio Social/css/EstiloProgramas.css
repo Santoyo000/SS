@@ -1,0 +1,122 @@
+﻿/*-----------------------------------------------------------------------------------------------------*/
+/*------------------------------- TIPO DE LETRA -------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+form {
+    width: 70%; /* O cualquier otro ancho deseado */
+    margin: 0 auto; /* Esto centra el formulario horizontalmente */
+}
+/*-----------------------------------------------------------------------------------------------------*/
+/*------------------------------- TIPO DE LETRA -------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.label-derecha {
+    /* display: inline-block;*/ /* Hace que el label sea un bloque en línea */
+    text-align: left; /* Alinea el texto a la derecha */
+    /*margin-right: 10px;*/ /* Ajusta el margen derecho según sea necesario */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+
+    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto se desborda */
+}
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA ---------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario {
+    width: 60%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        width: 45%; /* Ajusta el ancho de las columnas */
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario .form-group {
+        margin-bottom: 0; /* Elimina el espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario label {
+        display: inline-block; /* Hace que las etiquetas ocupen una línea completa */
+        width: 40%; /* Ancho deseado para los labels */
+        margin-right: 10px; /* Espacio entre el label y el campo de entrada */
+        vertical-align: top; /* Alinea los labels con la parte superior del campo de entrada */
+    }
+
+}
+
+.tabla-formulario input[type="text"],
+.tabla-formulario input[type="password"],
+.tabla-formulario select,
+.tabla-formulario textarea {
+    width: calc(60% - 10px); /* Calcula el ancho del campo de entrada restando el ancho del label y el margen derecho */
+    display: inline-block; /* Mostrar los campos de entrada en línea */
+    vertical-align: top; /* Alinea los campos de entrada con los labels */
+}
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO DropDownList FORMULARIO -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+.DropDownList-estilo {
+    box-shadow: inset #abacaf 0 0 0 2px;
+    border: 0;
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    height: 35px;
+    transition: all .2s ease;
+    width: 300px; /* Aquí puedes ajustar el ancho según tus necesidades */
+}
+
+    .DropDownList-estilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+    }
+
+    .DropDownList-estilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+.textbox-estilo {
+    box-shadow: inset #abacaf 0 0 0 2px;
+    border: 0;
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px; /*ANTES 25*/
+    transition: all .2s ease;
+    width: 300px; /* Aquí puedes ajustar el ancho según tus necesidades */
+}
+
+    .textbox-estilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+    }
+
+    .textbox-estilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+    }

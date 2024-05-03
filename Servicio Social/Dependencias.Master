@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="Scripts/font-awesome.min.css" />
     <style type="text/css" media="screen">  
     </style>
-    <link rel="stylesheet" type="text/css" href="Estilos.css"/>
+    <link rel="stylesheet" type="text/css" href="css/Estilos.css"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"/>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
