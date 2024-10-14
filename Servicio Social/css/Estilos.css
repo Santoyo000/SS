@@ -1,29 +1,394 @@
 ﻿/*-----------------------------------------------------------------------------------------------------*/
 /*------------------------------- TIPO DE LETRA -------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------*/
-body {
+/*body {
+    font-family: 'Montserrat', sans-serif;*/
+   /* font-size: 20px;*/
+/*}*/
+
+
+
+.containerbtnRegistrar {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    margin: 0; /* Eliminar el margen predeterminado del contenedor */
+    text-align: right;
+}
+
+
+
+/*-----------------------------------------------------------------------------------------------------
+--------------------------------- ESTILO USUARIO Y CONTRASEÑA----------------------------------------
+-----------------------------------------------------------------------------------------------------*/
+.inline-group .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   /* display: inline-block;*/
+    vertical-align: top; /*Alineación vertical superior */
+    margin-right: 5px; /* Espacio entre los elementos, ajusta según necesites */
+}
+
+.form-group.inline-group {
+    display: flex;
+    flex-direction: column; /* Alinear los elementos verticalmente */
+    align-items: center; /*Centrar los elementos horizontalmente  */
+}
+
+/*.input-group {
+    margin-bottom: 0.5rem;*/ /* Espacio entre los elementos */
+/*}*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.textbox-estilo {
+    box-shadow: inset #abacaf 0 0 0 0px; /* Reducido el tamaño de la sombra */
+    border: 1px solid transparent; /* Grosor del borde reducido */
+    background: rgba(0, 0, 0, 0);
+    width: 120%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    height: 50px; /* Ajuste de la altura */
+    transition: all .2s ease;
+}
+
+    .textbox-estilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+    }
+
+    .textbox-estilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+    }
+/*.textbox-estilo {
+    box-shadow: inset #abacaf 0 0 0 1px;*/ /* Reducido el tamaño de la sombra */
+    /*border: 1px solid transparent;*/ /* Grosor del borde reducido */
+    /*background: rgba(0, 0, 0, 0);
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px;*/ /*ANTES 25*/
+    /*transition: all .2s ease;
+    width: 300px;*/ /* Aquí puedes ajustar el ancho según tus necesidades */
+/*}
+
+    .textbox-estilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+    }
+
+    .textbox-estilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+    }*/
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX USUARIO INICIO -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.tbEstilo {
+    box-shadow: inset #abacaf 0 0 0 1px; /* Reducido el tamaño de la sombra */
+    border: 1px solid transparent; /* Grosor del borde reducido */
+    background: rgba(0, 0, 0, 0);
+    width: 150%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: 400;
+    height: 45px; /* Ajuste de la altura */
+    transition: all .2s ease;
+    display: flex; /* Convertimos el contenedor en un flexbox */
+    justify-content: center; /* Centramos horizontalmente los elementos */
+    align-items: center; /* Centramos verticalmente los elementos */
+    text-align: center; /* Centramos el texto dentro del contenedor */
+    margin-right: 5px;
+}
+    .tbEstilo > * {
+        /* Centramos los elementos hijos horizontalmente */
+        margin: auto;
+    }
+
+    .tbEstilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+    }
+
+    .tbEstilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+    }
+
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA ---------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario {
+    width: 70%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        width: 50%; /* Establece que cada columna ocupe el 50% del ancho total de la tabla */
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario .form-group {
+        margin-bottom: 10px; /* Agrega espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario label {
+        display: block; /* Hace que las etiquetas sean bloques */
+        margin-bottom: 5px; /* Agrega espacio entre las etiquetas */
+    }
+
+    .tabla-formulario input[type="text"],
+    .tabla-formulario input[type="password"],
+    .tabla-formulario select,
+    .tabla-formulario textarea {
+        font-size: 18px;
+        width: calc(100% - 24px); /* Calcula el ancho del campo de entrada restando el padding */
+        padding: 12px 12px; /* Ajusta el padding */
+        border: 2px solid #abacaf; /* Añade un borde */
+        border-radius: 3px; /* Agrega borde redondeado */
+        line-height: 1.4;
+        color: rgb(0, 0, 0);
+        font-size: 16px;
+        font-weight: 400;
+        transition: all .2s ease;
+        box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+    }
+
+    .tabla-formulario select {
+        appearance: none; /* Quita el estilo nativo del elemento */
+        -webkit-appearance: none; /* Para navegadores basados en WebKit */
+        -moz-appearance: none; /* Para navegadores basados en Gecko */
+    }
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO DropDownList FORMULARIO -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+.DropDownList-estilo {
+    width: 100%; /* Ancho completo */
+    height: 67px;  /*antes 45*/
     font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* Tamaño de la fuente */
 }
-.column-padding {
-    padding: 5px; /* Puedes ajustar este valor según lo necesites */
+
+    .DropDownList-estilo:hover {
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+        font-size: 18px; /* Tamaño de la fuente al pasar el mouse */
+    }
+
+    .DropDownList-estilo:focus {
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+        background: #fff;
+        outline: 0;
+        font-size: 18px; /* Tamaño de la fuente al enfocar */
+    }
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+/*.textbox-estilo {
+    width: 100%;*/ /* Ancho completo */
+    /*height: 60px;
 }
+
+    .textbox-estilo:hover {
+        border-color: #1de9b6;*/  /*Cambia el color del borde al pasar el mouse */
+    /*}
+
+    .textbox-estilo:focus {
+        border-color: #1de9b6;*/  /*Cambia el color del borde al enfocar */
+        /*background: #fff;
+        outline: 0;
+    }*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------------- ESTILO BOTÓN INGRESAR ---------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.containerbtnIniciar {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    margin: 0; /* Eliminar el margen predeterminado del contenedor */
+}
+
+.miBoton {
+    font-size: 18px;
+    background: #1AAB8A;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+    .miBoton:hover {
+        background: #fff;
+        color: #1AAB8A;
+    }
+
+    .miBoton:before, .miBoton:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #1AAB8A;
+        transition: 400ms ease all;
+    }
+
+    .miBoton:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    .miBoton:hover:before, .miBoton:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*----------------------------------------- ESTILO GRIDVIEW -------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.gridview-estilo {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .gridview-estilo th, .gridview-estilo td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .gridview-estilo th {
+        background-color: #2e5790; /*#f2f2f2;*/
+        font-weight: bold;
+        color: white;
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------------- ESTILO BOTON DE ELIMINAR ------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.miBoton2 {
+    background: #FF5733; /* Cambia el color de fondo a rojo */
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+    .miBoton2:hover {
+        background: #fff;
+        color: #FF5733; /* Cambia el color del texto a rojo al pasar el mouse */
+    }
+
+    .miBoton2:before, .miBoton:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #FF5733; /* Cambia el color de las líneas a rojo */
+        transition: 400ms ease all;
+    }
+
+    .miBoton2:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    .miBoton2:hover:before, .miBoton:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }
+
+
 /*-----------------------------------------------------------------------------------------------------*/
 /*------------------------------- ESTILO RADIOBUTTON --------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------*/
-/*body {
-    padding: 50px;
-}*/
-
-.label-derecha {
-    /* display: inline-block;*/ /* Hace que el label sea un bloque en línea */
-    text-align: left; /* Alinea el texto a la derecha */
-    /*margin-right: 10px;*/ /* Ajusta el margen derecho según sea necesario */
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-
-    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto se desborda */
+/* Estilo del radio button personalizado */
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.opcion-radio {
+    .custom-radio input[type="radio"] {
+        display: none; /* Oculta el radio button original */
+    }
+
+    .custom-radio label {
+        position: relative;
+        display: inline-block;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 20px;
+        user-select: none;
+    }
+
+        .custom-radio label:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px; /* Tamaño del círculo */
+            height: 20px; /* Tamaño del círculo */
+            border-radius: 50%;
+            border: 2px solid #000;
+            background: #fff;
+        }
+
+    .custom-radio input[type="radio"]:checked + label:before {
+        background: #000; /* Color del círculo cuando está seleccionado */
+    }
+
+
+
+
+
+ /* Color del círculo cuando está seleccionado */
+    /*.opcion-radio {
     display: inline-block;
     margin-right: 18px;
 }
@@ -66,16 +431,125 @@ body {
         display: inline-block;
         vertical-align: middle;
         line-height: 32px;
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*------------------------------- TIPO DE LETRA -------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*body {
+    font-family: 'Montserrat', sans-serif;
+}
+.form-group.inline-group {
+    display: flex;
+    flex-direction: column;*/ /* Alinear los elementos verticalmente */
+    /*align-items: flex-start;*/ /* Alinear los elementos a la izquierda */
+    /*}*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* ------------------------------------- ESTILOS DE TABLA ---------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* Estilos específicos para la tabla del formulario */
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* ------------------------------------- ESTILOS DE TABLA ---------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* Estilos específicos para la tabla del formulario */
+    /*.tabla-formulario {
+    width: 60%;*/ /* Ajusta el ancho de la tabla */
+    /*margin: 0 auto;*/ /* Centra la tabla en la página */
+    /*border-collapse: separate;*/ /* Separa los bordes de las celdas */
+    /*border-spacing: 5px;*/ /* Espacio entre las celdas */
+    /*}*/
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    /*.tabla-formulario td {
+        padding: 10px;*/ /* Añade espacio interno a las celdas */
+    /*vertical-align: top;*/ /* Alinea el contenido de las celdas en la parte superior */
+    /*width: 45%;*/ /* Ajusta el ancho de las columnas */
+    /*}*/
+    /* Estilos específicos para los elementos dentro de las celdas */
+    /*.tabla-formulario .form-group {
+        margin-bottom: 0;*/ /* Elimina el espacio entre grupos de formulario */
+    /*}
+
+    .tabla-formulario label {
+        display: inline-block;*/ /* Hace que las etiquetas ocupen una línea completa */
+    /*width: 40%;*/ /* Ancho deseado para los labels */
+    /*margin-right: 10px;*/ /* Espacio entre el label y el campo de entrada */
+    /*vertical-align: top;*/ /* Alinea los labels con la parte superior del campo de entrada */
+    /*}
+
+    .tabla-formulario input[type="text"],
+    .tabla-formulario input[type="password"],
+    .tabla-formulario select,
+    .tabla-formulario textarea {
+        width: calc(60% - 10px);*/ /* Calcula el ancho del campo de entrada restando el ancho del label y el margen derecho */
+    /*display: inline-block;*/ /* Mostrar los campos de entrada en línea */
+    /*vertical-align: top;*/ /* Alinea los campos de entrada con los labels */
+    /*}*/
+    /*.column-padding {
+    padding: 5px;*/ /* Puedes ajustar este valor según lo necesites */
+    /*}*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*------------------------------- ESTILO RADIOBUTTON --------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*body {
+    padding: 50px;
+}*/
+    /*.label-derecha {*/
+    /* display: inline-block;*/ /* Hace que el label sea un bloque en línea */
+    /*text-align: left;*/ /* Alinea el texto a la derecha */
+    /*margin-right: 10px;*/ /* Ajusta el margen derecho según sea necesario */
+    /*white-space: nowrap;*/ /* Evita que el texto se divida en varias líneas */
+    /*text-overflow: ellipsis;*/ /* Agrega puntos suspensivos (...) si el texto se desborda */
+    /*}*/
+    /*.opcion-radio {
+    display: inline-block;
+    margin-right: 18px;
+}
+
+    .opcion-radio input {
+        margin-right: 5px;
     }
-/*-----------------------------------------------------------------------------------------------------*/
-/* ------------------------------- FIN ESTILO RADIOBUTTON -------------------------------------------- */
-/*-----------------------------------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
+        .opcion-radio input[type=radio] {
+            position: absolute;
+            opacity: 0;
+        }
 
-.textbox-estilo {
+            .opcion-radio input[type=radio] + label:before {
+                content: '';
+                background: #F4F5F8;
+                border-radius: 100%;
+                border: 1px solid #a6aec6;
+                display: inline-block;
+                width: 1.4em;
+                height: 1.4em;
+                position: relative;
+                top: -.2em;
+                margin-right: .5em;
+                vertical-align: top;
+                cursor: pointer;
+                text-align: center;
+                -webkit-transition: all 250ms ease;
+                transition: all 250ms ease;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .opcion-radio input[type=radio]:checked + label:before {
+                background-color: #8879FF;
+                box-shadow: inset 0 0 0 4px #F4F5F8;
+            }
+
+    .opcion-radio label {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* ------------------------------- FIN ESTILO RADIOBUTTON -------------------------------------------- */
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.textbox-estilo {
     box-shadow: inset #abacaf 0 0 0 2px;
     border: 0;
     background: rgba(0, 0, 0, 0);
@@ -87,10 +561,10 @@ body {
     color: rgb(0, 0, 0);
     font-size: 16px;
     font-weight: 400;
-    height: 20px; /*ANTES 25*/
-    transition: all .2s ease;
-    width: 300px; /* Aquí puedes ajustar el ancho según tus necesidades */
-}
+    height: 20px;*/ /*ANTES 25*/
+    /*transition: all .2s ease;
+    width: 300px;*/ /* Aquí puedes ajustar el ancho según tus necesidades */
+    /*}
 
     .textbox-estilo:hover {
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
@@ -100,11 +574,11 @@ body {
         background: #fff;
         outline: 0;
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
-    }
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- ESTILO TEXTBOX USUARIO INICIO -------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-.tbEstilo {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- ESTILO TEXTBOX USUARIO INICIO -------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.tbEstilo {
     box-shadow: inset #abacaf 0 0 0 2px;
     border: 0;
     background: rgba(0, 0, 0, 0);
@@ -118,8 +592,8 @@ body {
     font-weight: 400;
     height: 30px;
     transition: all .2s ease;
-    width: 200px; /* Aquí puedes ajustar el ancho según tus necesidades */
-}
+    width: 200px;*/ /* Aquí puedes ajustar el ancho según tus necesidades */
+    /*}
 
     .tbEstilo:hover {
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
@@ -129,12 +603,11 @@ body {
         background: #fff;
         outline: 0;
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
-    }
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- ESTILO DropDownList FORMULARIO -------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-
-.DropDownList-estilo {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- ESTILO DropDownList FORMULARIO -------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.DropDownList-estilo {
     box-shadow: inset #abacaf 0 0 0 2px;
     border: 0;
     background: rgba(0, 0, 0, 0);
@@ -148,8 +621,8 @@ body {
     font-weight: 400;
     height: 35px;
     transition: all .2s ease;
-    width: 220px; /* Aquí puedes ajustar el ancho según tus necesidades */
-}
+    width: 220px;*/ /* Aquí puedes ajustar el ancho según tus necesidades */
+    /*}
 
     .DropDownList-estilo:hover {
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
@@ -159,27 +632,26 @@ body {
         background: #fff;
         outline: 0;
         box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
-    }
-/*-----------------------------------------------------------------------------------------------------*/
-/* --------------------------------------- FIN ESTILO TEXTBOX -----------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-
-.containerbtnRegistrar {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* --------------------------------------- FIN ESTILO TEXTBOX -----------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.containerbtnRegistrar {
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
-    margin: 0; /* Eliminar el margen predeterminado del contenedor */
-    text-align: right;
-}
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------------- ESTILO BOTÓN INGRESAR ---------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-.containerbtnIniciar {
+    justify-content: center;*/ /* Centrado horizontal */
+    /*align-items: center;*/ /* Centrado vertical */
+    /*margin: 0;*/ /* Eliminar el margen predeterminado del contenedor */
+    /*text-align: right;
+}*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------- ESTILO BOTÓN INGRESAR ---------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.containerbtnIniciar {
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
-    margin: 0; /* Eliminar el margen predeterminado del contenedor */
-}
+    justify-content: center;*/ /* Centrado horizontal */
+    /*align-items: center;*/ /* Centrado vertical */
+    /*margin: 0;*/ /* Eliminar el margen predeterminado del contenedor */
+    /*}
 
 .miBoton {
     background: #1AAB8A;
@@ -220,12 +692,11 @@ body {
     .miBoton:hover:before, .miBoton:hover:after {
         width: 100%;
         transition: 800ms ease all;
-    }
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------------- FIN ESTILO BOTÓN --------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-
-.miBoton2 {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------- FIN ESTILO BOTÓN --------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.miBoton2 {
     background: orange;
     color: #fff;
     border: none;
@@ -264,89 +735,46 @@ body {
     .miBoton2:hover:before, .miBoton2:hover:after {
         width: 100%;
         transition: 800ms ease all;
-    }
-
-/*-----------------------------------------------------------------------------------------------------*/
-/* ------------------------------------- ESTILO BOTÓN MOSTRAR -----------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-.button-container {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* ------------------------------------- ESTILO BOTÓN MOSTRAR -----------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.button-container {
     display: inline-block;
     vertical-align: top;
-}
-/*-----------------------------------------------------------------------------------------------------*/
-/*FIN ESTILO BOTÓN MOSTRAR*/
-/*-----------------------------------------------------------------------------------------------------*/
-
-/*-----------------------------------------------------------------------------------------------------*/
-/* ------------------------------------- ESTILOS DE TABLA ---------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-/* Estilos específicos para la tabla del formulario */
-.tabla-formulario {
-    width: 60%; /* Ajusta el ancho de la tabla */
-    margin: 0 auto; /* Centra la tabla en la página */
-    border-collapse: separate; /* Separa los bordes de las celdas */
-    border-spacing: 5px; /* Espacio entre las celdas */
-}
-
-    /* Estilos para las celdas dentro de la tabla del formulario */
-    .tabla-formulario td {
-        padding: 10px; /* Añade espacio interno a las celdas */
-        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
-        width: 45%; /* Ajusta el ancho de las columnas */
-    }
-
-    /* Estilos específicos para los elementos dentro de las celdas */
-    .tabla-formulario .form-group {
-        margin-bottom: 0; /* Elimina el espacio entre grupos de formulario */
-    }
-
-    .tabla-formulario label {
-        display: inline-block; /* Hace que las etiquetas ocupen una línea completa */
-        width: 40%; /* Ancho deseado para los labels */
-        margin-right: 10px; /* Espacio entre el label y el campo de entrada */
-        vertical-align: top; /* Alinea los labels con la parte superior del campo de entrada */
-    }
-
-}
-
-.tabla-formulario input[type="text"],
-.tabla-formulario input[type="password"],
-.tabla-formulario select,
-.tabla-formulario textarea {
-    width: calc(60% - 10px); /* Calcula el ancho del campo de entrada restando el ancho del label y el margen derecho */
-    display: inline-block; /* Mostrar los campos de entrada en línea */
-    vertical-align: top; /* Alinea los campos de entrada con los labels */
-}
-/*-----------------------------------------------------------------------------------------------------*/
-/* --------------------------------------- ESTILOS DROPDOWNLIST ---------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-.custom-dropdown select {
+}*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*FIN ESTILO BOTÓN MOSTRAR*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /* --------------------------------------- ESTILOS DROPDOWNLIST ---------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.custom-dropdown select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     padding: 0 30px 0 10px;
     border: 1px solid #e0e0e0;
     border-radius: 3px;
-    line-height: 36px; /* Valor predeterminado si $height no está definido */
-    height: 36px; /* Valor predeterminado si $height no está definido */
-    background: #fff;
+    line-height: 36px;*/ /* Valor predeterminado si $height no está definido */
+    /*height: 36px;*/ /* Valor predeterminado si $height no está definido */
+    /*background: #fff;
     margin: 0 5px 5px 0;
 }
 
     .custom-dropdown select::-ms-expand {
         display: none;
-    }
-
-/* Otros estilos específicos del DropDownList */
-.custom-dropdown label {
+    }*/
+    /* Otros estilos específicos del DropDownList */
+    /*.custom-dropdown label {
     position: relative;
     display: inline-block;
 }
 
     .custom-dropdown label:before {
         content: '';
-        height: 31px; /* Valor predeterminado si $height no está definido */
-        position: absolute;
+        height: 31px;*/ /* Valor predeterminado si $height no está definido */
+    /*position: absolute;
         right: 7px;
         top: 3px;
         width: 22px;
@@ -371,43 +799,41 @@ body {
         border-width: 6.9px 4px 0 4px;
         border-color: #aaa transparent transparent transparent;
         pointer-events: none;
-    }
-
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- FIN ESTILOS DROPDOWNLIST ------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- ESTILO USUARIO Y CONTRASEÑA----------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-.inline-group .form-group {
+    }*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- FIN ESTILOS DROPDOWNLIST ------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- ESTILO USUARIO Y CONTRASEÑA----------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*.inline-group .form-group {
     display: inline-block;
-    vertical-align: top; /* Alineación vertical superior */
-    margin-right: 5px; /* Espacio entre los elementos, ajusta según necesites */
-}
+    vertical-align: top;*/ /* Alineación vertical superior */
+    /*margin-right: 5px;*/ /* Espacio entre los elementos, ajusta según necesites */
+    /*}
 
 .form-group.inline-group {
     display: flex;
-    flex-direction: column; /* Alinear los elementos verticalmente */
-    align-items: center; /* Centrar los elementos horizontalmente */
-}
+    flex-direction: column;*/ /* Alinear los elementos verticalmente */
+    /*align-items: center;*/ /* Centrar los elementos horizontalmente */
+    /*}
 
 .input-group {
-    margin-bottom: 0.5rem; /* Espacio entre los elementos */
-}
-/*-----------------------------------------------------------------------------------------------------*/
-/*--------------------------------- ESTILO GRIDVIEW ESTUDIANTES ---------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------*/
-#GridViewEstudiantes * {
+    margin-bottom: 0.5rem;*/ /* Espacio entre los elementos */
+    /*}*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*--------------------------------- ESTILO GRIDVIEW ESTUDIANTES ---------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
+    /*#GridViewEstudiantes * {
     box-sizing: border-box;
 }
 
 .gridview-container {
     display: flex;
-    justify-content: center; /* Centra horizontalmente el contenedor */
-    align-items: center; /* Centra verticalmente el contenedor */
-    height: 100%; /* Opcional: establece la altura del contenedor al 100% para centrarlo verticalmente en la página */
-}
+    justify-content: center;*/ /* Centra horizontalmente el contenedor */
+    /*align-items: center;*/ /* Centra verticalmente el contenedor */
+    /*height: 100%;*/ /* Opcional: establece la altura del contenedor al 100% para centrarlo verticalmente en la página */
+    /*}
 
 btn-primary {
     color: #fff;
@@ -436,4 +862,4 @@ btn-primary {
     color: #fff;
     background-color: #0056b3;
     border-color: #004285;
-}
+}*/

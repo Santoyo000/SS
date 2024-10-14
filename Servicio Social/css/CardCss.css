@@ -1,0 +1,33 @@
+﻿
+ .card{
+    margin-bottom: 20px; /* Espacio entre tarjetas */
+    border: none; /* Sin bordes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 10px; /* Bordes redondeados */
+    transition: transform 0.3s ease-in-out; /* Transición para efecto hover */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Efecto hover */
+}
+
+.card-img-top {
+    border-top-left-radius: 10px; /* Bordes redondeados */
+    border-top-right-radius: 10px; /* Bordes redondeados */
+    height: 200px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Ajuste de las imágenes */
+}
+
+.card-title {
+    color: #2E5790; /* Color del título */
+    font-weight: bold; /* Negrita */
+}
+
+.card-text {
+    color: #6c757d; /* Color del texto */
+}
+
+.card-body {
+    padding: 20px; /* Espaciado interno */
+}
+

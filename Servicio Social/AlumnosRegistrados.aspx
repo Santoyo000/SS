@@ -1,0 +1,163 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SS.Master" AutoEventWireup="true" CodeBehind="AlumnosRegistrados.aspx.cs" Inherits="Servicio_Social.AlumnosRegistrados" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .custom-header {
+            background-color: #343a40; /* Color de fondo personalizado */
+            color: white; /* Color del texto */
+        }
+
+        .table td {
+            font-size: 12px; /* Tamaño de fuente más pequeño para las celdas de datos */
+
+        }
+
+        .table tr {
+            font-size: 13px; /* Tamaño de fuente más pequeño para las celdas de datos */
+        }
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
+    <br />
+    <asp:ScriptManager runat="server">
+    </asp:ScriptManager>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="0">
+        <ProgressTemplate>
+            <div id="overlay">
+                <div id="loadingContent">
+                    <asp:Image ID="imgWaitIcon" runat="server" ImageUrl="Image/loading.gif" AlternateText="Cargando..." Style="max-width: 300px;" />
+                    <div id="loadingText">Por favor, espere...</div>
+                </div>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
+
+
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <div class="container-fluid">
+                <div style="text-align: center">
+                    <div class="form-group">
+                        <h2 class="text-gray-900 mb-4" style="color: #2e5790">Alumnos Registrados</h2>
+                    </div>
+                    <div class="">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="display: none;">ID</th>
+                                    <th>Fecha de Registro</th>
+                                    <th>Matrícula</th>
+                                    <th>Alumno</th>
+                                    <th>Correo</th>
+                                    <th>Plan de Estudios</th>
+                                    <th>Escuela</th>
+                                    <th>Unidad</th>
+                                    <th>Estatus</th>
+                                    <th>Ver Más</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="Repeater1_ItemDataBound">
+                                    <ItemTemplate>
+                                        <tr>
+                                            <asp:Panel runat="server" ID="pnlViewMode" Visible="true">
+                                                <td style="display: none;"><%# Eval("ID") %></td>
+                                                <td><%# Eval("dFechaRegistro") %></td>
+                                                <td><%# Eval("Matricula") %></td>
+                                                <td><%# Eval("Alumno") %></td>
+                                                <td><%# Eval("Correo") %></td>
+                                                <td><%# Eval("PlanEstudio") %></td>
+                                                <td><%# Eval("Escuela") %></td>
+                                                <td><%# Eval("UNIDAD") %></td>
+                                                <%-- <td style="display: none;"><%# Eval("kpEstatus_Programa") %></td>--%>
+                                                <td><%# Eval("EstadoAutorizacion") %></td>
+                                                <td style="display: none;"><%# Eval("idEstatus") %></td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <asp:LinkButton ID="btnDetalle" Visible="false" runat="server" CommandName="cmdRechazar" CssClass="btn btn-warning" data-toggle="modal" data-target="#myModal"><span data-toggle="tooltip" title="Ver detalles" ><i class="fas fa-search"></i></asp:LinkButton>
+                                                        <asp:LinkButton ID="btnAutorizar" runat="server" CommandName="cmdAutorizar" CommandArgument='<%# Eval("ID") %>' OnClick="btnAutorizar_Click" OnClientClick='return confirm("El registro cambiará de estatus de Autorizado");' CssClass="btn btn-success btn-sm"><span data-toggle="tooltip" title="Autorizar" ><i class="fas fa-check-square"></i></span></asp:LinkButton>
+                                                        <asp:LinkButton ID="btnRechazar" runat="server" CommandName="cmdRechazar" CommandArgument='<%# Eval("ID") %>' OnClick="btnRechazar_Click" OnClientClick='return confirm("El registro cambiará de estatus de NO Autorizado");' CssClass="btn btn-danger btn-sm"><span data-toggle="tooltip" title="No Autorizar" ><i class="fas fa-window-close"></i></asp:LinkButton>
+                                                        <asp:LinkButton ID="btnEliminar" runat="server" CommandName="cmdEliminar" CommandArgument='<%# Eval("ID") %>' OnClick="btnEliminar_Click" OnClientClick='return confirm("El registro se eliminará, ¿desea continuar?");' CssClass="btn btn-danger btn-sm"><span data-toggle="tooltip" title="Eliminar alumno" ><i class="fa fa-trash"></i></asp:LinkButton>
+                                                        <asp:LinkButton ID="btnLiberar" Visible="false" runat="server" CommandName="cmdLiberar" CommandArgument='<%# Eval("ID") %>' OnClick="btnLiberar_Click" CssClass="btn  btn-primary"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fas fa-solid fa-file-pdf"></i></asp:LinkButton>
+                                                    </div>
+                                                </td>
+                                            </asp:Panel>
+                                            <asp:Panel runat="server" ID="pnlEditMode" Visible="false">
+                                                <asp:HiddenField ID="hdnID" runat="server" Value='<%# Eval("ID") + "|" + Eval("Correo") %>' />
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtFechaRegistro" Text='<%# Eval("dFechaRegistro") %>'></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtMatricula" Text='<%# Eval("Matricula") %>'></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtAlumno" Text='<%# Eval("Alumno") %>'></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtCorreo" Text='<%# Eval("Correo") %>'></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtPlanEstudio" Text='<%# Eval("PlanEstudio") %>'></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtEscuela" Text='<%# Eval("Escuela") %>'></asp:TextBox>
+                                                </td>
+                                                <%-- <td>
+                                        <%# Eval("Estatus") %>
+                                    </td>--%>
+                                                <td>
+                                                    <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update" CommandArgument='<%# Container.ItemIndex %>'><i class="fas fa-save"></i></asp:LinkButton>
+                                                    <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-window-close"></i></asp:LinkButton>
+                                                </td>
+                                                <%-- <td>
+                                        <asp:HiddenField ID="hdnAutorizado" runat="server" Value='<%# Eval("kpEstatus_Programa") %>' />
+                                    </td>--%>
+                                            </asp:Panel>
+                                        </tr>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        </tbody>
+                            </table>
+                                    </FooterTemplate>
+                                </asp:Repeater>
+                            </tbody>
+                        </table>
+
+                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
+                        <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
+                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>
+                        <div style="text-align: left;">
+                            <% 
+                                if (Session["filtros"] != null)
+                                {
+                                    string usuario = Session["filtros"].ToString().Split('|')[0];
+                                    if (usuario == "1")
+                                    {
+                                        btnAdmon.Visible = true;
+                                    }
+                                    else if (usuario == "4")
+                                    {
+                                        btnEncEs.Visible = true;
+                                    }
+                                }
+                            %>
+                            <asp:Button ID="btnAdmon" Visible="false" runat="server" Text="Regresar" CssClass="btn btn-primary miBoton" PostBackUrl="PanelAdministrador.aspx" />
+                            <asp:Button ID="btnEncEs" Visible="false" runat="server" Text="Regresar" CssClass="btn btn-primary miBoton" PostBackUrl="PanelEncargadoEscuelaspx.aspx" />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

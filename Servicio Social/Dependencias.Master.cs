@@ -11,7 +11,17 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //if (Session["idUser"] == null)
+            //    lkbLogout.Visible = false;
+            //else
+            //    lkbLogout.Visible = true;
+        }
 
+        protected void lkbLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("Dependencias.aspx");
         }
     }
 }

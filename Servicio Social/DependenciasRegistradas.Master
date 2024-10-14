@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="DependenciasRegistradas.master.cs" Inherits="Servicio_Social.DependenciasRegistradas" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>UADEC Trabajo Social</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="templatemo.css">
+    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="Scripts/bootstrap.min.css" />
+    <script src="Scripts/query.min.js"></script>
+    <script src="Scripts/popper.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="../css/sweetalert.min.cache.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="Scripts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/Estilos.css" />
+    <%--<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"/>--%>
+    <link rel="shortcut icon" type="image/x-icon" href="Imagen/icono_uadec.png" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body runat="server">
+    <!-- Header -->
+
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-light shadow">
+            <div class="container d-flex justify-content-between align-items-center">
+
+                <a class="navbar-brand text-success logo h1 align-self-center" href="Home.aspx">
+                    <img src="Image/UAdeC-blanco.png" alt="" />
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                    <div class="flex-fill">
+                        <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="Home.aspx">Servicio Social</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="PanelEstudiante.aspx">Estudiantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Dependencias.aspx">Dependencias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="LoginAdministrador.aspx">Administrador</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="navbar align-self-center d-flex">
+                        <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                                <div class="input-group-text">
+                                    <i class="fa fa-fw fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                    <asp:LinkButton runat="server" ID="lkbLogout" class="fa fa-sign-out text-right" Style="font-size: x-large" OnClick="lkbLogout_Click" Visible="false">Cerrar Sesión</asp:LinkButton>
+
+            </div>
+        </nav>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

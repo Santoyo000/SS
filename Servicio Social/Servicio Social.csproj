@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -46,6 +47,36 @@
   <ItemGroup>
     <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=7.1.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.1.2\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMaps, Version=8.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleMapControl.8.0.1\lib\net40\GoogleMaps.dll</HintPath>
     </Reference>
     <Reference Include="itext.barcodes, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext.8.0.3\lib\net461\itext.barcodes.dll</HintPath>
@@ -105,6 +136,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.1\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -113,9 +147,10 @@
     <Reference Include="Novell.Directory.Ldap.NETStandard, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Novell.Directory.Ldap.NETStandard.2.3.0\lib\netstandard1.5\Novell.Directory.Ldap.NETStandard.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.23.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.23.4.0\lib\net472\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.21.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System.AppContext, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.1.0\lib\net463\System.AppContext.dll</HintPath>
       <Private>True</Private>
@@ -128,6 +163,9 @@
       <HintPath>..\packages\System.Collections.NonGeneric.4.0.1\lib\net46\System.Collections.NonGeneric.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -253,6 +291,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.2.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
       <Private>True</Private>
@@ -346,6 +385,7 @@
     <Reference Include="Microsoft.AspNet.FriendlyUrls">
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -354,6 +394,40 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AlumnosPostulados.aspx" />
+    <Content Include="AlumnosRegistrados.aspx" />
+    <Content Include="assets\img\24.jpg" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\custom.css" />
+    <Content Include="assets\css\fontawesome.min.css" />
+    <Content Include="assets\css\templatemo.css" />
+    <Content Include="assets\img\01.jpeg" />
+    <Content Include="assets\img\11.jpg" />
+    <Content Include="assets\img\22.jpg" />
+    <Content Include="assets\img\25.jpg" />
+    <Content Include="assets\img\bannersersocial.jpg" />
+    <Content Include="assets\img\bannersersocial1.jpg" />
+    <Content Include="assets\img\bannersersocial2.jpg" />
+    <Content Include="assets\img\bannersersocial3.jpg" />
+    <Content Include="assets\img\logoUAdeC.png" />
+    <Content Include="assets\img\manenimiento2.jpeg" />
+    <Content Include="assets\img\manteimiento3.jpeg" />
+    <Content Include="assets\img\mantenimiento.jpeg" />
+    <Content Include="assets\img\REGISTROest.png" />
+    <Content Include="assets\img\UAdeC-blanco.png" />
+    <Content Include="assets\img\UAdeC.png" />
+    <Content Include="assets\img\UAdeC_escudo.png" />
+    <Content Include="assets\js\bootstrap.bundle.min.js" />
+    <Content Include="assets\js\custom.js" />
+    <Content Include="assets\js\jquery-1.11.0.min.js" />
+    <Content Include="assets\js\jquery-migrate-1.2.1.min.js" />
+    <Content Include="assets\js\templatemo.js" />
+    <Content Include="assets\webfonts\fa-brands-400.svg" />
+    <Content Include="assets\webfonts\fa-regular-400.svg" />
+    <Content Include="assets\webfonts\fa-solid-900.svg" />
+    <Content Include="assets\webfonts\slick.svg" />
+    <Content Include="bootstrap.min.css" />
+    <Content Include="ConfiguracionPagina.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -372,16 +446,52 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="css\CardCss.css" />
     <Content Include="css\EstiloProgramas.css" />
     <Content Include="css\style.css" />
     <Content Include="Default.aspx" />
-    <Content Include="Dependencias.aspx" />
+    <Content Include="EditarDetallePrograma.aspx" />
+    <Content Include="EditarPrograma.aspx" />
+    <Content Include="Home.aspx" />
+    <Content Include="Image\loading.gif" />
+    <Content Include="Image\LOGG.jpg" />
+    <Content Include="Image\logoUAdeC.png" />
+    <Content Include="Image\LogoVertical.png" />
+    <Content Include="Image\mantenimiento.jpeg" />
+    <Content Include="Image\UADEC_AZUL.png" />
+    <Content Include="Image\UADEC_AZUL2.png" />
+    <Content Include="Image\UADEC_BLANCO.png" />
+    <Content Include="LoginDependencia.aspx" />
     <Content Include="css\Estilos.css" />
+    <Content Include="DependenciasRegistradas.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="fontawesome.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Image\icono_uadec.png" />
+    <Content Include="Image\UAdeC-blanco.png" />
+    <Content Include="Image\UAdeC.png" />
+    <Content Include="index.html" />
+    <Content Include="LoginAdministrador.aspx" />
+    <Content Include="LoginEncargadoEscuela.aspx" />
+    <Content Include="LoginResponsableUnidad.aspx" />
+    <Content Include="logout.aspx" />
+    <Content Include="PanelAdministrador.aspx" />
+    <Content Include="PanelDependencia.aspx" />
+    <Content Include="PanelEncargadoEscuelaspx.aspx" />
     <Content Include="PanelEstudiante.aspx" />
+    <Content Include="PanelResponsables.aspx" />
+    <Content Include="PerfilDependencia.aspx" />
+    <Content Include="PerfilEstudiante.aspx" />
     <Content Include="Programas.aspx" />
+    <Content Include="LoginEstudiante.aspx" />
+    <Content Include="ProgramasAlumno.aspx" />
+    <Content Include="ProgramasDependencias.aspx" />
+    <Content Include="ProgramasRegistrados.aspx" />
+    <Content Include="RegistroDependencia.aspx" />
+    <Content Include="RegistroEncargadoEscuela.aspx" />
     <Content Include="RegistroEstudiante.aspx" />
+    <Content Include="RegistroResponsable.aspx" />
+    <Content Include="Reglamento.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -412,12 +522,24 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Dependencias.Master" />
     <Content Include="Programas.Master" />
-    <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Oracle.ManagedDataAccess.Client.Configuration.Section.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Alumnos.Master" />
+    <Content Include="DependenciasRegistradas.Master" />
+    <Content Include="assets\webfonts\fa-brands-400.eot" />
+    <Content Include="assets\webfonts\fa-brands-400.ttf" />
+    <Content Include="assets\webfonts\fa-brands-400.woff" />
+    <Content Include="assets\webfonts\fa-brands-400.woff2" />
+    <Content Include="assets\webfonts\fa-regular-400.eot" />
+    <Content Include="assets\webfonts\fa-regular-400.ttf" />
+    <Content Include="assets\webfonts\fa-regular-400.woff" />
+    <Content Include="assets\webfonts\fa-regular-400.woff2" />
+    <Content Include="assets\webfonts\fa-solid-900.eot" />
+    <Content Include="assets\webfonts\fa-solid-900.ttf" />
+    <Content Include="assets\webfonts\fa-solid-900.woff" />
+    <Content Include="assets\webfonts\fa-solid-900.woff2" />
+    <Content Include="assets\webfonts\slick.eot" />
+    <Content Include="assets\webfonts\slick.ttf" />
+    <Content Include="assets\webfonts\slick.woff" />
+    <Content Include="Login.Master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -445,13 +567,41 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="SeleccionarPrograma.aspx" />
+    <Content Include="SeleccionPlan.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="SitioMantenimiento.aspx" />
+    <Content Include="templatemo.css" />
+    <Content Include="UsuariosRegistrados.aspx" />
+    <Content Include="Validaciones.js" />
+    <Content Include="VerProgramas.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alumnos.Master.cs">
+      <DependentUpon>Alumnos.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alumnos.Master.designer.cs">
+      <DependentUpon>Alumnos.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnosPostulados.aspx.cs">
+      <DependentUpon>AlumnosPostulados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlumnosPostulados.aspx.designer.cs">
+      <DependentUpon>AlumnosPostulados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AlumnosRegistrados.aspx.cs">
+      <DependentUpon>AlumnosRegistrados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlumnosRegistrados.aspx.designer.cs">
+      <DependentUpon>AlumnosRegistrados.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -461,6 +611,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ConfiguracionPagina.aspx.cs">
+      <DependentUpon>ConfiguracionPagina.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfiguracionPagina.aspx.designer.cs">
+      <DependentUpon>ConfiguracionPagina.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -475,12 +632,40 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Dependencias.aspx.cs">
-      <DependentUpon>Dependencias.aspx</DependentUpon>
+    <Compile Include="EditarDetallePrograma.aspx.cs">
+      <DependentUpon>EditarDetallePrograma.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Dependencias.aspx.designer.cs">
-      <DependentUpon>Dependencias.aspx</DependentUpon>
+    <Compile Include="EditarDetallePrograma.aspx.designer.cs">
+      <DependentUpon>EditarDetallePrograma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarPrograma.aspx.cs">
+      <DependentUpon>EditarPrograma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarPrograma.aspx.designer.cs">
+      <DependentUpon>EditarPrograma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.Master.cs">
+      <DependentUpon>Login.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.Master.designer.cs">
+      <DependentUpon>Login.Master</DependentUpon>
+    </Compile>
+    <Compile Include="LoginDependencia.aspx.cs">
+      <DependentUpon>LoginDependencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginDependencia.aspx.designer.cs">
+      <DependentUpon>LoginDependencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dependencias.Master.cs">
       <DependentUpon>Dependencias.Master</DependentUpon>
@@ -489,16 +674,101 @@
     <Compile Include="Dependencias.Master.designer.cs">
       <DependentUpon>Dependencias.Master</DependentUpon>
     </Compile>
+    <Compile Include="DependenciasRegistradas.aspx.cs">
+      <DependentUpon>DependenciasRegistradas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DependenciasRegistradas.aspx.designer.cs">
+      <DependentUpon>DependenciasRegistradas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DependenciasRegistradas.Master.cs">
+      <DependentUpon>DependenciasRegistradas.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DependenciasRegistradas.Master.designer.cs">
+      <DependentUpon>DependenciasRegistradas.Master</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalConstants.cs" />
+    <Compile Include="LoginAdministrador.aspx.cs">
+      <DependentUpon>LoginAdministrador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginAdministrador.aspx.designer.cs">
+      <DependentUpon>LoginAdministrador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginEncargadoEscuela.aspx.cs">
+      <DependentUpon>LoginEncargadoEscuela.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginEncargadoEscuela.aspx.designer.cs">
+      <DependentUpon>LoginEncargadoEscuela.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginResponsableUnidad.aspx.cs">
+      <DependentUpon>LoginResponsableUnidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginResponsableUnidad.aspx.designer.cs">
+      <DependentUpon>LoginResponsableUnidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageBorder.cs" />
+    <Compile Include="PanelAdministrador.aspx.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PanelAdministrador.aspx.designer.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelDependencia.aspx.cs">
+      <DependentUpon>PanelDependencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PanelDependencia.aspx.designer.cs">
+      <DependentUpon>PanelDependencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEncargadoEscuelaspx.aspx.cs">
+      <DependentUpon>PanelEncargadoEscuelaspx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PanelEncargadoEscuelaspx.aspx.designer.cs">
+      <DependentUpon>PanelEncargadoEscuelaspx.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PanelEstudiante.aspx.cs">
       <DependentUpon>PanelEstudiante.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEstudiante.aspx.designer.cs">
       <DependentUpon>PanelEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelResponsables.aspx.cs">
+      <DependentUpon>PanelResponsables.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PanelResponsables.aspx.designer.cs">
+      <DependentUpon>PanelResponsables.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PerfilDependencia.aspx.cs">
+      <DependentUpon>PerfilDependencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PerfilDependencia.aspx.designer.cs">
+      <DependentUpon>PerfilDependencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PerfilEstudiante.aspx.cs">
+      <DependentUpon>PerfilEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PerfilEstudiante.aspx.designer.cs">
+      <DependentUpon>PerfilEstudiante.aspx</DependentUpon>
     </Compile>
     <Compile Include="Programas.aspx.cs">
       <DependentUpon>Programas.aspx</DependentUpon>
@@ -514,13 +784,83 @@
     <Compile Include="Programas.Master.designer.cs">
       <DependentUpon>Programas.Master</DependentUpon>
     </Compile>
+    <Compile Include="ProgramasAlumno.aspx.cs">
+      <DependentUpon>ProgramasAlumno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProgramasAlumno.aspx.designer.cs">
+      <DependentUpon>ProgramasAlumno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProgramasDependencias.aspx.cs">
+      <DependentUpon>ProgramasDependencias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProgramasDependencias.aspx.designer.cs">
+      <DependentUpon>ProgramasDependencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProgramasRegistrados.aspx.cs">
+      <DependentUpon>ProgramasRegistrados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProgramasRegistrados.aspx.designer.cs">
+      <DependentUpon>ProgramasRegistrados.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LoginEstudiante.aspx.cs">
+      <DependentUpon>LoginEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginEstudiante.aspx.designer.cs">
+      <DependentUpon>LoginEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroDependencia.aspx.cs">
+      <DependentUpon>RegistroDependencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroDependencia.aspx.designer.cs">
+      <DependentUpon>RegistroDependencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroEncargadoEscuela.aspx.cs">
+      <DependentUpon>RegistroEncargadoEscuela.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroEncargadoEscuela.aspx.designer.cs">
+      <DependentUpon>RegistroEncargadoEscuela.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegistroEstudiante.aspx.cs">
       <DependentUpon>RegistroEstudiante.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RegistroEstudiante.aspx.designer.cs">
       <DependentUpon>RegistroEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroResponsable.aspx.cs">
+      <DependentUpon>RegistroResponsable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroResponsable.aspx.designer.cs">
+      <DependentUpon>RegistroResponsable.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reglamento.aspx.cs">
+      <DependentUpon>Reglamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reglamento.aspx.designer.cs">
+      <DependentUpon>Reglamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SeleccionarPrograma.aspx.cs">
+      <DependentUpon>SeleccionarPrograma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SeleccionarPrograma.aspx.designer.cs">
+      <DependentUpon>SeleccionarPrograma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SeleccionPlan.aspx.cs">
+      <DependentUpon>SeleccionPlan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SeleccionPlan.aspx.designer.cs">
+      <DependentUpon>SeleccionPlan.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -536,6 +876,34 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="SitioMantenimiento.aspx.cs">
+      <DependentUpon>SitioMantenimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SitioMantenimiento.aspx.designer.cs">
+      <DependentUpon>SitioMantenimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SS.Master.cs">
+      <DependentUpon>SS.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SS.Master.designer.cs">
+      <DependentUpon>SS.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UsuariosRegistrados.aspx.cs">
+      <DependentUpon>UsuariosRegistrados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuariosRegistrados.aspx.designer.cs">
+      <DependentUpon>UsuariosRegistrados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerProgramas.aspx.cs">
+      <DependentUpon>VerProgramas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerProgramas.aspx.designer.cs">
+      <DependentUpon>VerProgramas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -546,17 +914,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="SS.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -588,7 +961,10 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

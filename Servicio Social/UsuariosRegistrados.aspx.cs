@@ -1,0 +1,1622 @@
+﻿using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Net.Mail;
+using System.Net;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using static Servicio_Social.Dependencias1;
+using System.Reflection.Emit;
+using System.Web.UI.WebControls.WebParts;
+
+
+namespace Servicio_Social
+{
+    public partial class UsuariosRegistrados : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["idUser"] == null)
+                Response.Redirect("LoginAdministrador.aspx");
+            else
+            {
+                if (Session["filtros"].ToString().Split('|')[0] == "3")
+                {
+                    lbnResponsable.Visible = false;
+                    pnlDependencias.Visible = true;
+                    pnlResponsables.Visible = false;
+                    PanelEncargadosEscuela.Visible = false;
+                    pnlRegistrarAdmon.Visible = false;
+                    pnlRegistrarEncargado.Visible = false;
+                }
+                   
+            } 
+
+            if (!IsPostBack)
+            {
+                CargarDatosResponsable(0, "");
+                CargarDatosDependencia(0, "");
+                CargarDatosEncargadosEscuela(0, "");
+                cargarUnidades();
+                CargarUsuarios();
+            }
+
+        }
+        protected void lbnUsuarios_Click(object sender, EventArgs e)
+        {
+            pnlResponsables.Visible = false;
+            pnlDependencias.Visible = false;
+            PanelEncargadosEscuela.Visible = false;
+            pnlUsuarios.Visible = true;
+        }
+        protected void lbnEncargadoEsc_Click(object sender, EventArgs e)
+        {
+            pnlResponsables.Visible = false;
+            PanelEncargadosEscuela.Visible = true;
+            ddlUser.SelectedIndex = -1;
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+            ddlUnidad.Text = "";
+            pnlDependencias.Visible = false;
+            pnlRegistrarResponsable.Visible = false;
+            pnlUsuarios.Visible = false;
+        }
+        protected void lbnResponsable_Click(object sender, EventArgs e)
+        {
+            pnlResponsables.Visible = true;
+            PanelEncargadosEscuela.Visible = false;
+            ddlUser.SelectedIndex = -1;
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+            ddlUnidad.Text = "";
+            pnlDependencias.Visible = false;
+            pnlRegistrarResponsable.Visible = false;
+            pnlUsuarios.Visible = false;
+        }
+
+        protected void lbnDependencias_Click(object sender, EventArgs e)
+        {
+            pnlResponsables.Visible = false;
+            PanelEncargadosEscuela.Visible = false;
+            pnlDependencias.Visible = true;
+            ddlUser.SelectedIndex = -1;
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+            ddlUnidad.Text = "";
+            pnlUsuarios.Visible = false;
+            pnlRegistrarResponsable.Visible = false;
+        }
+
+        private int CurrentPage
+        {
+            get
+            {
+                return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
+        }
+
+        private int TotalPages
+        {
+            get
+            {
+                return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;
+            }
+            set
+            {
+                ViewState["TotalPages"] = value;
+            }
+        }
+        protected void CargarDatosEncargadosEscuela(int pageIndex, string searchTerm)
+        {
+            int pageSize = 30; // Cantidad de registros por página
+            int totalRecords;
+            DataTable dt = ObtenerDatosEncarg(pageIndex, pageSize, searchTerm, out totalRecords);
+
+            RepeaterEncarg.DataSource = dt;
+            RepeaterEncarg.DataBind();
+
+            // Calcula el número total de páginas
+            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Configura el estado de los botones
+            btnPreviousEncarg.Enabled = pageIndex > 0;
+            btnNextEncarg.Enabled = pageIndex < TotalPages - 1;
+
+            // Actualiza la etiqueta de número de página
+            lblPageNumberEncarg.Text = $"Página {pageIndex + 1} de {TotalPages}";
+        }
+        protected void CargarDatosResponsable(int pageIndex, string searchTerm)
+        {
+            int pageSize = 30; // Cantidad de registros por página
+            int totalRecords;
+
+            DataTable dt = ObtenerDatosResponsable(pageIndex, pageSize, searchTerm, out totalRecords);
+
+            repeaterResp.DataSource = dt;
+            repeaterResp.DataBind();
+
+            // Calcula el número total de páginas
+            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Configura el estado de los botones
+            btnPreviousResp.Enabled = pageIndex > 0;
+            btnNextResp.Enabled = pageIndex < TotalPages - 1;
+
+            // Actualiza la etiqueta de número de página
+            lblPageNumberResp.Text = $"Página {pageIndex + 1} de {TotalPages}";
+        }
+
+        protected void CargarDatosDependencia(int pageIndex, string searchTerm)
+        {
+            int pageSize = 30; // Cantidad de registros por página
+            int totalRecords;
+
+            DataTable dt = ObtenerDatosDependencia(pageIndex, pageSize, searchTerm, out totalRecords);
+
+            RepeaterDep.DataSource = dt;
+            RepeaterDep.DataBind();
+
+            // Calcula el número total de páginas
+            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Configura el estado de los botones
+            btnPrevDep.Enabled = pageIndex > 0;
+            btnNextDep.Enabled = pageIndex < TotalPages - 1;
+
+            // Actualiza la etiqueta de número de página
+            lblPageDep.Text = $"Página {pageIndex + 1} de {TotalPages}";
+        }
+
+        protected DataTable ObtenerDatosEncarg(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+        {
+            string conString = GlobalConstants.SQL;
+            int rowsToSkip = pageIndex * pageSize;
+
+            // Consulta SQL para obtener los datos paginados
+            string query = "SELECT CONVERT(varchar, U.dFechaRegistro, 103) AS FechaRegistro, U.idUsuario,  U.sApellido_Pat + ' ' + U.sApellido_Mat + ' ' + U.sNombreUsuario AS Nombre, " +
+               "U.sCorreo, TU.sDescripcion AS TipoUsuario,ESC.SCLAVE + ' - ' + ESC.SDESCRIPCION AS Escuela, UN.sCiudad AS Unidad, " + 
+                "CASE U.bAutorizado WHEN '1' THEN  'AUTORIZADO' WHEN '0' THEN 'NO AUTORIZADO' ELSE '' END AS Estatus " +
+                "FROM SM_USUARIO U "+
+                "INNER JOIN SP_TIPO_USUARIO TU ON TU.idTipoUsuario = U.kpTipoUsuario " +
+                "INNER JOIN NP_UNIDAD UN ON UN.idUnidad = U.kpUnidad "+
+                "INNER JOIN SP_ESCUELA_UAC AS ESC ON U.kpEscuela = ESC.idEscuelauac "+
+                "WHERE U.kpTipoUsuario = 4 ";
+
+            // Consulta SQL para contar el total de registros
+            string countQuery =
+
+                "SELECT COUNT(*) " +
+                "FROM SM_USUARIO U " +
+                "INNER JOIN SP_TIPO_USUARIO TU ON TU.idTipoUsuario = U.kpTipoUsuario " +
+                "INNER JOIN NP_UNIDAD UN ON UN.idUnidad = U.kpUnidad " +
+                "INNER JOIN SP_ESCUELA_UAC AS ESC ON U.kpEscuela = ESC.idEscuelauac " +
+                "WHERE U.kpTipoUsuario = 4 ";
+
+            //"SELECT COUNT(*) " +
+            //"FROM SM_USUARIO U " +
+            //"INNER JOIN NM_EMPLEADO E ON E.idEmpleado = U.kmIdentificador " +
+            //"INNER JOIN NM_PERSONA P ON P.idPersona = E.kmPersona " +
+            //"INNER JOIN SP_TIPO_USUARIO TU ON TU.idTipoUsuario = U.kpTipoUsuario " +
+            //"INNER JOIN NP_UNIDAD UN ON UN.idUnidad = U.kpUnidad " +
+            //"INNER JOIN SP_ESCUELA_UAC AS ESC ON U.kpEscuela = ESC.idEscuelauac " +
+            //"WHERE U.kpTipoUsuario = 4 ";
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                string searchCondition =
+                    "AND (U.sCorreo LIKE @searchTerm " +
+                                         " OR U.sApellido_Pat + ' ' + U.sApellido_Mat + ' ' + U.sNombreUsuario LIKE @searchTerm " +
+                                         "OR UN.sCiudad LIKE @searchTerm) ";
+                //"AND (U.sCorreo LIKE @searchTerm " +
+                //                     "OR E.sExpediente LIKE @searchTerm OR P.sApellido_paterno + ' ' + P.sApellido_materno + ' ' + P.sNombres LIKE @searchTerm " +
+                //                     "OR UN.sCiudad LIKE @searchTerm) ";
+                query += searchCondition;
+                countQuery += searchCondition;
+            }
+
+            query += "ORDER BY 3 " +
+                     "OFFSET @rowsToSkip ROWS " +
+                     "FETCH NEXT @pageSize ROWS ONLY;";
+
+            DataTable dt = new DataTable();
+            totalRecords = 0;
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                SqlCommand countCmd = new SqlCommand(countQuery, con);
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                }
+
+                con.Open();
+
+                // Obtener el número total de registros
+                totalRecords = (int)countCmd.ExecuteScalar();
+
+                // Obtener los datos paginados
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            return dt;
+
+        }
+        protected DataTable ObtenerDatosResponsable(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+        {
+            string conString = GlobalConstants.SQL;
+            int rowsToSkip = pageIndex * pageSize;
+
+            // Consulta SQL para obtener los datos paginados
+            string query = "SELECT U.idUsuario, E.sExpediente, P.sApellido_paterno + ' ' + P.sApellido_materno + ' ' + P.sNombres AS Nombre, " +
+                "U.sCorreo, TU.sDescripcion AS TipoUsuario, UN.sCiudad AS Unidad, " +
+                "CASE U.bAutorizado WHEN '1' THEN  'Autorizado' WHEN '0' THEN 'No Autorizado' ELSE '' END AS Estatus " +
+                "FROM SM_USUARIO U " +
+                "INNER JOIN NM_EMPLEADO E ON E.idEmpleado = U.kmIdentificador " +
+                "INNER JOIN NM_PERSONA P ON P.idPersona = E.kmPersona " +
+                "INNER JOIN SP_TIPO_USUARIO TU ON TU.idTipoUsuario = U.kpTipoUsuario " +
+                "INNER JOIN NP_UNIDAD UN ON UN.idUnidad = U.kpUnidad " +
+                "WHERE U.kpTipoUsuario = 3 ";
+
+            // Consulta SQL para contar el total de registros
+            string countQuery = "SELECT COUNT(*) " +
+                "FROM SM_USUARIO U " +
+                "INNER JOIN NM_EMPLEADO E ON E.idEmpleado = U.kmIdentificador " +
+                "INNER JOIN NM_PERSONA P ON P.idPersona = E.kmPersona " +
+                "INNER JOIN SP_TIPO_USUARIO TU ON TU.idTipoUsuario = U.kpTipoUsuario " +
+                "INNER JOIN NP_UNIDAD UN ON UN.idUnidad = U.kpUnidad " +
+                "WHERE U.kpTipoUsuario = 3 ";
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                string searchCondition = "AND (U.sCorreo LIKE @searchTerm " +
+                                         "OR E.sExpediente LIKE @searchTerm OR P.sApellido_paterno + ' ' + P.sApellido_materno + ' ' + P.sNombres LIKE @searchTerm " +
+                                         "OR UN.sCiudad LIKE @searchTerm) ";
+                query += searchCondition;
+                countQuery += searchCondition;
+            }
+
+            query += "ORDER BY 3 " +
+                     "OFFSET @rowsToSkip ROWS " +
+                     "FETCH NEXT @pageSize ROWS ONLY;";
+
+            DataTable dt = new DataTable();
+            totalRecords = 0;
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                SqlCommand countCmd = new SqlCommand(countQuery, con);
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                }
+
+                con.Open();
+
+                // Obtener el número total de registros
+                totalRecords = (int)countCmd.ExecuteScalar();
+
+                // Obtener los datos paginados
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            return dt;
+
+        }
+
+        protected DataTable ObtenerDatosDependencia(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+        {
+            string conString = GlobalConstants.SQL;
+            int rowsToSkip = pageIndex * pageSize;
+
+            string filtros = Session["filtros"].ToString();
+            string tipoUsuario = filtros.Split('|')[0];
+            string unidadUsuario = filtros.Split('|')[1];
+            string filtroquery = "";
+
+            // Consulta SQL para obtener los datos paginados
+            string query = "SELECT U.idUsuario, DS.sDescripcion, U.sCorreo, U.sPassword " +
+                "FROM SM_USUARIO U " +
+                "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
+                "WHERE kpTipoUsuario = 2 ";
+
+            if (tipoUsuario == "1")
+            {
+                filtroquery = "AND DS.kpUnidad IN (2,3,4) ";
+            }
+            else if (tipoUsuario == "3")
+            {
+                filtroquery = "AND DS.kpUnidad = " + unidadUsuario + " ";
+            }
+            query += filtroquery;
+
+            // Consulta SQL para contar el total de registros
+            string countQuery = "SELECT COUNT(*) " +
+                "FROM SM_USUARIO U " +
+                "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
+                "WHERE kpTipoUsuario = 2 ";
+            countQuery += filtroquery;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                string searchCondition = "AND ( DS.sDescripcion LIKE @searchTerm OR  U.sCorreo  LIKE @searchTerm) ";
+                query += searchCondition;
+                countQuery += searchCondition;
+            }
+
+            query += "ORDER BY 2 " +
+                     "OFFSET @rowsToSkip ROWS " +
+                     "FETCH NEXT @pageSize ROWS ONLY;";
+
+            DataTable dt = new DataTable();
+            totalRecords = 0;
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                SqlCommand countCmd = new SqlCommand(countQuery, con);
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                }
+
+                con.Open();
+
+                // Obtener el número total de registros
+                totalRecords = (int)countCmd.ExecuteScalar();
+
+                // Obtener los datos paginados
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            return dt;
+
+        }
+
+        protected void RepeaterDep_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                DataRowView dr = e.Item.DataItem as DataRowView;
+                TextBox txtPassword = (TextBox)e.Item.FindControl("txtPassword");
+                string s = txtPassword.Text;
+                txtPassword.Text = SeguridadUtils.Desencriptar(s);
+            }
+        }
+
+        protected void RepeaterDep_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            if (e.CommandName == "Edit")
+            {
+                // Mostrar el modo de edición para la fila seleccionada
+                Panel pnlViewMode = (Panel)RepeaterDep.Items[index].FindControl("pnlViewModeDep");
+                Panel pnlEditMode = (Panel)RepeaterDep.Items[index].FindControl("pnlEditModeDep");
+
+                pnlViewMode.Visible = false;
+                pnlEditMode.Visible = true;
+
+                ViewState["ActiveTab"] = "#tab2";
+            }
+            else if (e.CommandName == "Update")
+            {
+                // Lógica para actualizar los datos en la base de datos
+                //Label txtDescripcion = (Label)RepeaterDep.Items[index].FindControl("lblDescripcion");
+                TextBox txtCorreo = (TextBox)RepeaterDep.Items[index].FindControl("txtCorreo");
+                TextBox txtPassword = (TextBox)RepeaterDep.Items[index].FindControl("txtPassword");
+
+                int rowIndex = e.Item.ItemIndex;
+                HiddenField hdnID = (HiddenField)RepeaterDep.Items[rowIndex].FindControl("hdnID");
+                int id = Convert.ToInt32(hdnID.Value);
+                //string descripcion = txtDescripcion.Text;
+                string correo = txtCorreo.Text;
+                string password = SeguridadUtils.Encriptar(txtPassword.Text);
+                // Actualiza los datos en la base de datos
+                UpdateDataInDatabase(id, correo, password);
+
+                // Vuelve al modo de visualización
+                Panel pnlViewMode = (Panel)RepeaterDep.Items[index].FindControl("pnlViewModeDep");
+                Panel pnlEditMode = (Panel)RepeaterDep.Items[index].FindControl("pnlEditModeDep");
+
+                pnlViewMode.Visible = true;
+                pnlEditMode.Visible = false;
+
+                if (pnlEditMode.Visible)
+                    pnlEditMode.CssClass = "edit-mode";
+
+                string searchTerm = txtBusquedaDependencias.Text.Trim();
+                int page = CurrentPage;
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    // Vuelve a enlazar los datos al Repeater
+                    CargarDatosDependencia(page, "");
+                }
+                else
+                {
+                    // Vuelve a enlazar los datos al Repeater
+                    CargarDatosDependencia(page, searchTerm);
+                }
+               
+            }
+            else if (e.CommandName == "Cancel")
+            {
+                // Vuelve al modo de visualización sin hacer cambios
+                Panel pnlViewMode = (Panel)RepeaterDep.Items[index].FindControl("pnlViewModeDep");
+                Panel pnlEditMode = (Panel)RepeaterDep.Items[index].FindControl("pnlEditModeDep");
+
+                pnlViewMode.Visible = true;
+                pnlEditMode.Visible = false;
+                //UpdatePanel1.Update();
+            }
+
+            if (e.CommandName == "Page")
+            {
+                int pageIndex = int.Parse(e.CommandArgument.ToString());
+                CargarDatosDependencia(pageIndex, "");
+                //UpdatePanel1.Update();
+            }
+        }
+
+        protected void btnPrevDep_Click(object sender, EventArgs e)
+        {
+
+            string searchTerm = txtBusquedaDependencias.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosDependencia(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosDependencia(CurrentPage, searchTerm);
+                }
+            }
+
+        }
+
+        protected void btnNextDep_Click(object sender, EventArgs e)
+        {
+            string searchTerm = txtBusquedaDependencias.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosDependencia(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosDependencia(CurrentPage, searchTerm);
+                }
+            }
+
+        }
+
+        protected void btnPrevEncarg_Click(object sender, EventArgs e)
+        {
+
+            string searchTerm = txtBuscarEncargado.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosEncargadosEscuela(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosEncargadosEscuela(CurrentPage, searchTerm);
+                }
+            }
+
+        }
+
+        protected void btnNextEncarg_Click(object sender, EventArgs e)
+        {
+            string searchTerm = txtBuscarEncargado.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosEncargadosEscuela(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosEncargadosEscuela(CurrentPage, searchTerm);
+                }
+            }
+
+        }
+
+
+        protected void btnBuscarDependencia_Click(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del cuadro de texto
+            string searchTerm = txtBusquedaDependencias.Text.Trim();
+
+            // Establece la página actual en cero para volver a la primera página después de la búsqueda
+            CurrentPage = 0;
+
+            // Carga los datos con el término de búsqueda y la página actual
+            CargarDatosDependencia(CurrentPage, searchTerm);
+        }
+
+        protected void btnBuscarEncargado_Click(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del cuadro de texto
+            string searchTerm = txtBuscarEncargado.Text.Trim();
+
+            // Establece la página actual en cero para volver a la primera página después de la búsqueda
+            CurrentPage = 0;
+
+            // Carga los datos con el término de búsqueda y la página actual
+            CargarDatosEncargadosEscuela(CurrentPage, searchTerm);
+        }
+
+        private void UpdateDataInDatabase(int id, string correo, string password)
+        {
+            string connectionString = GlobalConstants.SQL;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Inicia una transacción
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Update SM_DEPENDENCIA_SERVICIO
+                    using (SqlCommand cmd1 = new SqlCommand("UPDATE SM_USUARIO SET sCorreo = @sCorreo, sPassword = @sPassword " +
+                        "WHERE idUsuario = @id", connection, transaction))
+                    {
+                        cmd1.Parameters.AddWithValue("@sCorreo", correo);
+                        cmd1.Parameters.AddWithValue("@sPassword", password);
+
+                        cmd1.Parameters.AddWithValue("@id", id);
+                        cmd1.ExecuteNonQuery();
+                    }
+
+                    // Confirma la transacción
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    // Si ocurre un error, realiza un rollback
+                    transaction.Rollback();
+                }
+            }
+        }
+
+        protected void btnPreviousResp_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage > 0)
+            {
+                CurrentPage -= 1;
+                CargarDatosResponsable(CurrentPage, "");
+            }
+        }
+
+        protected void btnNextResp_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+            {
+                CurrentPage += 1;
+                CargarDatosResponsable(CurrentPage, "");
+            }
+        }
+
+        protected void btnBuscarResponsable_Click(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del cuadro de texto
+            string searchTerm = txtBusquedaResponsables.Text.Trim();
+
+            // Establece la página actual en cero para volver a la primera página después de la búsqueda
+            CurrentPage = 0;
+
+            // Carga los datos con el término de búsqueda y la página actual
+            CargarDatosResponsable(CurrentPage, searchTerm);
+        }
+        
+
+        protected void btnAutorizar_Click(object sender, EventArgs e)
+        {
+            LinkButton lnkUpdate = (LinkButton)sender;
+            string id = lnkUpdate.CommandArgument;
+            string cambio = "1";
+            cambiarEstatus(id, cambio);
+            mensajeScript("Registrado Autorizado con éxito");
+            CargarDatosResponsable(0, "");
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+            LinkButton lnkUpdate = (LinkButton)sender;
+            string id = lnkUpdate.CommandArgument;
+            string cambio = "0";
+            cambiarEstatus(id, cambio);
+            mensajeScript("Registrado NO Autorizado con éxito");
+            CargarDatosResponsable(0, "");
+        }
+
+        protected void cambiarEstatus(string id, string cambio)
+        {
+            string connectionString = GlobalConstants.SQL;
+            string updateQuery = "UPDATE SM_USUARIO SET bAutorizado = @bAutorizado WHERE idUsuario = @idUsuario";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(updateQuery, connection))
+                {
+                    // Parámetros
+                    command.Parameters.AddWithValue("@bAutorizado", cambio);
+                    command.Parameters.AddWithValue("@idUsuario", id);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        //Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        public void mensajeScript(string mensaje)
+        {
+            string scriptText = "alert('" + mensaje + "');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+        }
+
+        //protected void repeaterResp_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        //{
+        //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        //    {
+        //        DataRowView row = (DataRowView)e.Item.DataItem;
+        //        LinkButton btnAutorizar = (LinkButton)e.Item.FindControl("btnAutorizar");
+        //        LinkButton btnEliminar = (LinkButton)e.Item.FindControl("btnEliminar");
+
+        //        string autorizado = row["Estatus"].ToString().Trim();
+
+        //        switch (autorizado)
+        //        {
+        //            case "Autorizado":
+        //                btnAutorizar.Visible = false;
+        //                btnEliminar.Visible = true;
+        //                break;
+
+        //            case "No Autorizado":
+        //                btnAutorizar.Visible = true;
+        //                btnEliminar.Visible = false;
+        //                break;
+
+        //            default:
+        //                btnAutorizar.Visible = true;
+        //                btnEliminar.Visible = true;
+        //                break;
+        //        }
+        //    }
+
+        //}
+
+        // REGISTRO DE RESPONSABLES
+        protected void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string _idExpediente = getIdEmpleado(txtExpediente.Text);
+                if (!string.IsNullOrEmpty(_idExpediente))
+                {
+                    string connectionString = GlobalConstants.SQL;
+                    string _correo = txtEmail.Text.Trim();
+                    string _telefono = txtTelefono.Text.Trim();
+                    string _unidad = ddlUnidad.SelectedValue;
+                    string _tipo = "3";
+                    string _nombre = txtNombre.Text.Trim();
+                    string _apepat = txtApePat.Text.Trim();
+                    string _apemat = txtApeMat.Text.Trim();
+
+                    // Depurar valores
+                    //System.Diagnostics.Debug.WriteLine("Nombre: " + _nombre);
+                    //System.Diagnostics.Debug.WriteLine("Apellido Paterno: " + _apepat);
+                    //System.Diagnostics.Debug.WriteLine("Apellido Materno: " + _apemat);
+
+                    string Concatenado = _idExpediente + " - " + _nombre + " " + _apepat + " " + _apemat;
+
+                    if (!verificarExistente(_correo))
+                    {
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            SqlTransaction transaction = connection.BeginTransaction();
+
+                            try
+                            {
+                                insertUser(_correo, _telefono, _tipo, _unidad, _idExpediente, Concatenado, connection, transaction);
+
+                                transaction.Commit();
+                                pnlRegistrarResponsable.Visible = false;
+                                ddlUser.SelectedIndex = -1;
+                                mensajeScriptExito("El usuario ha sido creado con éxito.");
+                                LimpiarDatos();
+                            }
+                            catch (Exception ex)
+                            {
+                                // Si ocurre algún error, realizar un rollback de la transacción
+                                transaction.Rollback();
+
+                                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                                Response.Write("Error: " + ex.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMensajeError.Text = "El correo ingresado ya se encuentra registrado.";
+                    }
+                }
+                else
+                {
+                    lblMensajeError.Text = "Ha ocurrido un error al intentar guardar el registro, contacte al administrador";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensajeError.Text = "Ha ocurrido un error: " + ex.Message;
+            }
+
+        }
+        protected void btnRegistrarAdmon_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string _idExpediente = getIdEmpleado(txt1.Text);
+                if (_idExpediente != null || _idExpediente != "")
+                {
+                    string connectionString = GlobalConstants.SQL;
+                    string _correo = txt2.Text.Trim();
+                    string _telefono = txt6.Text.Trim();
+                    string _unidad = DDL1.SelectedValue;
+                    string _tipo = "1";
+                    string _nombre = txt3.Text.Trim();
+                    string _apepat = txt4.Text.Trim();
+                    string _apemat = txt5.Text.Trim();
+                    string Concatenado = _idExpediente + " - " + _nombre + " " + _apepat + " " + _apemat;
+                    if (verificarExistente(_correo) == false)
+                    {
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            SqlTransaction transaction = connection.BeginTransaction();
+
+                            try
+                            {
+                                insertUser(_correo, _telefono, _tipo, _unidad, _idExpediente, Concatenado, connection, transaction);
+
+                                transaction.Commit();
+                                pnlRegistrarAdmon.Visible = false;
+                                ddlUser.SelectedIndex = -1;
+                                mensajeScriptExito("El usuario ha sido creado con éxito.");
+                                LimpiarDatos();
+                            }
+                            catch (Exception ex)
+                            {
+                                // Si ocurre algún error, realizar un rollback de la transacción
+                                transaction.Rollback();
+
+                                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                                Response.Write("Error: " + ex.Message);
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Label2.Text = "El correo ingresado ya se encuentra registrado.";
+                    }
+                }
+                else
+                {
+                    Label2.Text = "Ha ocurrido un error al intentar guardar el registro, contecte al administrador";
+                }
+
+            }
+            catch
+            {
+
+            }
+
+        }
+        private void insertUser(string correo, string telefono, string tipo, string unidad, string expediente, string Concatenado ,SqlConnection connection, SqlTransaction transaction)
+        {
+            string query = "INSERT INTO SM_USUARIO (sCorreo, sTelefono, kpTipoUsuario, kpUnidad, kmIdentificador, sNombreUsuario, bAutorizado) " +
+                "VALUES (@sCorreo, @sTelefono, @kpTipoUsuario, @kpUnidad, @kmIdentificador, @sNombreUsuario, 1);";
+
+            using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@sCorreo", correo);
+                cmd.Parameters.AddWithValue("@sTelefono", telefono);
+                cmd.Parameters.AddWithValue("@kpTipoUsuario", tipo);
+                cmd.Parameters.AddWithValue("@kpUnidad", unidad);
+                cmd.Parameters.AddWithValue("@kmIdentificador", expediente);
+                cmd.Parameters.AddWithValue("@sNombreUsuario", Concatenado);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        [WebMethod]
+        public static List<string> buscarCorreo(string correo, string exp)
+        {
+            List<string> results = new List<string>();
+            string connectionString = GlobalConstants.ORA;
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                string sqlQuery = "SELECT TRIM(GE.NOMBRE) NOMBRE, TRIM(GE.APE_PAT) APE_PAT, TRIM(GE.APE_MAT) APE_MAT, EE.UADEC_EMAIL AS EMAIL " +
+                    "FROM MAILEDU.EMPLEADO_EMAIL EE " +
+                    "INNER JOIN OM.GEMPLEADO GE ON GE.EXPEDIENTE = EE.EXPEDIENTE " +
+                    "WHERE EE.UADEC_EMAIL LIKE :email AND GE.EXPEDIENTE = :exp " +
+                    "UNION ALL " +
+                    "SELECT TRIM(NOMBRE) NOMBRE, TRIM(APE_PAT) APE_PAT, TRIM(APE_MAT) APE_MAT, EMAIL " +
+                    "FROM PLANTADOCENTE.DOCENTEINCORPORADO " +
+                    "WHERE EMAIL LIKE :email AND EXPEDIENTE = :exp";
+                using (OracleCommand cmd = new OracleCommand(sqlQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("email", correo));
+                    cmd.Parameters.Add(new OracleParameter("exp", exp));
+                    conn.Open();
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            results.Add(reader["NOMBRE"].ToString());
+                            results.Add(reader["APE_PAT"].ToString());
+                            results.Add(reader["APE_MAT"].ToString());
+                        }
+                    }
+                }
+            }
+            return results;
+        }
+
+        public static List<string> buscarCorreo2(string correo, string exp)
+        {
+            List<string> results = new List<string>();
+            string connectionString = GlobalConstants.ORA;
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                string sqlQuery = "SELECT TRIM(GE.NOMBRE) NOMBRE, TRIM(GE.APE_PAT) APE_PAT, TRIM(GE.APE_MAT) APE_MAT, EE.UADEC_EMAIL AS EMAIL " +
+                    "FROM MAILEDU.EMPLEADO_EMAIL EE " +
+                    "INNER JOIN OM.GEMPLEADO GE ON GE.EXPEDIENTE = EE.EXPEDIENTE " +
+                    "WHERE EE.UADEC_EMAIL LIKE :email AND GE.EXPEDIENTE = :exp " +
+                    "UNION ALL " +
+                    "SELECT TRIM(NOMBRE) NOMBRE, TRIM(APE_PAT) APE_PAT, TRIM(APE_MAT) APE_MAT, EMAIL " +
+                    "FROM PLANTADOCENTE.DOCENTEINCORPORADO " +
+                    "WHERE EMAIL LIKE :email AND EXPEDIENTE = :exp";
+                using (OracleCommand cmd = new OracleCommand(sqlQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("email", correo));
+                    cmd.Parameters.Add(new OracleParameter("exp", exp));
+                    conn.Open();
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            results.Add(reader["NOMBRE"].ToString());
+                            results.Add(reader["APE_PAT"].ToString());
+                            results.Add(reader["APE_MAT"].ToString());
+                        }
+                    }
+                }
+            }
+            return results;
+        }
+        public void enviarCorreo(string email, string tipo)
+        {
+            MensajesCorreo mc = new MensajesCorreo();
+            string body = mc.tipoTexto(tipo);
+            string to = email;
+            string from = "noreply@uadec.edu.mx";
+            MailMessage message = new MailMessage();
+            message.To.Add(to);
+            message.From = new MailAddress(from);
+            //message.To.Add(); //correo al administrador (por definir)
+            message.Subject = "Registro Plataforma de Servicio Social | UAdeC";
+            message.IsBodyHtml = true;
+            message.Body = body;
+            SmtpClient client = new SmtpClient("mailgate2.uadec.mx");
+            // Credentials are necessary if the server requires the client 
+            // to authenticate before it will send email on the client's behalf.
+            client.Host = "mailgate2.uadec.mx";
+            client.Port = 25;
+            client.EnableSsl = false;
+            client.Credentials = new NetworkCredential(from, "");
+            try
+            {
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                ex.ToString());
+            }
+        }
+
+        public void cargarUnidades()
+        {
+            string conString = GlobalConstants.SQL;
+            string query = "SELECT idUnidad, sCiudad FROM NP_UNIDAD WHERE idUnidad NOT IN (1);";
+
+            // Agregar una opción predeterminada al DropDownList
+            ddlUnidad.Items.Add(new ListItem("Selecciona una opción", ""));
+            DDL1.Items.Add(new ListItem("Selecciona una opción", ""));
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+
+                // Ejecutar la consulta y leer los resultados
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // Añadir cada nombre a un elemento ListItem y agregarlo al DropDownList
+                    ddlUnidad.Items.Add(new ListItem(reader["sCiudad"].ToString(), reader["idUnidad"].ToString()));
+                    DDL1.Items.Add(new ListItem(reader["sCiudad"].ToString(), reader["idUnidad"].ToString()));
+                }
+
+                // Cerrar la conexión
+                con.Close();
+            }
+        }
+
+        public string getIdEmpleado(string expediente)
+        {
+            string idExpediente = "";
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                string query = "SELECT idEmpleado FROM NM_EMPLEADO WHERE sExpediente = @Expediente";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Expediente", expediente);
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    if (result != null)
+                    {
+                        idExpediente = result.ToString();
+                    }
+                    else
+                        idExpediente = null;
+                }
+            }
+
+            return idExpediente;
+        }
+
+        public bool verificarExistente(string correo)
+        {
+            string idUser = ddlUser.SelectedValue;
+            string connectionString = GlobalConstants.SQL; // Reemplaza esto con tu cadena de conexión real
+
+            // Query para verificar si el correo existe en la base de datos
+            string query = "SELECT COUNT(*) FROM SM_USUARIO WHERE sCorreo = @Email and kpTipoUsuario =" + idUser;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Email", correo);
+
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+
+                    return count > 0;
+                }
+            }
+
+        }
+        //public bool verificarExistenteAdmon(string correo)
+        //{
+        //    string connectionString = GlobalConstants.SQL; // Reemplaza esto con tu cadena de conexión real
+            
+        //    // Query para verificar si el correo existe en la base de datos
+        //    string query = "SELECT COUNT(*) FROM SM_USUARIO WHERE sCorreo = @Email and kpTipoUsuario = 1";
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Email", correo);
+
+        //            connection.Open();
+        //            int count = (int)command.ExecuteScalar();
+
+        //            return count > 0;
+        //        }
+        //    }
+
+        //}
+        public void CargarUsuarios()
+        {
+            string conString = GlobalConstants.SQL;
+            
+            // Define la conexión SQL y la consulta
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string queryString = "SELECT sDescripcion, idTipoUsuario FROM SP_TIPO_USUARIO ";
+
+                // Crea un DataSet para almacenar los resultados de la consulta
+                DataSet ds3 = new DataSet();
+
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds3);
+                }
+                DataTable dt = ds3.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sDescripcion"] = "Seleccione el Usuario...";
+                dt.Rows.InsertAt(newRow, 0);
+
+                // Asigna los resultados al DropDownList
+                ddlUser.DataSource = ds3;
+                ddlUser.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
+                ddlUser.DataValueField = "idTipoUsuario";
+                ddlUser.DataBind();
+            }
+        }
+        protected void ddlUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idUser = ddlUser.SelectedValue;
+            // Verificar si el valor seleccionado en DDLNIVEL1 es 1
+            //RESPONSABLE UNIDAD
+            if (idUser == "3")
+            {
+                LimpiarDatos();
+                pnlRegistrarResponsable.Visible = true;
+                pnlRegistrarAdmon.Visible = false;
+                pnlRegistrarEncargado.Visible = false;
+                pnlRegistrarDependencias.Visible= false;
+               
+                CargarDatosResponsable(0, "");
+                repeaterResp.DataBind();
+            }
+            //ADMINISTRADOR
+            else if (idUser == "1")
+            {
+                LimpiarDatos();
+                pnlRegistrarAdmon.Visible = true;
+                pnlRegistrarResponsable.Visible = false;
+                pnlRegistrarEncargado.Visible = false;
+                pnlRegistrarDependencias.Visible = false;
+               
+            }
+            //ENCARGADO ESCUELA
+            else if (idUser == "4")
+            {
+                LimpiarDatos();
+                pnlRegistrarEncargado.Visible = true;
+                pnlRegistrarAdmon.Visible = false;
+                pnlRegistrarResponsable.Visible = false;
+                pnlRegistrarDependencias.Visible = false;
+                CargarUnidadEnc();
+                CargarNivelEnc();
+                CargaEscuelaEnc();
+            }
+            //DEPENDENCIAS
+            else if (idUser == "2")
+            {
+                LimpiarDatos();
+                pnlRegistrarDependencias.Visible = true;
+                pnlRegistrarEncargado.Visible = false;
+                pnlRegistrarAdmon.Visible = false;
+                pnlRegistrarResponsable.Visible = false;
+                CargarUnidadDep();
+                CargarOrganismoDep();
+
+
+            }
+        }
+       public void LimpiarDatos ()
+        {
+            Label4.Text = "";
+            lblMensajeError.Text = "";
+            lblMensajeErrorDep.Text = "";
+            lblMensajeErrorEnc.Text = "";
+            //ADMINISTRADOR
+            txt1.Text = "";
+            txt2.Text = "";
+            txt3.Text = "";
+            txt4.Text = "";
+            txt5.Text = "";
+            txt6.Text = "";
+            Label1.Text = "";
+            Label2.Text = "";
+            DDL1.SelectedIndex = -1;
+           //RESPONSABLE
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtNombre.Text = "";
+            txtApePat.Text = "";
+            txtApeMat.Text = "";
+            txtTelefono.Text = "";
+            lblMensajeEmail.Text = "";
+            lblMensajeExpediente.Text = "";
+            ddlUnidad.SelectedIndex = -1;
+            //ENCARGADO
+            txtExpedienteEnc.Text = "";
+            txtEmailEnc.Text = "";
+            txtNombreEnc.Text = "";
+            txtApePatEnc.Text = "";
+            txtApeMatEnc.Text = "";
+            txtTelefonoEnc.Text = "";
+            //DEPENDENCIAS
+            txtDependenciaDep.Text = "";
+            txtContraDep.Text = "";
+            txtReContraDep.Text = "";
+            ddlUnidadDep.SelectedIndex = -1;
+            ddlOrganismoDep.SelectedIndex = -1;
+            txtResponsableDep.Text = "";
+            txtAreaDep.Text = "";
+            txtTelefonoDep.Text = "";
+            txtDomicilioDep.Text = "";
+
+
+
+
+        }
+        public void mensajeScriptExito(string mensaje)
+        {
+            string scriptText = "$('.alert').remove(); $('body').prepend('<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\" style=\"background-color: #d4edda; color: #155724;\"><strong>" + mensaje + "</strong><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>'); setTimeout(function() { $('.alert').alert('close'); }, 6000);";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+        }
+
+        #region ENCARGADO
+        //Filtro  UNIDAD NIVEL ESCUELA
+        private void CargarUnidadEnc()
+        {
+            // Define la conexión SQL y la consulta
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string queryString = "SELECT idUnidad, sCiudad FROM NP_UNIDAD WHERE idUnidad NOT IN (1) ";
+
+                // Crea un DataSet para almacenar los resultados de la consulta
+                DataSet ds3 = new DataSet();
+
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds3);
+                }
+                DataTable dt = ds3.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sCiudad"] = "Seleccione la Unidad...";
+                dt.Rows.InsertAt(newRow, 0);
+
+                // Asigna los resultados al DropDownList
+                ddlUnidadEnc.DataSource = ds3;
+                ddlUnidadEnc.DataTextField = "sCiudad"; // Utiliza el alias "Descripcion" como texto visible
+                ddlUnidadEnc.DataValueField = "idUnidad";
+                ddlUnidadEnc.DataBind();
+            }
+
+        }
+
+        private void CargarNivelEnc()
+        {
+            // Define la conexión SQL y la consulta
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string queryString = "SELECT sDescripcion, idTipoNivel FROM SP_TIPO_NIVEL  WHERE idTipoNivel != 666 AND idTipoNivel!= 3  ";
+
+                // Crea un DataSet para almacenar los resultados de la consulta
+                DataSet ds3 = new DataSet();
+
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds3);
+                }
+                DataTable dt = ds3.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sDescripcion"] = "Seleccione el Nivel...";
+                dt.Rows.InsertAt(newRow, 0);
+
+                // Asigna los resultados al DropDownList
+                ddlNivelEnc.DataSource = ds3;
+                ddlNivelEnc.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
+                ddlNivelEnc.DataValueField = "idTipoNivel";
+                ddlNivelEnc.DataBind();
+            }
+
+        }
+
+
+        private void CargaEscuelaEnc()
+        {
+            ddlEscuelEnc.Items.Clear();
+            string idUnidadSeleccionado = ddlUnidadEnc.SelectedValue;
+            string idNivelSeleccionado = ddlNivelEnc.SelectedValue;
+
+            // CARGAR ESCUELAS CON ENFOQUE DIFERENTE PBG
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine(@"SELECT DISTINCT ESC.sClave + ' - ' + ESC.sDescripcion Descripcion, ");
+            sb.AppendLine(@"       PLA.kpEscuela_UAdeC,PE.kpNivel, kpUnidad, ESC.idEscuelaUAC ");
+            sb.AppendLine(@"FROM SM_PLAN_EST_ESCUELA AS PLA ");
+            sb.AppendLine(@"INNER JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC ");
+            sb.AppendLine(@"INNER JOIN SP_PLAN_ESTUDIO AS PE ON PE.idPlanEstudio = PLA.kpPlan_Estudio ");
+            sb.AppendLine(@"WHERE  PE.kpNivel=@idNivel AND ESC.kpUnidad = @idUnidad ");
+            sb.AppendLine(@"AND    PE.bVigente=1 AND PE.bActivo=1 ");
+            sb.AppendLine(@"ORDER BY ESC.sClave + ' - ' + ESC.sDescripcion");
+
+            string queryString = sb.ToString();
+
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(queryString, con);
+                cmd.Parameters.AddWithValue("@idNivel", idNivelSeleccionado);
+                cmd.Parameters.AddWithValue("@idUnidad", idUnidadSeleccionado);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                // Crear un nuevo DataTable que incluya el primer elemento "Seleccione la Escuela..."
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Descripcion", typeof(string));
+                dt.Columns.Add("kpEscuela_UAdeC", typeof(string));
+                dt.Rows.Add("Seleccione la Escuela...", ""); // Agregar el primer elemento
+
+                // Llenar el DataTable con los resultados de la consulta
+                while (reader.Read())
+                {
+                    dt.Rows.Add(reader["Descripcion"], reader["kpEscuela_UAdeC"]);
+                }
+
+                // Llena DDLEscuela con los datos del DataTable
+                ddlEscuelEnc.DataSource = dt;
+                ddlEscuelEnc.DataTextField = "Descripcion";
+                ddlEscuelEnc.DataValueField = "kpEscuela_UAdeC";
+                ddlEscuelEnc.DataBind();
+            }
+
+        }
+
+
+        protected void ddlNivelEnc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargaEscuelaEnc();
+        }
+        protected void ddlUnidadEnc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlNivelEnc.SelectedIndex = -1;
+        }
+
+     
+        protected void btnEncargado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string _idExpediente = getIdEmpleado(txtExpedienteEnc.Text);
+                if (_idExpediente != null || _idExpediente != "")
+                {
+                    string connectionString = GlobalConstants.SQL;
+                    string _correo = txtEmailEnc.Text.Trim();
+                    string _telefono = txtTelefonoEnc.Text.Trim();
+                    string _unidad = ddlUnidadEnc.SelectedValue;
+
+                    string _tipo = ddlUser.SelectedValue;
+                    string _escuela = ddlEscuelEnc.SelectedValue;
+
+                    string _nombre = txtNombreEnc.Text.Trim() + txtApePatEnc.Text.Trim() + txtApeMatEnc.Text.Trim();
+                    if (verificarExistente(_correo) == false)
+                    {
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            SqlTransaction transaction = connection.BeginTransaction();
+
+                            try
+                            {
+                                insertEncargado(_correo, _telefono, _tipo, _unidad, _idExpediente, _escuela, connection, transaction);
+
+                                transaction.Commit();
+                                pnlRegistrarEncargado.Visible = false;
+                                mensajeScriptExito("El usuario ha sido creado con éxito.");
+                                ddlUser.SelectedIndex = -1;
+                                LimpiarDatos();
+                            }
+                            catch (Exception ex)
+                            {
+                                // Si ocurre algún error, realizar un rollback de la transacción
+                                transaction.Rollback();
+
+                                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                                Response.Write("Error: " + ex.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMensajeErrorEnc.Text = "El correo ingresado ya se encuentra registrado.";
+                    }
+                }
+                else
+                {
+                    lblMensajeErrorEnc.Text = "Ha ocurrido un error al intentar guardar el registro, contecte al administrador";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                Response.Write("Error: " + ex.Message);
+            }
+        }
+
+        private void insertEncargado(string correo, string telefono, string tipo, string unidad, string expediente, string escuela, SqlConnection connection, SqlTransaction transaction)
+        {
+            ////////////////////////////////////////
+            string query = "INSERT INTO SM_USUARIO (sCorreo, sTelefono, kpTipoUsuario, kpUnidad, kmIdentificador, bAutorizado, kpEscuela) " +
+                "VALUES (@sCorreo, @sTelefono, @kpTipoUsuario, @kpUnidad, @kpEmpleado, 1, @kpEscuela);";
+
+            using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@sCorreo", correo);
+                cmd.Parameters.AddWithValue("@sTelefono", telefono);
+                cmd.Parameters.AddWithValue("@kpTipoUsuario", tipo);
+                cmd.Parameters.AddWithValue("@kpUnidad", unidad);
+                cmd.Parameters.AddWithValue("@kpEmpleado", expediente);
+                cmd.Parameters.AddWithValue("@kpEscuela", escuela);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        #endregion
+
+        #region DEPENDENCIAS
+        //Filtro  UNIDAD NIVEL ESCUELA
+        private void CargarUnidadDep()
+        {
+            // Define la conexión SQL y la consulta
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string queryString = "SELECT idUnidad, sCiudad FROM NP_UNIDAD WHERE idUnidad NOT IN (1) ";
+
+                // Crea un DataSet para almacenar los resultados de la consulta
+                DataSet ds3 = new DataSet();
+
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds3);
+                }
+                DataTable dt = ds3.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sCiudad"] = "Seleccione la Unidad...";
+                dt.Rows.InsertAt(newRow, 0);
+
+                // Asigna los resultados al DropDownList
+                ddlUnidadDep.DataSource = ds3;
+                ddlUnidadDep.DataTextField = "sCiudad"; // Utiliza el alias "Descripcion" como texto visible
+                ddlUnidadDep.DataValueField = "idUnidad";
+                ddlUnidadDep.DataBind();
+            }
+
+        }
+
+        private void CargarOrganismoDep()
+        {
+            // Define la conexión SQL y la consulta
+            string conString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string queryString = "select sClave, sDescripcion from SP_ORGANISMO";
+
+                // Crea un DataSet para almacenar los resultados de la consulta
+                DataSet ds3 = new DataSet();
+
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds3);
+                }
+                DataTable dt = ds3.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sDescripcion"] = "Seleccione el Organismo...";
+                dt.Rows.InsertAt(newRow, 0);
+
+                // Asigna los resultados al DropDownList
+                ddlOrganismoDep.DataSource = ds3;
+                ddlOrganismoDep.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
+                ddlOrganismoDep.DataValueField = "sClave";
+                ddlOrganismoDep.DataBind();
+            }
+
+        }
+
+
+        protected void btnDependencia_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ddlUnidadDep.SelectedValue == "" || ddlOrganismoDep.SelectedValue == "")
+                {
+                    lblMensajeErrorDep.Text = "Debe seleccionar Unidad y Organismo.";
+                    return;
+                }
+
+                string _idExpediente = getIdEmpleado(txtExpedienteEnc.Text);
+                if (_idExpediente != null || _idExpediente != "")
+                {
+                    string connectionString = GlobalConstants.SQL;
+
+                    string _password = SeguridadUtils.Encriptar(txtReContraDep.Text);
+                    string _correo = txtCorreoDep.Text.Trim();
+                    string _telefono = txtTelefonoDep.Text.Trim();
+                    string _unidad = ddlUnidadDep.SelectedValue;
+
+                    string _resp = txtResponsableDep.Text.Trim();
+                    string _respArea = txtAreaDep.Text.Trim();
+                    string _descrip = txtDependenciaDep.Text.Trim();
+                    string _domicilio = txtDomicilioDep.Text.Trim();
+
+                    string _tipo = ddlUser.SelectedValue;
+
+                    if (verificarExistente(_correo) == false)
+                    {
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            SqlTransaction transaction = connection.BeginTransaction();
+
+                            try
+                            {
+                                insertEnUsuarioDep(_password, _correo, _telefono, _tipo, _unidad, null, null, null, connection, transaction, _resp, _respArea, _descrip, _domicilio);
+
+                                transaction.Commit();
+                                pnlRegistrarEncargado.Visible = false;
+                                mensajeScriptExito("El usuario ha sido creado con éxito.");
+                                LimpiarDatos();
+                            }
+                            catch (Exception ex)
+                            {
+                                // Si ocurre algún error, realizar un rollback de la transacción
+                                transaction.Rollback();
+
+                                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                                Response.Write("Error: " + ex.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMensajeErrorDep.Text = "El correo ingresado ya se encuentra registrado.";
+                    }
+                }
+                else
+                {
+                    lblMensajeErrorDep.Text = "Ha ocurrido un error al intentar guardar el registro, contecte al administrador";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+                Response.Write("Error: " + ex.Message);
+            }
+        }
+
+        private void insertEnUsuarioDep(string password, string correo, string telefono, string tipo, string unidad, string expediente, string plan, string escuela, SqlConnection connection, SqlTransaction transaction, string responsable, string respArea, string descripcion, string domicilio)
+        {
+            ////////////////////////////////////////
+            string query = "INSERT INTO SM_USUARIO (sPassword, sCorreo, sTelefono, kpTipoUsuario, kpUnidad, kmIdentificador, bAutorizado, kpPlanEstudio, kpEscuela) " +
+                "VALUES (@sPassword, @sCorreo, @sTelefono, @kpTipoUsuario, @kpUnidad, @kpEmpleado, 0, @kpPlanEstudio, @kpEscuela);";
+
+            using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@sPassword", password);
+                cmd.Parameters.AddWithValue("@sCorreo", correo);
+                cmd.Parameters.AddWithValue("@sTelefono", telefono);
+                cmd.Parameters.AddWithValue("@kpTipoUsuario", tipo);
+                cmd.Parameters.AddWithValue("@kpUnidad", unidad);
+                cmd.Parameters.AddWithValue("@kpEmpleado", expediente);
+
+                cmd.Parameters.AddWithValue("@kpPlanEstudio", plan);
+                cmd.Parameters.AddWithValue("@kpEscuela", escuela);
+                cmd.ExecuteNonQuery();
+            }
+
+            ////////////////////////////////////////
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine(@"INSERT INTO SM_DEPENDENCIA_SERVICIO (idDependenicaServicio, kmUsuario, sAreaResponsable, sResponsable, sTelefono, kpUnidad, kpOrganismo, ");
+            sb.AppendLine(@"             sDescripcion, sDomicilio, bAutorizado, dFechaRegistroDep, bVigente, kmValido, kmAutorizo)");
+            sb.AppendLine(@"VALUES (scope_identity(), @sAreaResponsable, @sResponsable, @sTelefono, @kpUnidad, @kpOrganismo, ");
+            sb.AppendLine(@"             @sDescripcion, @sDomicilio, NULL, @dFechaRegistroDep, 1)");
+
+            string query2 = sb.ToString();
+
+            using (SqlCommand cmd = new SqlCommand(query2, connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@sAreaResponsable", respArea);
+                cmd.Parameters.AddWithValue("@sResponsable", responsable);
+                cmd.Parameters.AddWithValue("@sTelefono", telefono);
+                cmd.Parameters.AddWithValue("@kpUnidad", unidad);
+                cmd.Parameters.AddWithValue("@kpOrganismo", expediente);
+                cmd.Parameters.AddWithValue("@sDescripcion", descripcion);
+                cmd.Parameters.AddWithValue("@sDomicilio", plan);
+                cmd.Parameters.AddWithValue("@dFechaRegistroDep", DateTime.Now);
+                cmd.ExecuteNonQuery();
+            }
+
+
+        }
+        #endregion
+    }
+}

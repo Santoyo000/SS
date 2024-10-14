@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +6,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using OfficeOpenXml;
+using System.IO;
 
 namespace Servicio_Social
 {
@@ -13,9 +15,10 @@ namespace Servicio_Social
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // CÃ³digo que se ejecuta al iniciar la aplicaciÃ³n
+            // Código que se ejecuta al iniciar la aplicación
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+		    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
     }
 }

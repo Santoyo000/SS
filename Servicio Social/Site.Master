@@ -4,7 +4,7 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
@@ -13,10 +13,11 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <asp:ContentPlaceHolder ID="head" runat="server">
+</asp:ContentPlaceHolder>
 </head>
 <body>
     <form runat="server">
@@ -38,31 +39,42 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+        <contenttemplate>
+            <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li><a runat="server" href="~/">Home</a></li>
+        <li><a runat="server" href="~/About">About</a></li>
+        <li><a runat="server" href="~/Contact">Contact</a></li>
 
-       <%-- <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
-                    </ul>
-                </div>
+        <li id="mAdmin" runat="server" class="dropdown"  ClientIDMode="Static">
+            <a runat="server"  href="#" data-toggle="dropdown" 
+                class="dropdown-toggle"
+                >Auto Buttons Dropdown Test<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a runat="server" href="~/SiteAdmin/Messages">Manage Portal Email Messages</a></li>
+                <li><a runat="server" href="~/Staff/CurrentUsersS">Show Logged on users</a></li>
+                <li><a runat="server" href="~/SiteAdmin/OneMonth">Month Logon Summary</a></li>
+
+                <li><a runat="server" href="~/SiteAdmin/EditChoices">Change/Edit Issue tracker choices</a></li>
+                <li><a runat="server" href="~/SiteAdmin/SetUp">Developer site settings</a></li>
+                <li><a onclick="hasproof()">My Proofs - testing</a></li>
+                <li><a runat="server" href="~/SiteAdmin/Issues">Issues Tracker and to-do list</a></li>
+                <li><asp:LinkButton ID="LinkButton1" runat="server">LinkButton Test</asp:LinkButton></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+            <div class="container body-content">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                </asp:ContentPlaceHolder>
+                <hr />
+                <footer>
+                    <%-- <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>--%>
+                </footer>
             </div>
-        </nav>--%>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-               <%-- <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>--%>
-            </footer>
-        </div>
+        </contenttemplate>
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
