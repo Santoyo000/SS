@@ -5701,3 +5701,7 @@ C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.c
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio.D6EA6CFA.Up2Date
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.dll
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.pdb
+C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.AssemblyReference.cache
+C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.CoreCompileInputs.cache
+C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.dll
+C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.pdb

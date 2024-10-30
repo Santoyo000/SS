@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -136,6 +137,9 @@ namespace Servicio_Social
 
             // Guardar los datos en la base de datos
             GuardarDatosInforme(kmUserAlumno, kmProgramaAlumno, actividades, poblacionBeneficiada, metasResultados);
+
+            // Generar el reporte después de guardar
+            GenerarReporte(int.Parse(idProgramaAlumno));
         }
         private void GuardarDatosInforme(string kmUserAlumno,int kmProgramaAlumno, string actividades, string poblacionBeneficiada, string metasResultados)
         {
@@ -191,6 +195,25 @@ namespace Servicio_Social
 
             // Mostrar el modal de éxito
             ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "$('#ModalExitoso').modal('show');", true);
+        }
+
+        private void GenerarReporte(int idProgramaAlumno)
+        {
+            // Ruta del archivo .rpt de Crystal Reports
+            string reportPath = Server.MapPath("~/InformeFinalSS.rpt");
+
+            // Crear una instancia del reporte
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(reportPath);
+
+            // Pasar el parámetro al reporte
+            reporte.SetParameterValue("idProgramaAlumno", idProgramaAlumno);
+
+            // Enlazar el reporte con el visor de Crystal Reports
+            crvInformeEstudiante.ReportSource = reporte;
+
+            // Configurar las opciones de exportación si es necesario
+            crvInformeEstudiante.RefreshReport();
         }
 
     }
