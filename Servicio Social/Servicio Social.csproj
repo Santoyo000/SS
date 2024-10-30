@@ -661,12 +661,6 @@
     <Compile Include="InformeEstudiante.aspx.designer.cs">
       <DependentUpon>InformeEstudiante.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\InformeFinal.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InformeFinal.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Login.Master.cs">
       <DependentUpon>Login.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -951,10 +945,6 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reportes\InformeFinal.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InformeFinal.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\InformeFinalSS.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InformeFinalSS.cs</LastGenOutput>
