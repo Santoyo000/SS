@@ -156,7 +156,7 @@ namespace Servicio_Social
                                sMetas_Resul = @sMetas_Resul, 
                                dFecha_inicio = @dFecha_inicio, 
                                dFecha_fin = @dFecha_fin 
-                           WHERE kmUserAlumno = @kmUserAlumno AND kmProgramaAlumno = @kmProgramaAlumno";
+                           WHERE kmUserAlumno = @kmUserAlumno AND kmPrograma = @kmPrograma";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
