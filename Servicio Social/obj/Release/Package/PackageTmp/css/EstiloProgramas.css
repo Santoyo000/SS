@@ -1,0 +1,481 @@
+﻿/*-----------------------------------------------------------------------------------------------------*/
+/*------------------------------- TIPO DE LETRA -------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+/*.visible {
+    display: block !important;
+}
+
+.oculto {
+    display: none !important;
+}*/
+
+.form-group.inline-group {
+    display: flex;
+    flex-direction: column; /* Alinear los elementos verticalmente */
+    align-items: flex-start; /* Alinear los elementos a la izquierda */
+}
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.textbox-estilo {
+    box-shadow: inset #abacaf 0 0 0 0px; /* Reducido el tamaño de la sombra */
+    border: 1px solid transparent; /* Grosor del borde reducido */
+    background: rgba(0, 0, 0, 0);
+    width: 120%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 12px;
+    font-weight: 400;
+    height: 50px; /* Ajuste de la altura */
+    transition: all .2s ease;
+}
+
+    .textbox-estilo:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+    }
+
+    .textbox-estilo:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+    }
+.textbox-estilo2 {
+    box-shadow: inset #abacaf 0 0 0 0px; /* Reducido el tamaño de la sombra */
+    border: 1px solid transparent; /* Grosor del borde reducido */
+    background: rgba(0, 0, 0, 0);
+    width: 120%;
+    position: relative;
+    border-radius: 3px;
+    padding: 9px 12px;
+    line-height: 1.4;
+    color: rgb(0, 0, 0);
+    font-size: 12px;
+    font-weight: 400;
+    height: 70px; /* Ajuste de la altura */
+    transition: all .2s ease;
+}
+
+    .textbox-estilo2:hover {
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+    }
+
+    .textbox-estilo2:focus {
+        background: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA 1 CELDAS -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario4 {
+    width: 70%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+    font-size: 12px; /* Cambiar el tamaño de la letra a 14px */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario4 td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        /* width: 50%; Establece que cada columna ocupe el 50% del ancho total de la tabla */
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario4 .form-group {
+        margin-bottom: 10px; /* Agrega espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario4 label {
+        display: block; /* Hace que las etiquetas sean bloques */
+        margin-bottom: 5px; /* Agrega espacio entre las etiquetas */
+    }
+
+    .tabla-formulario4 input[type="text"],
+    .tabla-formulario4 input[type="password"],
+    .tabla-formulario4 select,
+    .tabla-formulario4 textarea {
+        width: calc(100% - 24px); /* Calcula el ancho del campo de entrada restando el padding */
+        padding: 12px 12px; /* Ajusta el padding */
+        border: 2px solid #abacaf; /* Añade un borde */
+        border-radius: 3px; /* Agrega borde redondeado */
+        line-height: 1.4;
+        color: rgb(0, 0, 0);
+        font-size: 16px;
+        font-weight: 400;
+        transition: all .2s ease;
+        box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+        font-size: 14px; /* Cambiar el tamaño de la letra a 14px */
+    }
+
+    .tabla-formulario4 select {
+        appearance: none; /* Quita el estilo nativo del elemento */
+        -webkit-appearance: none; /* Para navegadores basados en WebKit */
+        -moz-appearance: none; /* Para navegadores basados en Gecko */
+    }
+
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA 2 CELDAS -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario {
+    width: 70%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+     font-size: 12px; /* Cambiar el tamaño de la letra a 14px */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        width: 50%; /* Establece que cada columna ocupe el 50% del ancho total de la tabla */
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario .form-group {
+        margin-bottom: 10px; /* Agrega espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario label {
+        display: block; /* Hace que las etiquetas sean bloques */
+        margin-bottom: 5px; /* Agrega espacio entre las etiquetas */
+    }
+
+    .tabla-formulario input[type="text"],
+    .tabla-formulario input[type="password"],
+    .tabla-formulario select,
+    .tabla-formulario textarea {
+        width: calc(100% - 24px); /* Calcula el ancho del campo de entrada restando el padding */
+        padding: 12px 12px; /* Ajusta el padding */
+        border: 2px solid #abacaf; /* Añade un borde */
+        border-radius: 3px; /* Agrega borde redondeado */
+        line-height: 1.4;
+        color: rgb(0, 0, 0);
+        font-size: 16px;
+        font-weight: 400;
+        transition: all .2s ease;
+        box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+        font-size: 14px; /* Cambiar el tamaño de la letra a 14px */
+    }
+
+    .tabla-formulario select {
+        appearance: none; /* Quita el estilo nativo del elemento */
+        -webkit-appearance: none; /* Para navegadores basados en WebKit */
+        -moz-appearance: none; /* Para navegadores basados en Gecko */
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*------------------------------- ESTILO RADIOBUTTON --------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.opcion-radio {
+    display: inline-block;
+    margin-right: 18px;
+}
+
+    .opcion-radio input {
+        margin-right: 5px;
+    }
+
+        .opcion-radio input[type=radio] {
+            position: absolute;
+            opacity: 0;
+        }
+
+            .opcion-radio input[type=radio] + label:before {
+                content: '';
+                background: #F4F5F8;
+                border-radius: 100%;
+                border: 1px solid #a6aec6;
+                display: inline-block;
+                width: 1.4em;
+                height: 1.4em;
+                position: relative;
+                top: -.2em;
+                margin-right: .5em;
+                vertical-align: top;
+                cursor: pointer;
+                text-align: center;
+                -webkit-transition: all 250ms ease;
+                transition: all 250ms ease;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .opcion-radio input[type=radio]:checked + label:before {
+                background-color: #8879FF;
+                box-shadow: inset 0 0 0 4px #F4F5F8;
+            }
+
+    .opcion-radio label {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+    }
+
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO DropDownList FORMULARIO -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+.DropDownList-estilo {
+    width: 100%; /* Ancho completo */
+    height: 45px;
+}
+
+    .DropDownList-estilo:hover {
+        border-color: #1de9b6; /* Cambia el color del borde al pasar el mouse */
+    }
+
+    .DropDownList-estilo:focus {
+        border-color: #1de9b6; /* Cambia el color del borde al enfocar */
+        background: #fff;
+        outline: 0;
+    }
+
+.DropDownList-con-fondo-gris {
+    background-color: #f2f2f2; /* Color de fondo gris */
+}
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------- ESTILO TEXTBOX FORMULARIO -----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+
+/*.textbox-estilo {
+    width: 100%;*/ /* Ancho completo */
+    /*height: 60px;
+}
+
+    .textbox-estilo:hover {
+        border-color: #1de9b6;*/ /* Cambia el color del borde al pasar el mouse */
+    /*}
+
+    .textbox-estilo:focus {
+        border-color: #1de9b6;*/ /* Cambia el color del borde al enfocar */
+        /*background: #fff;
+        outline: 0;
+    }*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA 4 CELDAS -------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario2 {
+    width: 70%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario2 td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        width: 25%; /*  width: 33.33%; Establece que cada columna ocupe el 33.33% del ancho total de la tabla SEPARA LAS COLUMNAS EN 3*/
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario2 .form-group {
+        margin-bottom: 10px; /* Agrega espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario2 label {
+        display: block; /* Hace que las etiquetas sean bloques */
+        margin-bottom: 5px; /* Agrega espacio entre las etiquetas */
+    }
+
+    .tabla-formulario2 input[type="text"],
+    .tabla-formulario2 input[type="password"],
+    .tabla-formulario2 select,
+    .tabla-formulario2 textarea {
+        width: calc(100% - 24px); /* Calcula el ancho del campo de entrada restando el padding */
+        padding: 12px 12px; /* Ajusta el padding */
+        border: 2px solid #abacaf; /* Añade un borde */
+        border-radius: 3px; /* Agrega borde redondeado */
+        line-height: 1.4;
+        color: rgb(0, 0, 0);
+        font-size: 12px;
+        font-weight: 400;
+        transition: all .2s ease;
+        box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+        font-size: 14px; /* Cambiar el tamaño de la letra a 14px */
+    }
+
+    .tabla-formulario2 select {
+        appearance: none; /* Quita el estilo nativo del elemento */
+        -webkit-appearance: none; /* Para navegadores basados en WebKit */
+        -moz-appearance: none; /* Para navegadores basados en Gecko */
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/* ------------------------------------- ESTILOS DE TABLA 3 CELDAS ------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+/* Estilos específicos para la tabla del formulario */
+.tabla-formulario3 {
+    width: 70%; /* Ajusta el ancho de la tabla */
+    margin: 0 auto; /* Centra la tabla en la página */
+    border-collapse: separate; /* Separa los bordes de las celdas */
+    border-spacing: 5px; /* Espacio entre las celdas */
+}
+
+    /* Estilos para las celdas dentro de la tabla del formulario */
+    .tabla-formulario3 td {
+        padding: 10px; /* Añade espacio interno a las celdas */
+        vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        width: 33.33%; /*  width: 33.33%; Establece que cada columna ocupe el 33.33% del ancho total de la tabla SEPARA LAS COLUMNAS EN 3*/
+    }
+
+    /* Estilos específicos para los elementos dentro de las celdas */
+    .tabla-formulario3 .form-group {
+        margin-bottom: 10px; /* Agrega espacio entre grupos de formulario */
+    }
+
+    .tabla-formulario3 label {
+        display: block; /* Hace que las etiquetas sean bloques */
+        margin-bottom: 5px; /* Agrega espacio entre las etiquetas */
+    }
+
+    .tabla-formulario3 input[type="text"],
+    .tabla-formulario3 input[type="password"],
+    .tabla-formulario3 select,
+    .tabla-formulario3 textarea {
+        width: calc(100% - 24px); /* Calcula el ancho del campo de entrada restando el padding */
+        padding: 12px 12px; /* Ajusta el padding */
+        border: 2px solid #abacaf; /* Añade un borde */
+        border-radius: 3px; /* Agrega borde redondeado */
+        line-height: 1.4;
+        color: rgb(0, 0, 0);
+        font-size: 12px;
+        font-weight: 400;
+        transition: all .2s ease;
+        box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+        font-size: 14px; /* Cambiar el tamaño de la letra a 14px */
+    }
+
+    .tabla-formulario3 select {
+        appearance: none; /* Quita el estilo nativo del elemento */
+        -webkit-appearance: none; /* Para navegadores basados en WebKit */
+        -moz-appearance: none; /* Para navegadores basados en Gecko */
+    }
+
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------------- ESTILO BOTÓN INGRESAR ---------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.containerbtnIniciar {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    margin: 0; /* Eliminar el margen predeterminado del contenedor */
+}
+
+.miBoton {
+    background: #1AAB8A;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+    .miBoton:hover {
+        background: #fff;
+        color: #1AAB8A;
+    }
+
+    .miBoton:before, .miBoton:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #1AAB8A;
+        transition: 400ms ease all;
+    }
+
+    .miBoton:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    .miBoton:hover:before, .miBoton:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*----------------------------------------- ESTILO GRIDVIEW -------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.gridview-estilo {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .gridview-estilo th, .gridview-estilo td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .gridview-estilo th {
+        background-color: #2e5790; /*#f2f2f2;*/
+        font-weight: bold;
+        color: white;
+    }
+/*-----------------------------------------------------------------------------------------------------*/
+/*--------------------------------------- ESTILO BOTON DE ELIMINAR ------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------*/
+.miBoton2 {
+    background: #FF5733; /* Cambia el color de fondo a rojo */
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+    .miBoton2:hover {
+        background: #fff;
+        color: #FF5733; /* Cambia el color del texto a rojo al pasar el mouse */
+    }
+
+    .miBoton2:before, .miBoton:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #FF5733; /* Cambia el color de las líneas a rojo */
+        transition: 400ms ease all;
+    }
+
+    .miBoton2:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    .miBoton2:hover:before, .miBoton:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.web>
+    <pages controlRenderingCompatibilityVersion="4.0">
+      <controls>
+        <add tagPrefix="map" namespace="GoogleMaps" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Markers" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Directions" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Overlays" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Polylines" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Drawing" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+        <add tagPrefix="map" namespace="GoogleMaps.Visualization" assembly="GoogleMaps" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix,namespace)"/>
+      </controls>
+    </pages>
+  </system.web>
+</configuration>

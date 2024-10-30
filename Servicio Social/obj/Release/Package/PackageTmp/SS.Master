@@ -1,0 +1,338 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SS.master.cs" Inherits="Servicio_Social.SS" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>UADEC Servicio Social</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <%--    <link rel="stylesheet" href="templatemo.css">
+    <link rel="stylesheet" href="custom.css">--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<%--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/Estilos.css" />
+    <link rel="stylesheet" type="text/css" href="css/EstiloProgramas.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logoUAdeC.png" />
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+        .navbar-dark {
+            background-color: #003366; /* Azul oscuro */
+        }
+
+            .navbar-dark .navbar-brand,
+            .navbar-dark .nav-link {
+                color: white;
+            }
+
+        .logout-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .logout-icon i {
+                font-size: 1.5rem;
+                color: white;
+            }
+
+            .logout-icon span {
+                font-size: 0.75rem;
+                color: white;
+            }
+
+        .custom-navbar {
+            height: 40px; /* Ajusta esta altura según tus necesidades */
+            line-height: 40px; /* Alinea el texto verticalmente */
+            font-size: 14px; /* Ajusta el tamaño de la fuente si es necesario */
+            padding: 0;
+        }
+
+            .custom-navbar .navbar-text {
+                padding-top: 0;
+                padding-bottom: 0;
+                font-size: 11px;
+                color: white;
+            }
+
+        /* Overlay para cubrir toda la pantalla */
+        #overlay {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 248, 248, 0.9); /* Color con opacidad */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center; /* Centra el texto debajo de la imagen */
+
+        }
+
+        /* Estilo para la imagen de carga */
+        #imgWaitIcon {
+            display: block;
+            width: 80%; /* Ajusta automáticamente el ancho */
+            height: auto; /* Ajusta automáticamente la altura */
+        }
+
+        /* Estilo para el texto */
+        #loadingText {
+            margin-top: 10px; /* Espacio entre la imagen y el texto */
+            font-size: 16px; /* Tamaño de fuente */
+            color: #000; /* Color del texto */
+        }
+
+        /*$(function(){
+            $('[data-toggle="tooltip"]').tooltip()
+            });*/
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-dark shadow">
+            <div class="container">
+                <a class="navbar-brand" href="Home.aspx">
+                    <img src="assets/img/logoUAdeC.png" alt="Logo" style="max-width: 140px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <%--Menú dependencias--%>
+                        <li class="nav-item" id="li_dependenciahome" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="panelDependencia.aspx" data-toggle="tooltip" title="Inicio">
+                                <i class="fas fa-home"></i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_dependenciaPerfil" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="PerfilDependencia.aspx" data-toggle="tooltip" title="Perfil">
+                                <i class="far fa-address-card"></i>
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_dependenciaProgramas" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="Programas.aspx" data-toggle="tooltip" title="Programas">
+                                <i class="fas fa-folder-minus"></i>
+                                <span>Registrar</span> <span>Programas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_dependenciaListadoProgramas" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="ProgramasDependencias.aspx" data-toggle="tooltip" title="Programas">
+                                <i class="far fa-list-alt"></i>
+                                <span>Programas</span> <span>Registrados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_dependenciaAlumnos" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="#" data-toggle="tooltip" title="Alumnos Registrados">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>Alumnos</span><span>Registrados</span>
+                            </a>
+                        </li>
+                        <%--Menú Administrador--%>
+                        <li class="nav-item" id="li_administradorHome" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="PanelAdministrador.aspx" data-toggle="tooltip" title="Inicio">
+                                <i class="fas fa-home"></i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_administradorUsuarios" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="UsuariosRegistrados.aspx" data-toggle="tooltip" title="Control Usuarios">
+                                <i class="fas fa-users-gear"></i>
+                                <span>Gestión</span><span>Usuarios</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_administradorDependencias" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="DependenciasRegistradas.aspx" data-toggle="tooltip" title="Dependencias Registradas">
+                                <i class="fas fa-building"></i>
+                                <span>Dependencias</span><span>Registradas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_1istadoP" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="ProgramasRegistrados.aspx" data-toggle="tooltip" title="Programas">
+                                <i class="far fa-list-alt"></i>
+                                <span>Programas</span> <span>Registrados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_alumnosregisitradosadmin" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="AlumnosRegistrados.aspx" data-toggle="tooltip" title="Alumnos Registrados">
+                                <i class="fa fa-id-badge"></i>
+                                <span>Alumnos</span> <span>Registrados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_programasAlumnoadmin" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="AlumnosPostulados.aspx" data-toggle="tooltip" title="Alumnos Programas">
+                                <i class="fa fa-user-group "></i>
+                                <span>Alumnos</span> <span>Programas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_administradorReportes" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="#" data-toggle="tooltip" title="Reportes">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Reportes</span>
+                            </a>
+                        </li>
+                        <%--Menú Responsable Unidad--%>
+                         <li class="nav-item" id="li_RespHome" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="panelResponsables.aspx" data-toggle="tooltip" title="Inicio">
+                                 <i class="fas fa-home"></i>
+                                 <span>Inicio</span>
+                             </a>
+                         </li>
+                         <li class="nav-item" id="li1DependenciasRegistradas" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="DependenciasRegistradas.aspx" data-toggle="tooltip" title="Validar Dependencias">
+                                 <i class="fas fa-check-circle"></i>
+                                 <span>Validar</span><span>Dependencias</span>
+                             </a>
+                         </li>
+                        <li class="nav-item" id="li_ProgramasRegistrados" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="ProgramasRegistrados.aspx" data-toggle="tooltip" title="Programas Registrados">
+                                <i class="fas fa-list-alt"></i>
+                                <span>Programas</span><span>Registrados</span>
+                            </a>
+                        </li>
+                         <li class="nav-item" id="li_AlumnosRegistrados" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="AlumnosRegistrados.aspx" data-toggle="tooltip" title="Alumnos Registrados">
+                                 <i class="fas fa-id-badge"></i>
+                                 <span>Alumnos</span><span>Registrados</span>
+                             </a>
+                         </li> 
+                        <li class="nav-item" id="li_RegistroEncargadoEscuela" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="RegistroEncargadoEscuela.aspx" data-toggle="tooltip" title="Crear Usuario">
+                                 <i class="fas fa-user-plus"></i>
+                                 <span>Crear </span><span>Usuario</span>
+                             </a>
+                         </li>
+                         <li class="nav-item" id="li_AlumnosPostulados" runat="server" visible="false">
+                              <a class="nav-link logout-icon" href="AlumnosPostulados.aspx" data-toggle="tooltip" title="Alumnos asignados en programas">
+                                  <i class="fas fa-user-group"></i>
+                                  <span>Alumnos </span><span>Programas</span>
+                              </a>
+                          </li>
+                        <%-- Estudiantes--%>
+                        <li class="nav-item" id="li_estudianteHome" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="PanelEstudiante.aspx" data-toggle="tooltip" title="Home">
+                                <i class="fas fa-home"></i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                         <li class="nav-item" id="li_estudianteReglamento" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="Reglamento.aspx" data-toggle="tooltip" title="Reglamento">
+                                 <i class="fas fa-book-open "></i>
+                                 <span>Reglamento</span>
+                             </a>
+                         </li>
+                        <li class="nav-item" id="li_estudianteProgramas" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="SeleccionarPrograma.aspx" data-toggle="tooltip" title="Programas">
+                                <i class="fas fa-folder-minus"></i>
+                                <span>Seleccionar</span><span>Programa</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_estudiantesProgSel" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="ProgramasAlumno.aspx" data-toggle="tooltip" title="Programas Seleccionados">
+                                <i class="far fa-list-alt"></i>
+                                <span>Programas</span><span>Seleccionados</span>
+                            </a>
+                        </li>
+                         <li class="nav-item" id="li_estudiantePerfil" runat="server" visible="false">
+                             <a class="nav-link logout-icon" href="PerfilEstudiante.aspx" data-toggle="tooltip" title="Perfil">
+                                 <i class="far fa-address-card"></i>
+                                 <span>Perfil</span>
+                             </a>
+                         </li>
+                        <%-- Encargado Escuela--%>
+                        <li class="nav-item" id="li_EncargHome" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="panelEncargadoEscuelaspx.aspx" data-toggle="tooltip" title="Inicio">
+                                <i class="fas fa-home"></i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_EncarEscPerfil" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="#" data-toggle="tooltip" title="Perfil">
+                                <i class="far fa-address-card"></i>
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li_EncargEscPrograma" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="ProgramasRegistrados.aspx" data-toggle="tooltip" title="Programas">
+                                <i class="far fa-list-alt"></i>
+                                <span>Programas</span> <span>Registrados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" id="li1_EncargEscAlumnos" runat="server" visible="false">
+                            <a class="nav-link logout-icon" href="AlumnosRegistrados.aspx" data-toggle="tooltip" title="Alumnos Registrados">
+                                <i class="fas  fa-id-badge"></i>
+                                <span>Alumnos</span><span>Registrados</span>
+                            </a>
+                        </li>
+                         <li class="nav-item" id="li_EncargAlumnosPost" runat="server" visible="false">
+                         <a class="nav-link logout-icon" href="AlumnosPostulados.aspx" data-toggle="tooltip" title="Alumnos Programas">
+                             <i class="fas  fa-user-group"></i>
+                             <span>Alumnos</span><span>Programas</span>
+                         </a>
+                     </li>
+                        <%-- Cerrar Sesion--%>
+                        <li class="nav-item">
+                            <a class="nav-link logout-icon" href="logout.aspx" data-toggle="tooltip" title="Cerrar Sesión">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Cerrar</span><span>Sesión</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow custom-navbar">
+            <div class="container justify-content-end">
+                <span class="navbar-text">
+                    <% 
+                        if (Session["alumno"] != null || Session["empleado"] != null)
+                        {
+                            if (Session["alumno"] != null)
+                            {
+                                Response.Write("Bienvenido, " + Session["alumno"].ToString() + ": " + Session["plan"].ToString());
+
+                                if ((int)Convert.ToInt32(Session["tipoUsuario"].ToString().Split('|')[1]) > 1 && !string.IsNullOrEmpty(Session["plan"].ToString()))
+                                {
+                                    lbtCambiarCarrera.Visible = true;
+                                }
+                            }
+                            if (Session["empleado"] != null)
+                            {
+                                Response.Write("Bienvenido, " + Session["empleado"].ToString());
+                            }
+                        }
+                    %>
+                    <span style="margin-left: 3px;">
+                        <asp:LinkButton ID="lbtCambiarCarrera" runat="server" Visible="false" OnClick="lbtCambiarCarrera_Click" Style="font-size: 11px !important;">Cambiar</asp:LinkButton>
+                    </span>
+
+
+                </span>
+            </div>
+        </nav>
+        <div>
+            <asp:ContentPlaceHolder ID="titulo" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

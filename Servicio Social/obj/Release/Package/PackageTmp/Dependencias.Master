@@ -1,0 +1,141 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Dependencias.master.cs" Inherits="Servicio_Social.Dependencias" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>UADEC Trabajo Social</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="templatemo.css">
+    <link rel="stylesheet" href="custom.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+     <style type="text/css" media="screen">
+         
+     /*#overlay {
+         position: fixed;
+         z-index: 99;
+         top: 0px;
+         left: 0px;
+         background-color: #f8f8f8;
+         width: 100%;
+         height: 100%;
+         filter: Alpha(Opacity=90);
+         opacity: 0.9;*/
+         /*-moz-opacity: 0.9;*/
+     /*}
+
+     #theprogress {
+         background-color: #fff;
+         border: 1px solid #ccc;
+         padding: 10px;
+         width: 200px;
+         height: 100px;
+         line-height: 30px;
+         text-align: center;
+         filter: Alpha(Opacity=100);
+         opacity: 1;*/
+         /*-moz-opacity: 1;*/
+     /*}
+
+     #modalprogress {
+         position: absolute;
+         top: 10%;
+         left: 50%;
+         margin: -11px 0 0 -150px;
+         color: #990000;
+         font-weight: bold;
+         font-size: 14px;
+     }
+     .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+     }*/
+ </style>
+    <link rel="stylesheet" type="text/css" href="css/Estilos.css"/>
+<%--    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"/>--%>
+    <link rel="shortcut icon" type="image/x-icon" href="Imagen/icono_uadec.png" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body runat="server">
+    <!-- Header -->
+
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-light shadow">
+            <div class="container d-flex justify-content-between align-items-center">
+
+                <a class="navbar-brand text-success logo h1 align-self-center" href="Home.aspx">
+                    <img src="Image/UAdeC-blanco.png" alt="" />
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                    <div class="flex-fill">
+                        <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="Home.aspx">Servicio Social</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="PanelEstudiante.aspx">Estudiantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Dependencias.aspx">Dependencias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="LoginAdministrador.aspx">Administrador</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="navbar align-self-center d-flex">
+                        <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                                <div class="input-group-text">
+                                    <i class="fa fa-fw fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <asp:LinkButton runat="server" ID="lkbLogout" class="fa fa-sign-out text-right" Style="font-size: x-large" OnClick="lkbLogout_Click" Visible="false">Cerrar Sesión</asp:LinkButton>
+
+            </div>
+        </nav>
+        <asp:ContentPlaceHolder ID="titulo" runat="server"></asp:ContentPlaceHolder>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+</body>
+<%--<footer class="footer" style="position:fixed">
+    <div style="background-color:#EDB621">
+        <div class="row">
+            <div class="col-md-12 text-center" >
+                <h4 style="font-size: x-larger;margin:10px auto 10px auto">"EN EL BIEN FINCAMOS EL SABER" </h4>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3" style="background-color:#2f2f2f; color:#fff; height:10px"  >
+            <div style="vertical-align:central; margin-top:10px">
+                ©202 Copyright:<a href="http://www.uadec.mx/" target="_blank" >&nbsp UAdeC &nbsp</a>All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>--%>
+</html>
