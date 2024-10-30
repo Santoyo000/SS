@@ -15,13 +15,13 @@ namespace Servicio_Social
     {
 
         /// <summary>
-        /// Control lbnDependencias.
+        /// Control lbnAlumnosIncorp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbnDependencias;
+        protected global::System.Web.UI.WebControls.LinkButton lbnAlumnosIncorp;
 
         /// <summary>
         /// Control lbnResponsable.
@@ -40,6 +40,15 @@ namespace Servicio_Social
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbnEncargadoEsc;
+
+        /// <summary>
+        /// Control lbnDependencias.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbnDependencias;
 
         /// <summary>
         /// Control lbnUsuarios.
@@ -238,6 +247,69 @@ namespace Servicio_Social
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnNextEncarg;
+
+        /// <summary>
+        /// Control pnlAlumnosIncorp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAlumnosIncorp;
+
+        /// <summary>
+        /// Control txtBuscarAlumInc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarAlumInc;
+
+        /// <summary>
+        /// Control btnBuscarAlumInc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarAlumInc;
+
+        /// <summary>
+        /// Control RepeaterAlumnosIncorp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterAlumnosIncorp;
+
+        /// <summary>
+        /// Control btnPrevAluInc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPrevAluInc;
+
+        /// <summary>
+        /// Control lblPageAluInc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPageAluInc;
+
+        /// <summary>
+        /// Control btnNextAluInc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNextAluInc;
 
         /// <summary>
         /// Control pnlUsuarios.

@@ -45,16 +45,17 @@
     </asp:UpdateProgress>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <asp:Panel ID="pnlCerrado" runat="server" Visible="false">
-                <div class="container">
-                    <div style="text-align: center">
-                        <div class="form-group">
-                            <br />
-                            <h2 class="text-gray-900 mb-4" style="color: #2e5790">Sitio en mantenimiento, en breve estará disponible para selección de Programas</h2>
-                            <a href="PanelEstudiante.aspx" cssclass="btn btn-primary">Volver a la página principal</a>
-                        </div>
-                    </div>
-            </asp:Panel>
+              <asp:Panel ID="PanelCerrado" runat="server" Visible="false">
+                  <div style="text-align: center">
+                <div class="form-group">
+                    <br />
+                    <h3 id="mensajeCierre" class="text-gray-900 mb-4" style="color: #2e5790">
+                     <asp:Label ID="lblMensajeProgramas" runat="server"></asp:Label>
+                    </h3>
+                     <a href="Home.aspx" cssclass="btn btn-primary">Volver a la página principal</a>
+                </div>
+            </div>
+              </asp:Panel>
             <asp:Panel ID="PanelProgramas" runat="server" Visible="true">
                 <div style="text-align: center">
                     <div class="form-group">

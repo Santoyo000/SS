@@ -43,10 +43,46 @@ namespace Servicio_Social
             if (!IsPostBack)
             {
                 CargarDatos(0, "");
+                CargarConfiguracion();
                 //cargarPlan();
             }
         }
+        private void CargarConfiguracion()
+        {
+            string connectionString = GlobalConstants.SQL; // Asegúrate de reemplazar esto con tu cadena de conexión real
 
+            // Query para obtener la configuración específica para Registro de Dependencias
+            string query = "SELECT bActivo, dFechaInicio, dFechaFin, sMensaje FROM SP_CONFIGURACION_PAG_SS WHERE sClave = '4'";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            bool activo = Convert.ToBoolean(reader["bActivo"]);
+                            DateTime fechaInicio = Convert.ToDateTime(reader["dFechaInicio"]);
+                            DateTime fechaFin = Convert.ToDateTime(reader["dFechaFin"]);
+                            DateTime hoy = DateTime.Now;
+                            string mensaje = reader["sMensaje"].ToString(); // Obtener el mensaje desde la BD
+
+                            // Determinar si la fecha actual está dentro del rango permitido
+                            bool dentroDelRango = hoy >= fechaInicio && hoy <= fechaFin;
+
+                            // Configurar la visibilidad de los paneles de acuerdo a la configuración
+                            PanelProgramas.Visible = dentroDelRango;
+                            PanelCerrado.Visible = !dentroDelRango;
+                            // Asignar el mensaje al control h3 del frontend
+                            lblMensajeProgramas.Text = mensaje;
+                        }
+                    }
+                }
+            }
+        }
         #region Botones Paginado
         private int CurrentPage
         {

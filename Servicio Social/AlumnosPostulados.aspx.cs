@@ -24,10 +24,7 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["idUser"] == null)
-            {
-                Response.Redirect("Home.aspx");
-            }
+            
 
             if (!IsPostBack)
             {

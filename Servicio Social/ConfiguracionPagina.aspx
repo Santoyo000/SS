@@ -248,6 +248,9 @@
             <li class="nav-item">
                 <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Registro de Alumnos</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="alumnosprogramas-tab" data-toggle="tab" href="#alumnosprogramas" role="tab" aria-controls="alumnosprogramas" aria-selected="false">Registro de Alumnos a Programas</a>
+            </li>
         </ul>
     </div>
          <!-- Campo oculto para almacenar la pestaña activa -->
@@ -334,7 +337,7 @@
                </div>
            </div>
  <!-- Pestaña 4: Registro de Alumnos -->
-           <div class="tab-pane fade" id="alumnos" role="tabpanel" aria-labelledby="Alumnos-tab">
+           <div class="tab-pane fade" id="alumnos" role="tabpanel" aria-labelledby="alumnos-tab">
                <div class="card card-custom mt-4 p-4">
                 <div class="form-group">
                     <label for="txtMensaje3">Mensaje de cierre a mostrar en registro de Alumnos:</label>
@@ -353,6 +356,28 @@
                </div>
                    <asp:Button ID="btnGuardarAlu" runat="server" Text="Guardar Configuración" OnClick="btnGuardarAlu_Click" CssClass="btn btn-primary btn-block" OnClientClick="return validarFechas3();" />
                    <asp:Label ID="lblMessageAlu" runat="server" CssClass="mt-3 text-success" />
+               </div>
+           </div>
+ <!-- Pestaña 5: Registro de Alumnos a Programas -->
+           <div class="tab-pane fade" id="alumnosprogramas" role="tabpanel" aria-labelledby="alumnosprogramas-tab">
+               <div class="card card-custom mt-4 p-4">
+                <div class="form-group">
+                    <label for="txtMensaje4">Mensaje de cierre a mostrar en registro de Alumnos a Programas:</label>
+                     <asp:TextBox ID="txtMensaje4" runat="server"  CssClass="form-control" style="height: 50px; padding: 8px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc;" Enabled="true"></asp:TextBox>
+                </div>
+                 <div class="date-group">
+                   <div class="form-group">
+                       <label for="txtFechaInicioAluProg">Fecha de Inicio:</label>
+                       <asp:TextBox ID="txtFechaInicioAluProg" runat="server" CssClass="form-control" TextMode="Date" OnClick="abrirCalendario(this);" />
+                   </div>
+
+                   <div class="form-group">
+                       <label for="txtFechaFinAluProg">Fecha de Fin:</label>
+                       <asp:TextBox ID="txtFechaFinAluProg" runat="server" CssClass="form-control" TextMode="Date" OnClick="abrirCalendario(this);" />
+                   </div>
+               </div>
+                   <asp:Button ID="btnGuardarAluPro" runat="server" Text="Guardar Configuración" OnClick="btnGuardarAluPro_Click" CssClass="btn btn-primary btn-block" OnClientClick="return validarFechas4();" />
+                   <asp:Label ID="lblMessageAluPro" runat="server" CssClass="mt-3 text-success" />
                </div>
            </div>
        </div>

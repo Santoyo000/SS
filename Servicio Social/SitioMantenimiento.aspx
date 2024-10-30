@@ -114,9 +114,9 @@
                 Estamos realizando mejoras en nuestro sitio web
             </div>
             <div class="maintenance-description">
-                Estamos trabajando para ofrecerte una mejor experiencia. Favor de consultar a partir del martes 17 de Noviembre a las 08:00 a.m.
+                Estamos trabajando para ofrecerte una mejor experiencia. Favor de consultar a partir del martes 29 de Octubre a las 08:00 a.m.
             </div>
-             <img src="/image/mantenimiento.jpeg" alt="Mantenimiento">
+             <img src="/Image/mantenimiento.jpeg" alt="Mantenimiento">
            
            
         </div>

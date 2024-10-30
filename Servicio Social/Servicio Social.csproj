@@ -461,6 +461,7 @@
     <Content Include="Image\UADEC_AZUL.png" />
     <Content Include="Image\UADEC_AZUL2.png" />
     <Content Include="Image\UADEC_BLANCO.png" />
+    <Content Include="InformeEstudiante.aspx" />
     <Content Include="LoginDependencia.aspx" />
     <Content Include="css\Estilos.css" />
     <Content Include="DependenciasRegistradas.aspx" />
@@ -652,6 +653,19 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InformeEstudiante.aspx.cs">
+      <DependentUpon>InformeEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeEstudiante.aspx.designer.cs">
+      <DependentUpon>InformeEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeFinal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformeFinal.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Login.Master.cs">
       <DependentUpon>Login.Master</DependentUpon>
@@ -848,6 +862,12 @@
     <Compile Include="Reglamento.aspx.designer.cs">
       <DependentUpon>Reglamento.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\InformeFinalSS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformeFinalSS.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SeleccionarPrograma.aspx.cs">
       <DependentUpon>SeleccionarPrograma.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -914,7 +934,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -930,6 +949,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\InformeFinal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InformeFinal.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeFinalSS.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InformeFinalSS.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

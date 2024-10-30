@@ -42,13 +42,22 @@ namespace Servicio_Social
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Control pnlCerrado.
+        /// Control PanelCerrado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCerrado;
+        protected global::System.Web.UI.WebControls.Panel PanelCerrado;
+
+        /// <summary>
+        /// Control lblMensajeProgramas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeProgramas;
 
         /// <summary>
         /// Control PanelProgramas.

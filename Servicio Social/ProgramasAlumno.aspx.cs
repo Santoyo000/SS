@@ -230,6 +230,12 @@ namespace Servicio_Social
 
 
         #region Botones
+        protected void btnLiberar_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)(sender);
+            string idPrograma = btn.CommandArgument;
+            Response.Redirect("InformeEstudiante.aspx?idProgramaAlumno=" + idPrograma);
+        }
         protected void btnAnular_Click(object sender, EventArgs e)
         {
             LinkButton lnkUpdate = (LinkButton)sender;

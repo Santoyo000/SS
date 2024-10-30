@@ -2,32 +2,49 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        #TabSelection .nav-link {
-            cursor: pointer;
-            background-color: transparent;
-            border: none;
-            border-bottom: 2px solid transparent;
-        }
+         #TabSelection .nav-link {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+    }
 
-            #TabSelection .nav-link:hover {
-                background-color: #f8f9fa;
-            }
+    #TabSelection .nav-link:hover {
+        background-color: #ccc; /* Color de fondo al pasar el mouse */
+    }
 
-            #TabSelection .nav-link:focus {
-                box-shadow: none;
-                outline: none;
-            }
+    #TabSelection .nav-link:focus {
+        box-shadow: none;
+        outline: none;
+    }
 
-            #TabSelection .nav-link.active {
-                background-color: #fff;
-                border-color: #dee2e6 #dee2e6 #fff;
-                color: #495057;
-            }
+    #TabSelection .nav-link.active {
+        background-color: #28a745; /* Color de fondo del enlace activo */
+        border-color: #dee2e6 #dee2e6 #fff;
+        color: #2e5790; /* Color del texto del enlace activo */
+    }
 
-        .table td {
-            font-size: 13px; /* Tamaño de fuente más pequeño para las celdas de datos */
-        }
+    .table td {
+        font-size: 13px; /* Tamaño de fuente más pequeño para las celdas de datos */
+    }
     </style>
+    <script type="text/javascript">
+        function setActiveNavLink(activeId) {
+            // Obtener todos los enlaces de navegación
+            var navLinks = document.querySelectorAll('.nav-link');
+
+            // Desactivar todos los enlaces
+            navLinks.forEach(function (link) {
+                link.classList.remove('active');
+            });
+
+            // Activar el enlace que ha sido clickeado
+            var activeLink = document.getElementById(activeId);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#<%= txtEmail.ClientID %>, #<%= txtExpediente.ClientID %>').on('input', function () {
@@ -142,6 +159,7 @@
             }
         }
     </script>
+    
     <style>
         .contenedor {
             max-width: 600px;
@@ -154,20 +172,20 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     <br />
-    <div class="container">
+ <%--   <div class="container">--%>
         <div class="nav nav-tabs" id="TabSelection">
-            <asp:LinkButton ID="lbnDependencias" runat="server" CssClass="nav-item nav-link" Text="Dependencias" OnClick="lbnDependencias_Click"></asp:LinkButton>
+            <asp:LinkButton ID="lbnAlumnosIncorp" runat="server" CssClass="nav-item nav-link" Text="Alumnos Incorporadas" OnClick="lbnAlumnosIncorp_Click"></asp:LinkButton>
             <asp:LinkButton ID="lbnResponsable" runat="server" CssClass="nav-item nav-link" Text="Responsables de Unidad" OnClick="lbnResponsable_Click"></asp:LinkButton>
             <asp:LinkButton ID="lbnEncargadoEsc" runat="server" CssClass="nav-item nav-link" Text="Encargado de Escuela" OnClick="lbnEncargadoEsc_Click"></asp:LinkButton>
+            <asp:LinkButton ID="lbnDependencias" runat="server" CssClass="nav-item nav-link" Text="Dependencias" OnClick="lbnDependencias_Click"></asp:LinkButton>
             <asp:LinkButton ID="lbnUsuarios" runat="server" CssClass="nav-item nav-link" Text="+ Crear Usuarios" OnClick="lbnUsuarios_Click"></asp:LinkButton>
-
         </div>
-    </div>
+<%--    </div>--%>
     <div style="display: inline-block;">
     </div>
     <asp:Panel ID="pnlResponsables" runat="server" Visible="false">
         <br />
-        <div class="container">
+<%--        <div class="container">--%>
             <div style="text-align: center">
                 <div class="">
                     <div class="row mb-3">
@@ -222,11 +240,11 @@
                     <asp:Button ID="btnNextResp" runat="server" Text="Siguiente" CssClass="btn btn-primary" OnClick="btnNextResp_Click" />
                 </div>
             </div>
-        </div>
+  <%--      </div>--%>
 
     </asp:Panel>
-    <asp:Panel ID="pnlDependencias" runat="server" Visible="true">
-        <div class="container">
+    <asp:Panel ID="pnlDependencias" runat="server" Visible="false">
+  <%--      <div class="container">--%>
             <br />
             <div style="text-align: center">
                 <div class="">
@@ -262,12 +280,12 @@
                                             </td>
                                             <td style="display: none;"><%# Eval("sPassword") %></td>
                                             <td>
-                                                <asp:LinkButton runat="server" ID="lnkEditDep" CommandName="Edit" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-edit"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lnkEditDep" CommandName="Edit"  CssClass="btn btn-success btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-edit"></i></asp:LinkButton>
                                             </td>
                                         </asp:Panel>
                                         <asp:Panel runat="server" ID="pnlEditModeDep" Visible="false">
                                             <asp:HiddenField ID="hdnID" runat="server" Value='<%# Eval("idUsuario") %>' />
-                                            <td>
+                                           <td>
                                                 <asp:Label Style="font-size: 0.9em !important;" runat="server" ID="lblDescripcion"> <%# Eval("sDescripcion") %></asp:Label>
                                             </td>
                                             <td>
@@ -278,8 +296,8 @@
                                                 <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtPassword" Text='<%# Eval("sPassword") %>'></asp:TextBox>
                                             </td>
                                             <td>
-                                                <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update" CommandArgument='<%# Container.ItemIndex %>'><i class="fas fa-save"></i></asp:LinkButton>
-                                                <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-window-close"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="fas fa-save"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel" CssClass="btn btn-danger btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-window-close"></i></asp:LinkButton>
                                             </td>
                                         </asp:Panel>
                                     </tr>
@@ -293,10 +311,10 @@
                     <asp:Button ID="btnNextDep" runat="server" Text="Siguiente" OnClick="btnNextDep_Click" CssClass="btn btn-primary" />
                 </div>
             </div>
-        </div>
+<%--        </div>--%>
     </asp:Panel>
     <asp:Panel ID="PanelEncargadosEscuela" runat="server" Visible="false">
-        <div class="container">
+  <%--      <div class="container">--%>
             <br />
             <div style="text-align: center">
                 <div class="">
@@ -348,97 +366,186 @@
                     <asp:Button ID="btnNextEncarg" runat="server" Text="Siguiente" OnClick="btnNextEncarg_Click" CssClass="btn btn-primary"/>
                 </div>
             </div>
-        </div>
+<%--        </div>--%>
     </asp:Panel>
-    <asp:Panel ID="pnlUsuarios" runat="server" Visible="false">
+    <asp:Panel ID="pnlAlumnosIncorp" runat="server" Visible="true">
+<%--        <div class="container">--%>
+            <br />
+            <div style="text-align: center">
+                <div class="">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <asp:TextBox ID="txtBuscarAlumInc" runat="server" CssClass="form-control" placeholder="Buscar..." />
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Button ID="btnBuscarAlumInc" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscarAlumInc_Click"/> 
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="display: none;">ID</th>
+                                <th>Fecha Registro</th>
+                                <th>Matricula</th>
+                                <th>Alumno</th>
+                                <th>Correo</th>
+                                <th>Contraseña</th>
+                                <th style="display: none;">sPassword</th>
+                                <th>Plan de Estudios</th>
+                                <th>Escuela</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <asp:Repeater ID="RepeaterAlumnosIncorp" runat="server" OnItemDataBound="RepeaterAlumnosIncorp_ItemDataBound" OnItemCommand="RepeaterAlumnosIncorp_ItemCommand"> 
+                                <ItemTemplate>
+                                    <tr>
+                                        <asp:Panel runat="server" ID="pnlViewModeAlumInc" Visible="true">
+                                            <td style="display: none;"><%# Eval("ID") %></td>
+                                            <td><%# Eval("FechaRegistro") %></td>
+                                            <td><%# Eval("Matricula") %></td>
+                                            <td><%# Eval("sNombreCompleto") %></td>
+                                            <td><%# Eval("sCorreo") %></td>
+                                            <td>
+                                                <p>••••••••</p>
+                                            </td>
+                                            <td style="display: none;"><%# Eval("sPassword") %></td>
+                                            <td><%# Eval("PlanEst") %></td>
+                                            <td><%# Eval("Escuela") %></td>
+                                            <td>
+                                                <asp:LinkButton runat="server" ID="lnkEdit" CommandName="Edit" CssClass="btn btn-success btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-edit"></i></asp:LinkButton>
+                                            </td>
+                                        </asp:Panel>
+                                        <asp:Panel runat="server" ID="pnlEditModeAlumInc" Visible="false">
+                                            <asp:HiddenField ID="hdnID" runat="server" Value='<%# Eval("ID") %>' />
+                                            <td>
+                                                <asp:Label Style="font-size: 0.9em !important;" runat="server" ID="Label9"> <%# Eval("FechaRegistro") %></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label Style="font-size: 0.9em !important;" runat="server" ID="Label1"> <%# Eval("Matricula") %></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label Style="font-size: 0.9em !important;" runat="server" ID="Label8"> <%# Eval("sNombreCompleto") %></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtCorreo" Text='<%# Eval("sCorreo") %>'></asp:TextBox>
+                                            </td>
+
+                                            <td>
+                                                <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtPassword" Text='<%# Eval("sPassword") %>'></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:Label Style="font-size: 0.9em !important;"  runat="server" ID="TextBox1"> <%# Eval("PlanEst") %></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label Style="font-size: 0.9em !important;"  runat="server" ID="TextBox2" ><%# Eval("Escuela") %>></asp:Label>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="fas fa-save"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel"  CssClass="btn btn-danger btn-sm" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-window-close"></i></asp:LinkButton>
+                                               </div>
+                                            </td>
+                                        </asp:Panel>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+
+                        </tbody>
+                    </table>
+                    <asp:Button ID="btnPrevAluInc" runat="server" Text="Anterior" OnClick="btnPrevAluInc_Click" CssClass="btn btn-primary"/>
+                    <asp:Label ID="lblPageAluInc" runat="server"></asp:Label>
+                    <asp:Button ID="btnNextAluInc" runat="server" Text="Siguiente" OnClick="btnNextAluIn_Click" CssClass="btn btn-primary" />
+                </div>
+            </div>
+<%--        </div>--%>
+    </asp:Panel>
+    <asp:Panel ID="pnlUsuarios" runat="server" Visible="false" CssClass="panel-container">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="lblUser" class="label-derecha"><strong>Tipo de Usuario</strong></label>
+                        <label for="lblUser" class="label-derecha"><strong>Seleccione el tipo de Usuario</strong></label>
                         <asp:DropDownList runat="server" ID="ddlUser" CssClass="form-control" required="required" OnSelectedIndexChanged="ddlUser_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                     </div>
                 </div>
             </div>
         </div>
         <%-- USUARIO ADMINISTRADOR --%>
-        <asp:Panel ID="pnlRegistrarAdmon" runat="server" Visible="false">
-            <div style="text-align: center">
+     <asp:Panel ID="pnlRegistrarAdmon" runat="server" Visible="false" CssClass="panel-container">
+    <div class="container" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
+        <div style="text-align: center">
+            <div class="form-group">
+                <br />
+                <h3 class="text-gray-900 mb-4" style="color: #2e5790">Capture los datos del Administrador:</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <br />
-                    <h3 class="text-gray-900 mb-4" style="color: #2e5790">Capture los datos del Administrador:</h3>
+                    <label for="txtExpediente" class="label-derecha">Expediente:</label>
+                    <asp:TextBox ID="txt1" runat="server" CssClass="form-control" required="required"></asp:TextBox>
+                </div>
+                <asp:Label runat="server" Style="color: #ff0d0d" ID="Label1"></asp:Label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtEmail" class="label-derecha">Correo Institucional:</label>
+                    <asp:TextBox ID="txt2" runat="server" CssClass="form-control" required="required" AutoComplete="off"></asp:TextBox>
+                </div>
+                <asp:Label runat="server" Style="color: #ff0d0d" ID="Label2"></asp:Label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtNombre" class="label-derecha">Nombre:</label>
+                    <asp:TextBox ID="txt3" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
                 </div>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtExpediente" class="label-derecha">Expediente:</label>
-                            <asp:TextBox ID="txt1" runat="server" CssClass="form-control" required="required"></asp:TextBox>
-                        </div>
-                        <asp:Label runat="server" Style="color: #ff0d0d" ID="Label1"></asp:Label>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtEmail" class="label-derecha">Correo Institucional:</label>
-                            <asp:TextBox ID="txt2" runat="server" CssClass="form-control" required="required" AutoComplete="off"></asp:TextBox>
-                        </div>
-                        <asp:Label runat="server" Style="color: #ff0d0d" ID="Label2"></asp:Label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtNombre" class="label-derecha">Nombre:</label>
-                            <asp:TextBox ID="txt3" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtApePat" class="label-derecha">Apellido Paterno:</label>
-                            <asp:TextBox ID="txt4" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtApeMat" class="label-derecha">Apellido Materno:</label>
-                            <asp:TextBox ID="txt5" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="txtTelefono" class="label-derecha">Teléfono:</label>
-                            <asp:TextBox ID="txt6" runat="server" CssClass="form-control" required="required" MaxLength="10"></asp:TextBox>
-                        </div>
-                        <asp:Label runat="server" Style="color: #ff0d0d" ID="Label3"></asp:Label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="ddlUnidad" class="label-derecha">Unidad:</label>
-                            <asp:DropDownList runat="server" ID="DDL1" CssClass="form-control" required="required"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <asp:Label ID="Label4" runat="server" Text="" ForeColor="Red"></asp:Label>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <%-- <div class="col-md-4 text-right">
-                <a href="index.html" class="btn miBoton" style="line-height: 40px;">Regresar</a>
-            </div>--%>
-                    <div class="col-md-4 text-center">
-                        <asp:Button runat="server" ID="Button1" CssClass="btn miBoton" Text="CREAR USUARIO" OnClick="btnRegistrarAdmon_Click" />
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtApePat" class="label-derecha">Apellido Paterno:</label>
+                    <asp:TextBox ID="txt4" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
-        </asp:Panel>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtApeMat" class="label-derecha">Apellido Materno:</label>
+                    <asp:TextBox ID="txt5" runat="server" CssClass="form-control" required="required" ReadOnly="true"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="txtTelefono" class="label-derecha">Teléfono:</label>
+                    <asp:TextBox ID="txt6" runat="server" CssClass="form-control" required="required" MaxLength="10"></asp:TextBox>
+                </div>
+                <asp:Label runat="server" Style="color: #ff0d0d" ID="Label3"></asp:Label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ddlUnidad" class="label-derecha">Unidad:</label>
+                    <asp:DropDownList runat="server" ID="DDL1" CssClass="form-control" required="required"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="text-center">
+                <asp:Label ID="Label4" runat="server" Text="" ForeColor="Red"></asp:Label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4 text-center">
+                <asp:Button runat="server" ID="Button1" CssClass="btn miBoton" Text="CREAR USUARIO" OnClick="btnRegistrarAdmon_Click" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+    </div>
+</asp:Panel>
         <%-- USUARIO RESPONSABLE --%>
         <asp:Panel ID="pnlRegistrarResponsable" runat="server" Visible="false">
             <div style="text-align: center">

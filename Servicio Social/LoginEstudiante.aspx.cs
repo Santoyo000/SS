@@ -97,6 +97,7 @@ namespace Servicio_Social
                             string matricula = reader["sMatricula"].ToString();
                             string Autorizado = reader["bAutorizado"].ToString();
                             Session["matricula"] = matricula;
+                            Session["ID"] = reader["ID"].ToString();
                             tipoUsuario = reader["kpTipoUsuario"].ToString();
                             idAlumno = reader["ID"].ToString();
                             registros.Add((matricula, Autorizado));
@@ -172,6 +173,7 @@ namespace Servicio_Social
                             autorizado = reader["bAutorizado"].ToString();
                             Session["alumno"] = reader["sNombre_completo"].ToString();
                             Session["matricula"] = matricula;
+                            Session["ID"] = reader["ID"].ToString();
                             tipoUsuario = reader["kpTipoUsuario"].ToString();
                             result = reader["sPassword"].ToString();
                             idAlumno = reader["ID"].ToString();

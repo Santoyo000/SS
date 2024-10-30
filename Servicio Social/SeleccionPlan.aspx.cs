@@ -16,6 +16,7 @@ namespace Servicio_Social
             if (!IsPostBack)
             {
                 cargarEscuela();
+
             }
         }
 

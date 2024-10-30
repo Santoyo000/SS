@@ -26,10 +26,10 @@ namespace Servicio_Social
         {
             // Declarar la variable
 
-            if (Session["idUser"] == null)
-            { 
-                Response.Redirect("Home.aspx");
-            }
+            //if (Session["idUser"] == null)
+            //{ 
+            //    Response.Redirect("Home.aspx");
+            //}
 
             if (!IsPostBack)
             {

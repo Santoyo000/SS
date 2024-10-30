@@ -16,10 +16,7 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["idUser"] == null)
-            {
-                Response.Redirect("Home.aspx");
-            }
+            
             CargarDatos(0, "");
         }
         private int CurrentPage

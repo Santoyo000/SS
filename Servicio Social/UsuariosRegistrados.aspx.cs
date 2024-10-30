@@ -28,11 +28,12 @@ namespace Servicio_Social
                 if (Session["filtros"].ToString().Split('|')[0] == "3")
                 {
                     lbnResponsable.Visible = false;
-                    pnlDependencias.Visible = true;
+                    pnlDependencias.Visible = false;
                     pnlResponsables.Visible = false;
                     PanelEncargadosEscuela.Visible = false;
                     pnlRegistrarAdmon.Visible = false;
                     pnlRegistrarEncargado.Visible = false;
+                    pnlAlumnosIncorp.Visible = true;
                 }
                    
             } 
@@ -44,18 +45,32 @@ namespace Servicio_Social
                 CargarDatosEncargadosEscuela(0, "");
                 cargarUnidades();
                 CargarUsuarios();
+                CargarDatosAlumInc(0, "");
+               
             }
 
         }
+     
         protected void lbnUsuarios_Click(object sender, EventArgs e)
         {
             pnlResponsables.Visible = false;
             pnlDependencias.Visible = false;
             PanelEncargadosEscuela.Visible = false;
             pnlUsuarios.Visible = true;
+            pnlAlumnosIncorp.Visible = false;
+            pnlRegistrarResponsable.Visible = false;
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+            ddlUnidad.Text = "";
+            pnlRegistrarAdmon.Visible = false;
+            pnlRegistrarResponsable.Visible=false;
+            pnlRegistrarEncargado.Visible = false;
+            pnlRegistrarDependencias.Visible=false;
         }
         protected void lbnEncargadoEsc_Click(object sender, EventArgs e)
         {
+            pnlAlumnosIncorp.Visible = false;
             pnlResponsables.Visible = false;
             PanelEncargadosEscuela.Visible = true;
             ddlUser.SelectedIndex = -1;
@@ -69,6 +84,7 @@ namespace Servicio_Social
         }
         protected void lbnResponsable_Click(object sender, EventArgs e)
         {
+            pnlAlumnosIncorp.Visible = false;
             pnlResponsables.Visible = true;
             PanelEncargadosEscuela.Visible = false;
             ddlUser.SelectedIndex = -1;
@@ -83,6 +99,7 @@ namespace Servicio_Social
 
         protected void lbnDependencias_Click(object sender, EventArgs e)
         {
+            pnlAlumnosIncorp.Visible = false;
             pnlResponsables.Visible = false;
             PanelEncargadosEscuela.Visible = false;
             pnlDependencias.Visible = true;
@@ -94,29 +111,31 @@ namespace Servicio_Social
             pnlUsuarios.Visible = false;
             pnlRegistrarResponsable.Visible = false;
         }
+        protected void lbnAlumnosIncorp_Click(object sender, EventArgs e)
+        {
+            pnlAlumnosIncorp.Visible = true;
+            pnlResponsables.Visible = false;
+            PanelEncargadosEscuela.Visible = false;
+            pnlDependencias.Visible = false;
+            ddlUser.SelectedIndex = -1;
+            txtExpediente.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+            ddlUnidad.Text = "";
+            pnlUsuarios.Visible = false;
+            pnlRegistrarResponsable.Visible = false;
+        }
 
         private int CurrentPage
         {
-            get
-            {
-                return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0;
-            }
-            set
-            {
-                ViewState["CurrentPage"] = value;
-            }
+            get{ return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0;}
+            set{ ViewState["CurrentPage"] = value;}
         }
 
         private int TotalPages
         {
-            get
-            {
-                return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;
-            }
-            set
-            {
-                ViewState["TotalPages"] = value;
-            }
+            get{return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;}
+            set{ ViewState["TotalPages"] = value;}
         }
         protected void CargarDatosEncargadosEscuela(int pageIndex, string searchTerm)
         {
@@ -178,7 +197,121 @@ namespace Servicio_Social
             // Actualiza la etiqueta de número de página
             lblPageDep.Text = $"Página {pageIndex + 1} de {TotalPages}";
         }
+        protected void CargarDatosAlumInc(int pageIndex, string searchTerm)
+        {
+            int pageSize = 30; // Cantidad de registros por página
+            int totalRecords;
 
+            DataTable dt = ObtenerDatosAlumInc(pageIndex, pageSize, searchTerm, out totalRecords);
+
+            RepeaterAlumnosIncorp.DataSource = dt;
+            RepeaterAlumnosIncorp.DataBind();
+
+            // Calcula el número total de páginas
+            TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Configura el estado de los botones
+            btnPrevAluInc.Enabled = pageIndex > 0;
+            btnNextAluInc.Enabled = pageIndex < TotalPages - 1;
+
+            // Actualiza la etiqueta de número de página
+            lblPageAluInc.Text = $"Página {pageIndex + 1} de {TotalPages}";
+        }
+        protected DataTable ObtenerDatosAlumInc(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+        {
+            string conString = GlobalConstants.SQL;
+            int rowsToSkip = pageIndex * pageSize;
+
+            // Consulta SQL para obtener los datos paginados
+            string query = @"SELECT  
+                                US.idUsuario AS ID, 
+                                CONVERT(varchar, US.dFechaRegistro, 103) AS FechaRegistro, 
+                                ALU.sMatricula AS Matricula,
+                                PER.sApellido_Paterno + ' ' + PER.sApellido_Materno + ' ' + PER.sNombres AS sNombreCompleto,   
+                                US.sCorreo, 
+                                US.sPassword,
+                                PLA.SCLAVE + ' - ' + PLA.SDESCRIPCION AS PlanEst,
+                                ESC.SCLAVE + ' - ' + ESC.SDESCRIPCION AS Escuela
+                                
+                            FROM 
+                                SM_USUARIOS_ALUMNOS AS USA
+                            INNER JOIN  
+                                SM_USUARIO AS US ON USA.kmUsuario = US.idUsuario
+                            INNER JOIN  
+                                SM_ALUMNO AS ALU ON USA.kmAlumno = ALU.idAlumno
+                            INNER JOIN  
+                                SP_PLAN_ESTUDIO AS PLA ON ALU.KPPLAN_ESTUDIOS = PLA.IDPLANESTUDIO
+                            INNER JOIN  
+                                SP_ESCUELA_UAC AS ESC ON ALU.KPESCUELASUADEC = ESC.IDEsCUELAUAC
+                            INNER JOIN  
+                                NM_PERSONA AS PER ON ALU.kmPersona = PER.idPersona
+                            WHERE 
+                                USA.bAutorizado = 11 AND sPassword IS NOT NULL";
+
+            // Consulta SQL para contar el total de registros
+            string countQuery =
+
+                @"SELECT COUNT(*)     FROM 
+                                SM_USUARIOS_ALUMNOS AS USA
+                            INNER JOIN  
+                                SM_USUARIO AS US ON USA.kmUsuario = US.idUsuario
+                            INNER JOIN  
+                                SM_ALUMNO AS ALU ON USA.kmAlumno = ALU.idAlumno
+                            INNER JOIN  
+                                SP_PLAN_ESTUDIO AS PLA ON ALU.KPPLAN_ESTUDIOS = PLA.IDPLANESTUDIO
+                            INNER JOIN  
+                                SP_ESCUELA_UAC AS ESC ON ALU.KPESCUELASUADEC = ESC.IDEsCUELAUAC
+                            INNER JOIN  
+                                NM_PERSONA AS PER ON ALU.kmPersona = PER.idPersona
+                            WHERE 
+                                USA.bAutorizado = 11 AND sPassword IS NOT NULL ";
+
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                string searchCondition =
+                    " AND (US.dFechaRegistro LIKE @searchTerm OR ALU.sMatricula LIKE @searchTerm OR US.sCorreo LIKE @searchTerm " +
+                                         " OR PER.sApellido_Paterno + ' ' + PER.sApellido_Materno + ' ' + PER.sNombres LIKE @searchTerm " +
+                                         "OR PLA.SDESCRIPCION LIKE @searchTerm OR ESC.SDESCRIPCION LIKE @searchTerm) ";
+
+                query += searchCondition;
+                countQuery += searchCondition;
+            }
+
+            query += " ORDER BY US.dFechaRegistro DESC " +
+                     " OFFSET @rowsToSkip ROWS " +
+                     " FETCH NEXT @pageSize ROWS ONLY;";
+
+            DataTable dt = new DataTable();
+            totalRecords = 0;
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                SqlCommand countCmd = new SqlCommand(countQuery, con);
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                }
+
+                con.Open();
+
+                // Obtener el número total de registros
+                totalRecords = (int)countCmd.ExecuteScalar();
+
+                // Obtener los datos paginados
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            return dt;
+
+        }
         protected DataTable ObtenerDatosEncarg(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
         {
             string conString = GlobalConstants.SQL;
@@ -358,13 +491,13 @@ namespace Servicio_Social
             // Consulta SQL para contar el total de registros
             string countQuery = "SELECT COUNT(*) " +
                 "FROM SM_USUARIO U " +
-                "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
+               "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
                 "WHERE kpTipoUsuario = 2 ";
             countQuery += filtroquery;
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                string searchCondition = "AND ( DS.sDescripcion LIKE @searchTerm OR  U.sCorreo  LIKE @searchTerm) ";
+                string searchCondition = "AND (  U.sCorreo  LIKE @searchTerm) ";
                 query += searchCondition;
                 countQuery += searchCondition;
             }
@@ -403,7 +536,89 @@ namespace Servicio_Social
             return dt;
 
         }
+        protected void RepeaterAlumnosIncorp_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
 
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                DataRowView dr = e.Item.DataItem as DataRowView;
+                TextBox txtPassword = (TextBox)e.Item.FindControl("txtPassword");
+                string s = txtPassword.Text;
+                txtPassword.Text = SeguridadUtils.Desencriptar(s);
+            }
+        }
+        protected void RepeaterAlumnosIncorp_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            if (e.CommandName == "Edit")
+            {
+                // Mostrar el modo de edición para la fila seleccionada
+                Panel pnlViewMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlViewModeAlumInc");
+                Panel pnlEditMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlEditModeAlumInc");
+
+                pnlViewMode.Visible = false;
+                pnlEditMode.Visible = true;
+
+                ViewState["ActiveTab"] = "#tab2";
+            }
+            else if (e.CommandName == "Update")
+            {
+                // Lógica para actualizar los datos en la base de datos
+                //Label txtDescripcion = (Label)RepeaterDep.Items[index].FindControl("lblDescripcion");
+                TextBox txtCorreo = (TextBox)RepeaterAlumnosIncorp.Items[index].FindControl("txtCorreo");
+                TextBox txtPassword = (TextBox)RepeaterAlumnosIncorp.Items[index].FindControl("txtPassword");
+
+                int rowIndex = e.Item.ItemIndex;
+                HiddenField hdnID = (HiddenField)RepeaterAlumnosIncorp.Items[rowIndex].FindControl("hdnID");
+                int id = Convert.ToInt32(hdnID.Value);
+                //string descripcion = txtDescripcion.Text;
+                string correo = txtCorreo.Text;
+                string password = SeguridadUtils.Encriptar(txtPassword.Text);
+                // Actualiza los datos en la base de datos
+                UpdateDataInDatabase(id, correo, password);
+
+                // Vuelve al modo de visualización
+                Panel pnlViewMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlViewModeAlumInc");
+                Panel pnlEditMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlEditModeAlumInc");
+
+                pnlViewMode.Visible = true;
+                pnlEditMode.Visible = false;
+
+                if (pnlEditMode.Visible)
+                    pnlEditMode.CssClass = "edit-mode";
+
+                string searchTerm = txtBuscarAlumInc.Text.Trim();
+                int page = CurrentPage;
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    // Vuelve a enlazar los datos al Repeater
+                    CargarDatosAlumInc(page, "");
+                }
+                else
+                {
+                    // Vuelve a enlazar los datos al Repeater
+                    CargarDatosAlumInc(page, searchTerm);
+                }
+
+            }
+            else if (e.CommandName == "Cancel")
+            {
+                // Vuelve al modo de visualización sin hacer cambios
+                Panel pnlViewMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlViewModeAlumInc");
+                Panel pnlEditMode = (Panel)RepeaterAlumnosIncorp.Items[index].FindControl("pnlEditModeAlumInc");
+
+                pnlViewMode.Visible = true;
+                pnlEditMode.Visible = false;
+                //UpdatePanel1.Update();
+            }
+
+            if (e.CommandName == "Page")
+            {
+                int pageIndex = int.Parse(e.CommandArgument.ToString());
+                CargarDatosAlumInc(pageIndex, "");
+                //UpdatePanel1.Update();
+            }
+        }
         protected void RepeaterDep_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
 
@@ -488,7 +703,50 @@ namespace Servicio_Social
                 //UpdatePanel1.Update();
             }
         }
+        protected void btnPrevAluInc_Click(object sender, EventArgs e)
+        {
 
+            string searchTerm = txtBuscarAlumInc.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosAlumInc(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage > 0)
+                {
+                    CurrentPage -= 1;
+                    CargarDatosAlumInc(CurrentPage, searchTerm);
+                }
+            }
+
+        }
+
+        protected void btnNextAluIn_Click(object sender, EventArgs e)
+        {
+            string searchTerm = txtBuscarAlumInc.Text.Trim();
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosAlumInc(CurrentPage, "");
+                }
+            }
+            else
+            {
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatosAlumInc(CurrentPage, searchTerm);
+                }
+            }
+
+        }
         protected void btnPrevDep_Click(object sender, EventArgs e)
         {
 
@@ -602,6 +860,17 @@ namespace Servicio_Social
 
             // Carga los datos con el término de búsqueda y la página actual
             CargarDatosEncargadosEscuela(CurrentPage, searchTerm);
+        }
+        protected void btnBuscarAlumInc_Click(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del cuadro de texto
+            string searchTerm = txtBuscarAlumInc.Text.Trim();
+
+            // Establece la página actual en cero para volver a la primera página después de la búsqueda
+            CurrentPage = 0;
+
+            // Carga los datos con el término de búsqueda y la página actual
+            CargarDatosAlumInc(CurrentPage, searchTerm);
         }
 
         private void UpdateDataInDatabase(int id, string correo, string password)

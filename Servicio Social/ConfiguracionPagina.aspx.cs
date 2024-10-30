@@ -26,6 +26,7 @@ namespace Servicio_Social
                 CargarFechas();
                 CargarFechas2();
                 CargarFechas3();
+                CargarFechas4();
                 // LoadRegistroDependenciasState();
             }
         }
@@ -147,6 +148,41 @@ namespace Servicio_Social
                         txtFechaInicioAlu.Text = string.Empty;
                         txtFechaFinAlu.Text = string.Empty;
                         txtMensaje3.Text = string.Empty;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes mostrar un mensaje de error en tu interfaz o registrar el error
+                //lblMessageDep.Text = "Error al cargar fechas: " + ex.Message; // Asegúrate de tener un Label para mostrar mensajes de error
+            }
+        }
+        private void CargarFechas4()
+        {
+            string connectionString = GlobalConstants.SQL;
+            string query = "SELECT dFechaInicio, dFechaFin, sMensaje FROM SP_CONFIGURACION_PAG_SS WHERE SCLAVE = '4'";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        txtFechaInicioAluProg.Text = Convert.ToDateTime(reader["dFechaInicio"]).ToString("yyyy-MM-dd");
+                        txtFechaFinAluProg.Text = Convert.ToDateTime(reader["dFechaFin"]).ToString("yyyy-MM-dd");
+                        // Cargar el mensaje
+                        txtMensaje4.Text = reader["sMensaje"] != DBNull.Value ? reader["sMensaje"].ToString() : string.Empty;
+                    }
+                    else
+                    {
+                        // Manejar el caso en que no se devuelven resultados
+                        txtFechaInicioAluProg.Text = string.Empty;
+                        txtFechaFinAluProg.Text = string.Empty;
+                        txtMensaje4.Text = string.Empty;
                     }
                 }
             }
@@ -463,6 +499,48 @@ namespace Servicio_Social
 
             // Query para actualizar las fechas de inicio y fin en la tabla SP_CONFIGURACION_PAG_SS para la clave '1'
             string query = "UPDATE SP_CONFIGURACION_PAG_SS SET dFechaInicio = @FechaInicio, dFechaFin = @FechaFin , sMensaje = @Mensaje WHERE sClave = '3'";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Asignar los parámetros
+                    command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                    command.Parameters.AddWithValue("@FechaFin", fechaFin);
+                    command.Parameters.AddWithValue("@Mensaje", mensaje);
+
+                    // Abrir la conexión
+                    connection.Open();
+
+                    // Ejecutar la consulta
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            // Mensaje de confirmación
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#ModalExitoso').modal('show');", true);
+        }
+
+        protected void btnGuardarAluPro_Click(object sender, EventArgs e)
+        {
+            string connectionString = GlobalConstants.SQL; // Asegúrate de reemplazar esto con tu cadena de conexión real
+            // Validar que los campos no estén vacíos
+            if (string.IsNullOrWhiteSpace(txtFechaInicioAluProg.Text) ||
+                string.IsNullOrWhiteSpace(txtFechaFinAluProg.Text) ||
+                string.IsNullOrWhiteSpace(txtMensaje4.Text))
+            {
+                // Mostrar mensaje de error
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#ModalError').modal('show');", true);
+                return; // Salir del método si hay campos vacíos
+            }
+
+            DateTime fechaInicio = Convert.ToDateTime(txtFechaInicioAluProg.Text);
+            DateTime fechaFin = Convert.ToDateTime(txtFechaFinAluProg.Text);
+            string mensaje = txtMensaje4.Text;
+
+            // Query para actualizar las fechas de inicio y fin en la tabla SP_CONFIGURACION_PAG_SS para la clave '1'
+            string query = "UPDATE SP_CONFIGURACION_PAG_SS SET dFechaInicio = @FechaInicio, dFechaFin = @FechaFin , sMensaje = @Mensaje WHERE sClave = '4'";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

@@ -22,10 +22,7 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["idUser"] == null)
-            {
-                Response.Redirect("Home.aspx");
-            }
+            
 
             if (!IsPostBack)
             {
@@ -214,6 +211,7 @@ namespace Servicio_Social
             return dt;
 
         }
+
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)(sender);
