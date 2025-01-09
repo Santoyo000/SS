@@ -27,29 +27,29 @@ namespace Servicio_Social
         string SQL = GlobalConstants.SQL;
         private const string NPE_VIEWSTATE_KEY = "NPE";
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            string idPrograma = Request.QueryString["idPrograma"];
-            if (!IsPostBack)
+            protected void Page_Load(object sender, EventArgs e)
             {
-                if (Request.QueryString["idPrograma"] != null)
+                string idPrograma = Request.QueryString["idPrograma"];
+                if (!IsPostBack)
                 {
+                    if (Request.QueryString["idPrograma"] != null)
+                    {
 
-                    // Usa el valor de idPrograma como necesites
-                    Editar(idPrograma);
-                }
-                // Este bloque de código se ejecuta solo en la primera carga de la página
-                CargarPerido();
-                CargarEnfoque();
-                CargarModalidad();
-                CargarUnidad();
-                CargarNivel();
+                        // Usa el valor de idPrograma como necesites
+                        Editar(idPrograma);
+                    }
+                    // Este bloque de código se ejecuta solo en la primera carga de la página
+                    CargarPerido();
+                    CargarEnfoque();
+                    CargarModalidad();
+                    CargarUnidad();
+                    CargarNivel();
                
 
-                //ViewState[NPE_VIEWSTATE_KEY] = new List<NPE>();
-            }
+                    //ViewState[NPE_VIEWSTATE_KEY] = new List<NPE>();
+                }
 
-        }
+            }
         [Serializable]
         public class NPE
         {
@@ -203,26 +203,51 @@ namespace Servicio_Social
         }
         private void CargarPerido()
         {
-            // Define la conexión SQL y la consulta
+            // Define la cadena de conexión
             using (SqlConnection con = new SqlConnection(SQL))
             {
-                con.Open();
-                string queryString = "SELECT sDescripcion, idCiclo FROM SP_CICLO  WHERE idCiclo= 663973";
-
-                // Crea un DataSet para almacenar los resultados de la consulta
-                DataSet ds99 = new DataSet();
-
-                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
-                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                try
                 {
-                    data.Fill(ds99);
-                }
+                    // Abre la conexión
+                    con.Open();
 
-                // Asigna los resultados al DropDownList
-                DDLPeriodo.DataSource = ds99;
-                DDLPeriodo.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
-                DDLPeriodo.DataValueField = "idCiclo";
-                DDLPeriodo.DataBind();
+                    // Define la consulta SQL
+                    string query = "SELECT sDescripcion, idCiclo FROM SP_CICLO WHERE bServicioSocial = 1";
+
+                    // Utiliza un SqlDataAdapter para llenar un DataTable
+                    DataTable dtPeriodos = new DataTable();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, con))
+                    {
+                        adapter.Fill(dtPeriodos);
+                    }
+
+                    // Verifica si hay datos antes de asignarlos al DropDownList
+                    if (dtPeriodos.Rows.Count > 0)
+                    {
+                        DDLPeriodo.DataSource = dtPeriodos;
+                        DDLPeriodo.DataTextField = "sDescripcion"; // Lo que se mostrará en la lista
+                        DDLPeriodo.DataValueField = "idCiclo";     // El valor subyacente (idCiclo)
+                        DDLPeriodo.DataBind();
+
+                        // Selecciona el primer elemento por defecto
+                        DDLPeriodo.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        // Si no hay datos, limpia el DropDownList y muestra un mensaje predeterminado
+                        DDLPeriodo.Items.Clear();
+                        //DDLPeriodo.Items.Add(new ListItem("No hay períodos disponibles", ""));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Maneja cualquier excepción
+                    System.Diagnostics.Debug.WriteLine($"Error en CargarPeriodo: {ex.Message}");
+
+                    // Opcional: muestra un mensaje en el DropDownList
+                    DDLPeriodo.Items.Clear();
+                    //DDLPeriodo.Items.Add(new ListItem("Error al cargar los períodos", ""));
+                }
             }
 
         }

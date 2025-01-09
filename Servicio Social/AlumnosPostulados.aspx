@@ -6,18 +6,17 @@
             $.ajax({
                 type: "POST",
                 url: '<%= ResolveUrl("AlumnosPostulados.aspx/llenarDatosModal") %>',
-            data: JSON.stringify({ id: id }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                document.getElementById("modalBody").innerHTML = response.d;
-            },
-            failure: function (response) {
-                document.getElementById("modalBody").innerHTML = "Error loading data";
-            }
-        });
+                data: JSON.stringify({ id: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    document.getElementById("modalBody").innerHTML = response.d;
+                },
+                failure: function (response) {
+                    document.getElementById("modalBody").innerHTML = "Error loading data";
+                }
+            });
         }
-
     </script>
     <style>
         .custom-header {
@@ -29,6 +28,34 @@
             font-size: 12px; /* Tamaño de fuente más pequeño para las celdas de datos */
         }
 
+        /* Clase para el botón con ícono y color de Excel */
+        .btn-excel {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #217346; /* Color de Excel */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            float: right; /* Para alinearlo a la derecha */
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-excel:hover {
+                background-color: #1d633c; /* Un color más oscuro al hacer hover */
+            }
+
+            .btn-excel i {
+                margin-right: 10px; /* Espacio entre el ícono y el texto */
+            }
+            /* Ajuste para el icono de Excel */
+            .btn-excel .fa-file-excel {
+                font-size: 18px;
+                color: white;
+            }
         /*.edit-mode input[type=text] {
         max-width: 200px;*/ /* Ajusta el ancho máximo según sea necesario */
         /*}*/
@@ -38,7 +65,7 @@
     <br />
     <asp:ScriptManager runat="server">
     </asp:ScriptManager>
-    <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="0">
+<%--    <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="0">
         <ProgressTemplate>
             <div id="overlay">
                 <div id="loadingContent">
@@ -47,9 +74,7 @@
                 </div>
             </div>
         </ProgressTemplate>
-    </asp:UpdateProgress>
-
-
+    </asp:UpdateProgress>--%>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
@@ -59,8 +84,13 @@
                     </div>
                     <div class="">
                         <div class="row mb-3">
+
                             <div class="col-md-3">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
+                            </div>
+                              <div class="col-md-3">
+                                <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > <%--OnSelectedIndexChanged="ddlEstatus_SelectedIndexChanged"--%>
+                                </asp:DropDownList>
                             </div>
                             <div class="col-md-2">
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
@@ -102,10 +132,15 @@
                                                 <td style="display: none;"><%# Eval("idEstatus") %></td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
+                                                        <asp:LinkButton ID="btnEvaluar" Visible ="true" runat="server" CommandName="cmdEvaluar" CommandArgument='<%# Eval("IDALUMNO") %>' OnClick="btnEvaluar_Click"  CssClass="btn" style="background-color: #49207d; color: white; border: none;"><span data-toggle="tooltip" title="Evaluar Alumno" ><i class="fas fa-pen-to-square"></i></asp:LinkButton> 
+                                                        <asp:LinkButton ID="btnLiberar" Visible ="true" runat="server" CommandName="cmdLiberar" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberar_Click"  CssClass="btn" style="background-color: #1c40a5; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fas fa-file-pdf"></i></asp:LinkButton>
+                                                        <asp:LinkButton ID="btnLiberarEsc" Visible ="true" runat="server" CommandName="cmdLiberarEsc" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberarEsc_Click" OnClientClick='return confirm("¿Desea liberar alumno?");' CssClass="btn" style="background-color: #03be35; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fa-regular fa-square-check"></i></asp:LinkButton> 
+                                                        <asp:LinkButton ID="btnLiberarResp" Visible ="true" runat="server" CommandName="cmdLiberarResp" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberarResp_Click" OnClientClick='return confirm("¿Desea liberar alumno?");' CssClass="btn" style="background-color: #03be35; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fa-regular fa-square-check"></i></asp:LinkButton> 
+                                                        <asp:LinkButton ID="btnLiberarAdmon" Visible ="true" runat="server" CommandName="cmdLiberarAdmon" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberarAdmon_Click" OnClientClick='return confirm("¿Desea liberar alumno?");' CssClass="btn" style="background-color: #03be35; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fa-regular fa-square-check"></i></asp:LinkButton> 
                                                         <asp:LinkButton ID="btnDetalle" Visible="true" runat="server" CommandName="cmdRechazar" CssClass="btn btn-warning" Style="background-color: orange; border-color: orange; color: white;" data-toggle="modal" data-target="#myModal" OnClick='<%# "loadModalData(" + Eval("IDALUMNO") + ")" %>'><span data-toggle="tooltip" title="Ver detalles" ><i class="fas fa-search"></i></asp:LinkButton>
                                                         <asp:LinkButton ID="btnAutorizar" runat="server" CommandName="cmdAutorizar" CommandArgument='<%# Eval("IDDEPENDENICASERVICIO") + "|" + Eval("idProgramaAlumno")+ "|" + Eval("IDALUMNO")%> ' OnClick="btnAutorizar_Click" OnClientClick='return confirm("El registro cambiará de estatus de Autorizado");' CssClass="btn btn-success btn-sm"><span data-toggle="tooltip" title="Autorizar" ><i class="fas fa-check-square"></i></span></asp:LinkButton>
                                                         <asp:LinkButton ID="btnEliminar" runat="server" CommandName="cmdRechazar" CommandArgument='<%# Eval("IDDEPENDENICASERVICIO") + "|" + Eval("idProgramaAlumno")+ "|" + Eval("IDALUMNO")%> ' OnClick="btnEliminar_Click" OnClientClick='return confirm("El alumno será eliminado del Programa Actual, ¿desea continuar?");' CssClass="btn btn-danger btn-sm"><span data-toggle="tooltip" title="No Autorizar" ><i class="fas fa-window-close"></i></asp:LinkButton>
-                                                        <%--<asp:LinkButton ID="btnLiberar" Visible ="false" runat="server" CommandName="cmdLiberar" CommandArgument='<%# Eval("ID") %>' OnClick="btnLiberar_Click"  CssClass="btn  btn-primary"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fas fa-solid fa-file-pdf"></i></asp:LinkButton> --%>
+                                                       
                                                     </div>
                                                 </td>
                                             </asp:Panel>
@@ -136,12 +171,51 @@
                                     </ItemTemplate>
                                     <FooterTemplate>
                                         </tbody>
-                    </table>
+                                    </table>
                                     </FooterTemplate>
                                 </asp:Repeater>
+                                <asp:Repeater ID="RepeaterTemp" runat="server">
+                                <HeaderTemplate>
+                                    <table { width: 100%; border-collapse: collapse; }>
+                                            <tr>
+                                                 <th style="display: none;">ID</th>
+                                                 <th>Fecha de Registro</th>
+                                                 <th>Matrícula</th>
+                                                 <th>Alumno</th>
+                                                 <th>Programa</th>
+                                                 <th>Plan de Estudios</th>
+                                                 <th>Escuela</th>
+                                                 <th>Unidad</th>
+                                                 <th>Cupo</th>
+                                                 <th>Estatus</th>
+                                                 <th>Ver Más</th>
+                                            </tr>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <tr>
+                                           <td style="display: none;"><%# Eval("IDDEPENDENICASERVICIO") %></td>
+                                            <td><%# Eval("FECHAREGISTRO") %></td>
+                                            <td><%# Eval("MATRICULA") %></td>
+                                            <td><%# Eval("NOMBRE_COMPLETO") %></td>
+                                            <td><%# Eval("PROGRMA") %></td>
+                                            <td><%# Eval("PLANEST") %></td>
+                                            <td><%# Eval("ESCUELA") %></td>
+                                            <td><%# Eval("UNIDAD") %></td>
+                                            <td><%# Eval("ICUPO") %></td>
+                                            <td><%# Eval("ESTATUS") %></td>
+                                            <td style="display: none;"><%# Eval("idProgramaAlumno") %></td>
+                                            <td style="display: none;"><%# Eval("IDALUMNO") %></td>
+                                            <td style="display: none;"><%# Eval("idEstatus") %></td>
+                                            <td>
+                                        </tr>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                  </table>
+                                </FooterTemplate>
+                            </asp:Repeater> 
                             </tbody>
                         </table>
-
+                       <%-- <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
                         <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
                         <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />

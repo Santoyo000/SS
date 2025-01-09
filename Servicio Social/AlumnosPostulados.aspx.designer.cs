@@ -15,15 +15,6 @@ namespace Servicio_Social
     {
 
         /// <summary>
-        /// Control UpdateProgress1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress UpdateProgress1;
-
-        /// <summary>
         /// Control UpdatePanel1.
         /// </summary>
         /// <remarks>
@@ -42,6 +33,15 @@ namespace Servicio_Social
         protected global::System.Web.UI.WebControls.TextBox txtBusqueda;
 
         /// <summary>
+        /// Control ddlEstatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstatus;
+
+        /// <summary>
         /// Control btnBuscar.
         /// </summary>
         /// <remarks>
@@ -58,6 +58,15 @@ namespace Servicio_Social
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
+
+        /// <summary>
+        /// Control RepeaterTemp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterTemp;
 
         /// <summary>
         /// Control btnPrevious.

@@ -26,6 +26,7 @@
         /* Navbar inferior */
         .navbar-lower {
             background-color: #2E5790; /* Azul fuerte */
+            z-index: 9999; /* Asegura que el menú esté por encima de otros elementos */
         }
 
             .navbar-lower .navbar-nav .nav-link {
@@ -154,11 +155,38 @@
             padding: 20px 0; /* Espaciado arriba y abajo */
             text-align: center; /* Centrar el texto */
         }
+
+        /* Estilos de animación */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Clases para activar animación */
+        .animated {
+            opacity: 0; /* Elementos ocultos inicialmente */
+            animation: fadeInUp 0.8s ease-out forwards; /* Duración y suavidad de animación */
+        }
+
+        /* Retrasos para cada sección (ajustados a tiempos más rápidos) */
+        #navbarUpper.animated { animation-delay: 0.1s; }
+        #navbarLower.animated { animation-delay: 0.3s; }
+        #myCarousel.animated { animation-delay: 0.5s; }
+        #cardContainer .card.animated { animation-delay: 0.7s; }
+        #footer.animated { animation-delay: 0.9s; }
+   
     </style>
+
 </head><!-- Navbar inferior con menú desplegable -->
 <body>
     <!-- Navbar superior -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-upper">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-upper animated" id="navbarUpper">
         <div class="container">
             <!-- Contactos alineados a la izquierda -->
             <span class="navbar-text mr-auto text-white">
@@ -168,7 +196,7 @@
     </nav>
 
     <!-- Navbar inferior con menú desplegable -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-lower">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-lower animated " id="navbarLower">
         <div class="container">
             <!-- Brand y botón de hamburguesa -->
             <a class="navbar-brand" href="Home.aspx">
@@ -213,7 +241,7 @@
     </nav>
     <br />
 
-   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+   <div id="myCarousel" class="carousel slide animated" data-ride="carousel">
     <div class="carousel-inner" runat="server" id="carouselInner">
         <asp:Literal ID="carouselLiteral" runat="server"></asp:Literal>
     </div>
@@ -245,11 +273,11 @@
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>--%>
-    <div class="container mt-5">
+    <div class="container mt-5  animated" id="cardContainer">
         <div class="row">
             <!--Primer tarjeta-->
             <div class="col-md-3">
-                <div class="card">
+                <div class="card ">
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28826.22417714386!2d-100.976662!3d25.428967!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86880d520e241d55%3A0x83b4e4dfe30412b9!2sUAdeC%20Unidad%20Campo%20Redondo!5e0!3m2!1ses-419!2smx!4v1715652731584!5m2!1ses-419!2smx" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
@@ -262,7 +290,7 @@
             </div>
             <!--Segunda tarjeta-->
             <div class="col-md-3">
-                <div class="card">
+                <div class="card ">
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28826.22417714386!2d-100.976662!3d25.428967!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86880d520e241d55%3A0x83b4e4dfe30412b9!2sUAdeC%20Unidad%20Campo%20Redondo!5e0!3m2!1ses-419!2smx!4v1715654975153!5m2!1ses-419!2smx" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
@@ -275,7 +303,7 @@
             </div>
             <!--Tercera tarjeta-->
             <div class="col-md-3">
-                <div class="card">
+                <div class="card ">
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d57601.41206836839!2d-103.442607!3d25.535437!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdbdd84a6f3c3%3A0x5b49bb5310e6efcd!2sUniversidad%20Aut%C3%B3noma%20de%20Coahuila!5e0!3m2!1ses-419!2smx!4v1715655060961!5m2!1ses-419!2smx" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
@@ -288,7 +316,7 @@
             </div>
             <!--Cuarta tarjeta-->
             <div class="col-md-3">
-                <div class="card">
+                <div class="card ">
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d56907.11495453538!2d-101.416461!3d26.944892!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868bcc3495a98fc7%3A0x481176202fae884e!2sU.%20A.%20de%20C.!5e0!3m2!1ses-419!2smx!4v1715655103581!5m2!1ses-419!2smx" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
@@ -303,9 +331,10 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <span id="year"></span> UAdeC | Designed by CGTIC
+    <footer class="footer animated" id="footer">
+        <div class="container d-flex justify-content-start">
+            <%--<span id="year"></span> UAdeC | Designed by --%>
+            <img src="assets/img/03.png" alt="Logo adicional" style="max-width: 250px; margin-left: 10px;"> 
         </div>
     </footer>
 

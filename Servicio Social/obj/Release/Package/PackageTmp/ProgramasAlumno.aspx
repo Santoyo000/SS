@@ -82,6 +82,7 @@
                         <th style="display: none;">ID</th>
                         <th>Dependencia</th>
                         <th>Programa</th>
+                        <th>Estatus</th>
                         <th>Operación</th>
                     </tr>
                 </thead>
@@ -93,11 +94,13 @@
                                     <td style="display: none;"><%# Eval("idProgramaAlumno") %></td>
                                     <td><%# Eval("Dependencia") %></td>
                                     <td><%# Eval("sNombre_Programa") %></td>
+                                    <td><%# Eval("Estatus") %></td>
                                     <td style="display: none;"><%# Eval("idDetallePrograma") %></td>
                                     <td>
                                         <div class="d-flex justify-content-center">
+                                            <asp:LinkButton ID="btnEvaluacion" runat="server" CommandName="cmEvaluacion" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnEvaluarPrograma_Click"  CssClass="btn " style="background-color: #6a0dad; color: white; border: none;"><span data-toggle="tooltip" title="EvaluarPrograma"><i class="fas fa-pen-to-square"></i> </asp:LinkButton>
+                                            <asp:LinkButton ID="btnLiberar" runat="server" CommandName="cmLiberar" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberar_Click"  CssClass="btn " style="background-color: #5fc431; color: white; border: none;"><span data-toggle="tooltip" title="Informe Servicio"><i class="fas fa-regular fa-file"></i> </asp:LinkButton>
                                             <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-primary" data-toggle="modal" data-target="#myModalData" OnClick='<%# "loadModalDataProgram(" + Eval("idDetallePrograma") + ")" %>'><span data-toggle="tooltip" title="Ver detalles" ><i class="fas fa-search"></i></asp:LinkButton>
-                                            <%-- <asp:LinkButton ID="btnLiberar" runat="server" CommandName="cmLiberar" CommandArgument='<%# Eval("idProgramaAlumno") %>' CssClass="btn btn-primary btn-sm" OnClick="btnLiberar_Click"><span data-toggle="tooltip" title="Informe Servicio"><i class="fas fa-regular fa-file"></i></asp:LinkButton>--%>
                                             <asp:LinkButton ID="btnDetalle" runat="server" CssClass="btn btn-primary" data-toggle="modal" data-target="#myModal" OnClick='<%# "loadModalData(" + Eval("idProgramaAlumno") + ")" %>'><span data-toggle="tooltip" title="Ver historial" ><i class="fas fa-history"></i></asp:LinkButton>
                                             <asp:LinkButton ID="btnAnular" runat="server" CommandName="cmAnular" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClientClick='return confirm("Se liberará el lugar ¿Desea continuar?");' CssClass="btn btn-danger btn-sm" OnClick="btnAnular_Click"><span data-toggle="tooltip" title="Liberar lugar"><i class="fas fa-window-close"></i></asp:LinkButton>
                                         </div>

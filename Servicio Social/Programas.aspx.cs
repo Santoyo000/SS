@@ -487,7 +487,7 @@ namespace Servicio_Social
                     case "2":
                         queryString = "SELECT * FROM (SELECT ESC.sClave + ' - ' + ESC.sDescripcion [Descripcion], PLA.kpEscuela_UAdeC FROM SM_PLAN_EST_ESCUELA AS PLA " +
                                     "JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC " +
-                                    "WHERE PLA.kpPlan_Estudio = 1171698 AND ESC.kpUnidad = @idUnidad " +
+                                    "WHERE PLA.kpPlan_Estudio IN ( 1171698,1177965) AND ESC.kpUnidad = @idUnidad " +
                                     "UNION ALL " +
                                     " SELECT sClave + ' - ' + sDescripcion AS Descripcion, idEscuelaUAC " +
                                     "FROM SP_ESCUELA_UAC " +
@@ -496,7 +496,7 @@ namespace Servicio_Social
                     default:
                         queryString = "SELECT ESC.sClave + ' - ' + ESC.sDescripcion [Descripcion], PLA.kpEscuela_UAdeC FROM SM_PLAN_EST_ESCUELA AS PLA " +
                                     "JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC " +
-                                    "WHERE PLA.kpPlan_Estudio = 1171698 AND ESC.kpUnidad = @idUnidad  ORDER BY 1";
+                                    "WHERE PLA.kpPlan_Estudio IN ( 1171698,1177965) AND ESC.kpUnidad = @idUnidad  ORDER BY 1";
                         break;
 
 
@@ -589,7 +589,7 @@ namespace Servicio_Social
                 // Filtrar la consulta del segundo DropDownList utilizando el valor seleccionado en DDLEscuela
                 queryString = "SELECT ESC.sClave + ' - ' + ESC.sDescripcion [Descripcion], PLA.kpEscuela_UAdeC FROM SM_PLAN_EST_ESCUELA AS PLA " +
                                 "JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC " +
-                                "WHERE PLA.kpPlan_Estudio = 1171698 AND ESC.kpUnidad = @idUnidad;";
+                                "WHERE PLA.kpPlan_Estudio IN ( 1171698,1177965)  AND ESC.kpUnidad = @idUnidad;";
             }
 
             using (SqlConnection con = new SqlConnection(SQL))
@@ -627,7 +627,7 @@ namespace Servicio_Social
             using (SqlConnection con = new SqlConnection(SQL))
             {
                 con.Open();
-                string queryString = "SELECT sDescripcion, idCiclo FROM SP_CICLO  WHERE idCiclo= 663973";
+                string queryString = "SELECT sDescripcion, idCiclo FROM SP_CICLO  WHERE bServicioSocial= 1";
 
                 // Crea un DataSet para almacenar los resultados de la consulta
                 DataSet ds99 = new DataSet();

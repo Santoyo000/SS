@@ -76,7 +76,7 @@ namespace Servicio_Social
             DataTable dt = new DataTable();
             totalRecords = 0;
 
-            using (SqlConnection con = new SqlConnection(conString))
+            using (SqlConnection con = new SqlConnection(conString)) 
             {
                 SqlCommand countCmd = new SqlCommand("sp_ContarProgramasSeleccionados_ss", con);
                 countCmd.CommandType = CommandType.StoredProcedure;
@@ -118,29 +118,197 @@ namespace Servicio_Social
             // Actualiza la etiqueta de número de página
             lblPageNumber.Text = $"Página {pageIndex + 1} de {TotalPages}";
         }
+
         protected void RepeaterProgramas_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 DataRowView row = (DataRowView)e.Item.DataItem;
                 LinkButton btnAnular = (LinkButton)e.Item.FindControl("btnAnular");
+                LinkButton btnEvaluacion = (LinkButton)e.Item.FindControl("btnEvaluacion");
+                LinkButton btnLiberar = (LinkButton)e.Item.FindControl("btnLiberar");
                 string programa = row["kpEstatus"].ToString().Trim();
 
-                if (string.IsNullOrEmpty(programa))
+                // Diccionario para mapear las configuraciones de visibilidad según el estado
+                var visibilidadBotones = new Dictionary<string, Action>
+        {
+            { "7", () => { btnAnular.Visible = false; btnEvaluacion.Visible = false; btnLiberar.Visible = false; } },     // CANCELADO
+            { "20707", () => { btnAnular.Visible = true; btnEvaluacion.Visible = false; btnLiberar.Visible = false; } }, // EN ESPERA
+            { "21522", () => { btnAnular.Visible = false; btnEvaluacion.Visible = false; btnLiberar.Visible = false; } }, // AUTORIZADO POR DEPENDENCIA
+            { "22113", () => { btnAnular.Visible = false; btnEvaluacion.Visible = false; btnLiberar.Visible = false; } }, // NO AUTORIZADO POR DEPENDENCIA
+            { "22116", () => {
+                bool encuestaRealizada = AlumnoYaHizoEncuesta();
+                btnAnular.Visible = false;
+                btnEvaluacion.Visible = !encuestaRealizada; // Visible si no hizo encuesta
+                btnLiberar.Visible = encuestaRealizada;    // Visible si ya hizo encuesta
+            } }, // LIBERADO DEP
+            { "42186", () => {
+                bool encuestaRealizada = AlumnoYaHizoEncuesta();
+                btnAnular.Visible = false;
+                btnEvaluacion.Visible = !encuestaRealizada;
+                btnLiberar.Visible = encuestaRealizada; // Visible si ya hizo encuesta
+            } }, // LIBERADO ESC
+            { "42187", () => {
+                bool encuestaRealizada = AlumnoYaHizoEncuesta();
+                btnAnular.Visible = false;
+                btnEvaluacion.Visible = !encuestaRealizada;
+                btnLiberar.Visible = encuestaRealizada; // Visible si ya hizo encuesta
+            } }, // LIBERADO UNI
+            { "42188", () => { btnAnular.Visible = false; btnEvaluacion.Visible = false; btnLiberar.Visible = false; } }  // LIBERADO DSS
+        };
+
+                // Configuración por defecto si el programa es nulo o no está en el diccionario
+                if (string.IsNullOrEmpty(programa) || !visibilidadBotones.ContainsKey(programa))
                 {
                     btnAnular.Visible = false;
+                    btnEvaluacion.Visible = false;
+                    btnLiberar.Visible = false;
                 }
                 else
                 {
-                    if (programa == "7")
-                        btnAnular.Visible = false;
-                    if (programa == "20707")
-                        btnAnular.Visible = true;
-                    if (programa == "21522")
-                        btnAnular.Visible = false;
-                    if (programa == "22113")
-                        btnAnular.Visible = false;
+                    // Ejecutar la configuración correspondiente al estatus
+                    visibilidadBotones[programa].Invoke();
                 }
+            }
+        
+
+        //protected void RepeaterProgramas_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        //{
+        //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        //    {
+        //        DataRowView row = (DataRowView)e.Item.DataItem;
+        //        LinkButton btnAnular = (LinkButton)e.Item.FindControl("btnAnular");
+        //        LinkButton btnEvaluacion = (LinkButton)e.Item.FindControl("btnEvaluacion");
+        //        LinkButton btnLiberar = (LinkButton)e.Item.FindControl("btnLiberar");
+        //        string programa = row["kpEstatus"].ToString().Trim();
+
+        //        // Diccionario para mapear las configuraciones de visibilidad según el estado
+        //        var visibilidadBotones = new Dictionary<string, (bool Anular, bool Evaluacion, bool Liberar)>
+        //{
+        //    { "7", (false, false, false) },      // CANCELADO
+        //    { "20707", (true, false, false) },  // EN ESPERA
+        //    { "21522", (false, false, false) }, // AUTORIZADO POR DEPENDENCIA
+        //    { "22113", (false, false, false) }, // NO AUTORIZADO POR DEPENDENCIA
+        //    { "22116", (false, true, false) }  , // LIBERADO DEP
+        //    { "42186", (false, false, false) } ,  // LLIBERADO ESC
+        //    { "42187", (false, false, false) }  , // LIBERADO UNI
+        //    { "42188", (false, false, false) }   // LIBERADO DSS
+        //};
+
+        //        // Configuración por defecto si programa es nulo o no está en el diccionario
+        //        (bool Anular, bool Evaluacion, bool Liberar) configuracion = (false, false, false);
+
+        //        // Obtener configuración según el estado
+        //        if (!string.IsNullOrEmpty(programa) && visibilidadBotones.ContainsKey(programa))
+        //        {
+        //            configuracion = visibilidadBotones[programa];
+        //        }
+
+        //        // Asignar visibilidad por defecto
+        //        btnAnular.Visible = configuracion.Anular;
+        //        btnEvaluacion.Visible = configuracion.Evaluacion;
+        //        btnLiberar.Visible = configuracion.Liberar;
+
+        //        // Manejo especial para "42188" (LIBERADO DSS)
+        //        if (programa == "22116")
+        //        {
+        //            bool encuestaRealizada = AlumnoYaHizoEncuesta();
+        //            btnEvaluacion.Visible = !encuestaRealizada;
+        //            btnLiberar.Visible = encuestaRealizada;
+        //        }
+        //    }
+
+
+        //if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        //{
+        //    DataRowView row = (DataRowView)e.Item.DataItem;
+        //    LinkButton btnAnular = (LinkButton)e.Item.FindControl("btnAnular");
+        //    string programa = row["kpEstatus"].ToString().Trim();
+        //    LinkButton btnEvaluacion = (LinkButton)e.Item.FindControl("btnEvaluacion");
+        //    LinkButton btnLiberar = (LinkButton)e.Item.FindControl("btnLiberar");
+
+        //    if (string.IsNullOrEmpty(programa))
+        //    {
+        //        btnAnular.Visible = false;
+        //        btnEvaluacion.Visible = false;
+        //        btnLiberar.Visible = false;
+        //    }
+        //    else
+        //    {
+        //        if (programa == "7") //7	CANCELADO
+        //        { 
+        //            btnAnular.Visible = false;
+        //            btnEvaluacion.Visible = false;
+        //            btnLiberar.Visible = false;
+        //        }
+        //        if (programa == "20707") //23	EN ESPERA
+        //        { 
+        //            btnAnular.Visible = true;
+        //            btnEvaluacion.Visible = false;
+        //            btnLiberar.Visible = false;
+        //        }
+        //        if (programa == "21522") //24	AUTORIZADO POR DEPENDENCIA
+        //        { 
+        //            btnAnular.Visible = false;
+        //            btnEvaluacion.Visible = false;
+        //            btnLiberar.Visible = false;
+        //        }
+        //        if (programa == "22113") //27	NO AUTORIZADO POR DEPENDENCIA
+        //        { 
+        //            btnAnular.Visible = false;
+        //            btnEvaluacion.Visible = false;
+        //            btnLiberar.Visible = false;
+        //        }
+        //        if (programa == "42188") //36	LIBERADO DSS
+        //        {
+        //            btnAnular.Visible = false;
+        //            btnEvaluacion.Visible = true;
+        //            btnLiberar.Visible = false;
+
+        //            // Ocultar o mostrar btnEvaluacion según el resultado de AlumnoYaHizoEncuesta
+        //            bool encuestaRealizada = AlumnoYaHizoEncuesta();
+        //            btnEvaluacion.Visible = !encuestaRealizada;
+        //            btnLiberar.Visible = encuestaRealizada;
+        //        }
+
+
+        //    }
+
+
+
+        //}
+    }
+
+        private bool AlumnoYaHizoEncuesta()
+        {
+            string idAlumno = Session["ID"].ToString();
+            string connectionString = GlobalConstants.SQL;
+            string query = "SELECT COUNT(1) FROM SM_EVALUACION_PROGRAMA_SS WHERE kmAlumno = @kmAlumno";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@kmAlumno", idAlumno));
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+
+                        // Si el alumno ya hizo la encuesta, redirige a alumnospostulados.aspx
+                        if (count > 0)
+                        {
+                            return true;
+                        }
+
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de la excepción, se puede registrar el error si es necesario
+                return false;
             }
         }
         #endregion
@@ -235,6 +403,12 @@ namespace Servicio_Social
             LinkButton btn = (LinkButton)(sender);
             string idPrograma = btn.CommandArgument;
             Response.Redirect("InformeEstudiante.aspx?idProgramaAlumno=" + idPrograma);
+        }
+        protected void btnEvaluarPrograma_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)(sender);
+            string nst = btn.CommandArgument;
+            Response.Redirect("EvaluacionPrograma.aspx?nst=" + nst);
         }
         protected void btnAnular_Click(object sender, EventArgs e)
         {

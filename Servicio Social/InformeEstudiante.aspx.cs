@@ -7,6 +7,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.Web;
+using CrystalDecisions.Shared;
+using System.IO;
+using Table = CrystalDecisions.CrystalReports.Engine.Table;
+using System.Data;
 
 namespace Servicio_Social
 {
@@ -14,7 +19,14 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["tipoUsuario"] == null)
+            {
+                Response.Redirect("LoginEstudiante.aspx");
+            }
+            //else 
+            //{
+            //    Response.Redirect("InformeEstudiante.aspx");
+            //}
             if (!IsPostBack) // Solo cargar datos en la primera carga
             {
                 string idProgramaAlumno = Request.QueryString["idProgramaAlumno"];
@@ -36,7 +48,9 @@ namespace Servicio_Social
 
                 // Primera consulta: siempre carga los datos básicos del programa y alumno
                 string queryPrograma = @"SELECT PA.dfechaRegistro, 
-                                        PER.sNombres + ' ' + PER.sApellido_Paterno + ' ' + PER.sApellido_Materno AS sNombre_Completo,
+                                        COALESCE(PER.sNombres, '') + ' ' + 
+                                        COALESCE(PER.sApellido_Paterno, '') + ' ' + 
+                                        COALESCE(PER.sApellido_Materno, '') AS sNombre_Completo,
                                         P.sNombre_Programa, sResponsable
                                  FROM SM_PROGRAMA AS P
                                  INNER JOIN SM_DETALLE_PROGRAMA AS DP ON P.idPrograma = DP.kmPrograma
@@ -125,6 +139,7 @@ namespace Servicio_Social
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            
             // Obtener los datos del formulario
             string actividades = txtActividades.Text;
             string poblacionBeneficiada = txtPoblacionBeneficiada.Text;
@@ -194,26 +209,169 @@ namespace Servicio_Social
             }
 
             // Mostrar el modal de éxito
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "$('#ModalExitoso').modal('show');", true);
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "$('#ModalExitoso').modal('show');", true);
         }
 
-        private void GenerarReporte(int idProgramaAlumno)
+        private void GenerarReporte(int kmProgramaAlumno)
         {
-            // Ruta del archivo .rpt de Crystal Reports
-            string reportPath = Server.MapPath("~/InformeFinalSS.rpt");
+            //string connectionString = GlobalConstants.SQL;
+            //try
+            //{
+            //    using (SqlConnection connection = new SqlConnection(connectionString))
+            //    {
+            //        connection.Open();
 
-            // Crear una instancia del reporte
-            ReportDocument reporte = new ReportDocument();
-            reporte.Load(reportPath);
+            //        // Configurar el DataSet para el reporte
+            //        DataSet dsInforme = new DataSet();
+            //        SqlCommand cmd = connection.CreateCommand();
+            //        SqlDataAdapter data = new SqlDataAdapter();
 
-            // Pasar el parámetro al reporte
-            reporte.SetParameterValue("idProgramaAlumno", idProgramaAlumno);
+            //        // Configurar el procedimiento almacenado y sus parámetros
+            //        cmd.CommandText = "sp_Informe_Estudiante_ss";
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.Add("kmProgramaAlumno", SqlDbType.Int).Value = kmProgramaAlumno;
+            //        data.SelectCommand = cmd;
 
-            // Enlazar el reporte con el visor de Crystal Reports
-            crvInformeEstudiante.ReportSource = reporte;
+            //        // Llenar el DataSet
+            //        data.Fill(dsInforme);
+            //        connection.Close();
 
-            // Configurar las opciones de exportación si es necesario
-            crvInformeEstudiante.RefreshReport();
+            //        if (dsInforme.Tables[0].Rows.Count > 0)
+            //        {
+            //            try
+            //            {
+            //                using (ReportDocument reporte = new ReportDocument())
+            //                {
+            //                    // Cargar el reporte de Crystal Reports
+            //                    string reportPath = Server.MapPath("~/Reportes/InformeFinalSS.rpt");
+            //                    reporte.Load(reportPath);
+
+
+
+            //                    // Asignar la fuente de datos al informe
+            //                    reporte.SetDataSource(dsInforme);
+
+            //                    // Establecer el valor del parámetro después de asignar la fuente de datos
+            //                    if (reporte.ParameterFields["@kmProgramaAlumno"] != null)
+            //                    {
+            //                        reporte.SetParameterValue("@kmProgramaAlumno", kmProgramaAlumno);
+            //                    }
+            //                     // Configurar información de conexión para cada tabla en el informe
+            //                    ConnectionInfo connectionInfo = new ConnectionInfo
+            //                    {
+            //                        ServerName = "148.212.19.202",
+            //                        DatabaseName = "PDU202",
+            //                        UserID = "sa",
+            //                        Password = "PDU2021*."
+            //                    };
+
+            //                    foreach (Table table in reporte.Database.Tables)
+            //                    {
+            //                        TableLogOnInfo tableLogOnInfo = table.LogOnInfo;
+            //                        tableLogOnInfo.ConnectionInfo = connectionInfo;
+            //                        table.ApplyLogOnInfo(tableLogOnInfo);
+            //                    }
+
+            //                    // Exportar el reporte a un Stream en formato PDF
+            //                    using (Stream stream = reporte.ExportToStream(ExportFormatType.PortableDocFormat))
+            //                    {
+            //                        // Convertir el Stream en un array de bytes
+            //                        byte[] bytes = new byte[stream.Length];
+            //                        stream.Read(bytes, 0, (int)stream.Length);
+
+            //                        // Convertir los bytes a una cadena Base64
+            //                        string base64String = Convert.ToBase64String(bytes);
+
+            //                        // Renderizar el PDF en un iframe
+            //                        rptVistaPrevia.Attributes["src"] = "data:application/pdf;base64," + base64String;
+            //                    }
+            //                }
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                // Manejar errores al generar el reporte
+            //                Response.Write("<script>alert('Error al generar el reporte: " + ex.Message + "');</script>");
+            //            }
+            //        }
+            //        else
+            //        {
+            //            // Mostrar mensaje de error si no hay datos
+            //            rptVistaPrevia.Visible = false;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Manejar errores de conexión o SQL
+            //    Response.Write("<script>alert('Ha ocurrido un error: " + ex.Message + "');</script>");
+            //}
+
+
+            try
+            {
+                // Ruta del archivo .rpt de Crystal Reports
+                string reportPath = Server.MapPath("~/Reportes/InformeFinalSS.rpt");
+
+                using (ReportDocument reporte = new ReportDocument())
+                {
+                    // Cargar el reporte
+                    reporte.Load(reportPath);
+
+                    // Establecer el login para la conexión de base de datos
+                    ConnectionInfo connectionInfo = new ConnectionInfo
+                    {
+                        ServerName = "148.212.19.202",
+                        DatabaseName = "PDU202",
+                        UserID = "sa",
+                        Password = "PDU2021*."
+                    };
+
+                    // Iterar a través de las tablas del reporte y establecer la conexión
+                    foreach (Table table in reporte.Database.Tables)
+                    {
+                        TableLogOnInfo tableLogOnInfo = table.LogOnInfo;
+                        tableLogOnInfo.ConnectionInfo = connectionInfo;
+                        table.ApplyLogOnInfo(tableLogOnInfo);
+                    }
+
+                    // Pasar el parámetro al reporte
+                    reporte.SetParameterValue("@kmProgramaAlumno", kmProgramaAlumno);
+
+                    // Exportar el reporte a un Stream en formato PDF
+                    using (Stream stream = reporte.ExportToStream(ExportFormatType.PortableDocFormat))
+                    {
+                        // Convierte el Stream en un array de bytes
+                        byte[] bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, (int)stream.Length);
+
+                        // Convierte los bytes a una cadena Base64
+                        string base64String = Convert.ToBase64String(bytes);
+
+                        // Renderiza el PDF dentro de un iframe en la página
+
+
+                        // Asignar el PDF a un control oculto en la página
+                        hiddenPdfBase64.Value = base64String;
+
+                        // Mostrar el modal con el PDF
+
+                        ScriptManager.RegisterStartupScript(this, GetType(), "ShowPdfModal", "ocultarOverlay(); $('#pdfModal').modal('show');", true);
+
+                    }
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                // Mostrar detalles del error en caso de que ocurra una excepción
+                Response.Write("<script>alert('Error al generar el reporte: " + ex.Message + "');</script>");
+            }
+            catch (Exception ex)
+            {
+                // Capturar cualquier otro tipo de error
+                Response.Write("<script>alert('Ha ocurrido un error inesperado: " + ex.Message + "');</script>");
+            }
+
+
         }
 
     }

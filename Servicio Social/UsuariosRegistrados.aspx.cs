@@ -475,7 +475,7 @@ namespace Servicio_Social
             // Consulta SQL para obtener los datos paginados
             string query = "SELECT U.idUsuario, DS.sDescripcion, U.sCorreo, U.sPassword " +
                 "FROM SM_USUARIO U " +
-                "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
+              "INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.kmUsuario = U.idUsuario " +
                 "WHERE kpTipoUsuario = 2 ";
 
             if (tipoUsuario == "1")

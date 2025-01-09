@@ -151,6 +151,7 @@ namespace Servicio_Social
                             // Obtener datos de la consulta
                             Session["idUser"] = reader["idUsuario"].ToString();
                             Session["filtros"] = reader["kpTipoUsuario"].ToString() + '|' + reader["kpUnidad"].ToString() + '|' + reader["kpEscuela"].ToString();
+                            Session["tipoUsuario"] = reader["kpTipoUsuario"].ToString();
                             autorizado = reader["bAutorizado"].ToString();
                         }
                     }
@@ -207,6 +208,7 @@ namespace Servicio_Social
                             hashedPassword = reader["sPassword"].ToString();
                             Session["idUser"] = reader["idUsuario"].ToString();
                             Session["filtros"] = reader["kpTipoUsuario"].ToString() + '|' + reader["kpUnidad"].ToString() + '|' + reader["kpEscuela"].ToString();
+                            Session["tipoUsuario"] = reader["kpTipoUsuario"].ToString();
                             autorizado = reader["bAutorizado"].ToString();
 
                         }

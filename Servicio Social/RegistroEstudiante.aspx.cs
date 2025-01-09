@@ -420,6 +420,37 @@ namespace Servicio_Social
             }
         }
 
+        //private void InsertarSiNoExiste(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, SqlConnection connection, SqlTransaction transaction)
+        //{
+        //    // Verificar si el registro ya existe en SM_USUARIOS_ALUMNOS
+        //    string checkQuery = "SELECT COUNT(*) FROM SM_USUARIOS_ALUMNOS WHERE kmAlumno = @kmAlumno AND kpPlan = @kpPlan AND kpEscuela = @kpEscuela AND bAutorizado <> 99 ";
+
+        //    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection, transaction))
+        //    {
+        //        checkCmd.Parameters.AddWithValue("@kmAlumno", _idalumno);
+        //        checkCmd.Parameters.AddWithValue("@kpPlan", _PlanEstudio);
+        //        checkCmd.Parameters.AddWithValue("@kpEscuela", _Escuela);
+
+        //        int count = (int)checkCmd.ExecuteScalar();
+
+        //        // Si no existe, insertar el nuevo registro
+        //        if (count == 0)
+        //        {
+        //            string insertQuery = "INSERT INTO SM_USUARIOS_ALUMNOS (kmUsuario, kmAlumno, kpPlan, kpEscuela, bAutorizado) " +
+        //                                 "VALUES (@kmUsuario, @kmAlumno, @kpPlan, @kpEscuela, @bAutorizado);";
+
+        //            using (SqlCommand insertCmd = new SqlCommand(insertQuery, connection, transaction))
+        //            {
+        //                insertCmd.Parameters.AddWithValue("@kmUsuario", _idUsuario);
+        //                insertCmd.Parameters.AddWithValue("@kmAlumno", _idalumno);
+        //                insertCmd.Parameters.AddWithValue("@kpPlan", _PlanEstudio);
+        //                insertCmd.Parameters.AddWithValue("@kpEscuela", _Escuela);
+        //                insertCmd.Parameters.AddWithValue("@bAutorizado", 1);
+        //                insertCmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //    }
+        //}
         private void InsertarSiNoExiste(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, SqlConnection connection, SqlTransaction transaction)
         {
             // Verificar si el registro ya existe en SM_USUARIOS_ALUMNOS
@@ -436,8 +467,22 @@ namespace Servicio_Social
                 // Si no existe, insertar el nuevo registro
                 if (count == 0)
                 {
-                    string insertQuery = "INSERT INTO SM_USUARIOS_ALUMNOS (kmUsuario, kmAlumno, kpPlan, kpEscuela, bAutorizado) " +
-                                         "VALUES (@kmUsuario, @kmAlumno, @kpPlan, @kpEscuela, @bAutorizado);";
+                    // Obtener el valor de idCiclo desde SP_CICLO
+                    string cicloQuery = "SELECT idCiclo FROM SP_CICLO WHERE bServicioSocial = 1";
+                    int? kpPeriodo = null;
+
+                    using (SqlCommand cicloCmd = new SqlCommand(cicloQuery, connection, transaction))
+                    {
+                        object result = cicloCmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            kpPeriodo = Convert.ToInt32(result);
+                        }
+                    }
+
+                    // Insertar el nuevo registro en SM_USUARIOS_ALUMNOS
+                    string insertQuery = "INSERT INTO SM_USUARIOS_ALUMNOS (kmUsuario, kmAlumno, kpPlan, kpEscuela, kpPeriodo, bAutorizado) " +
+                                         "VALUES (@kmUsuario, @kmAlumno, @kpPlan, @kpEscuela, @kpPeriodo, @bAutorizado);";
 
                     using (SqlCommand insertCmd = new SqlCommand(insertQuery, connection, transaction))
                     {
@@ -445,13 +490,22 @@ namespace Servicio_Social
                         insertCmd.Parameters.AddWithValue("@kmAlumno", _idalumno);
                         insertCmd.Parameters.AddWithValue("@kpPlan", _PlanEstudio);
                         insertCmd.Parameters.AddWithValue("@kpEscuela", _Escuela);
-                        insertCmd.Parameters.AddWithValue("@bAutorizado", 1);
+
+                        if (kpPeriodo.HasValue)
+                        {
+                            insertCmd.Parameters.AddWithValue("@kpPeriodo", kpPeriodo.Value);
+                        }
+                        else
+                        {
+                            insertCmd.Parameters.AddWithValue("@kpPeriodo", DBNull.Value);
+                        }
+
+                        insertCmd.Parameters.AddWithValue("@bAutorizado", 20707);
                         insertCmd.ExecuteNonQuery();
                     }
                 }
             }
         }
-
         public bool VerificarCorreo(string correo, string escuela, string plan, string matricula)
         {
             string connectionString = GlobalConstants.SQL; // Reemplaza esto con tu cadena de conexión real

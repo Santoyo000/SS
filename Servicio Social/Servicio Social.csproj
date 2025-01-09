@@ -51,14 +51,68 @@
     <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
     </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64" />
+    <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.VSDesigner, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64" />
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="DocumentFormat.OpenXml, Version=3.1.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.3.1.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="DotVVM.Contrib, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotVVM.Contrib.CrystalReportViewer.2.3.2\lib\net451\DotVVM.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="DotVVM.Core, Version=2.3.1.0, Culture=neutral, PublicKeyToken=23f3607db32275da, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotVVM.Core.2.3.1\lib\net451\DotVVM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotVVM.Framework, Version=2.3.1.0, Culture=neutral, PublicKeyToken=23f3607db32275da, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotVVM.2.3.1\lib\net451\DotVVM.Framework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -114,8 +168,17 @@
     <Reference Include="itext.svg, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext.8.0.3\lib\net461\itext.svg.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.0.0\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -158,6 +221,9 @@
     </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.NonGeneric, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.NonGeneric.4.0.1\lib\net46\System.Collections.NonGeneric.dll</HintPath>
@@ -264,6 +330,9 @@
       <HintPath>..\packages\System.Reflection.4.1.0\lib\net462\System.Reflection.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.0.21.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="System.Reflection.TypeExtensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reflection.TypeExtensions.4.1.0\lib\net462\System.Reflection.TypeExtensions.dll</HintPath>
@@ -396,6 +465,7 @@
     <Content Include="About.aspx" />
     <Content Include="AlumnosPostulados.aspx" />
     <Content Include="AlumnosRegistrados.aspx" />
+    <Content Include="assets\img\03.png" />
     <Content Include="assets\img\24.jpg" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\custom.css" />
@@ -446,12 +516,15 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CrystalReportViewerPage.aspx" />
     <Content Include="css\CardCss.css" />
     <Content Include="css\EstiloProgramas.css" />
     <Content Include="css\style.css" />
     <Content Include="Default.aspx" />
     <Content Include="EditarDetallePrograma.aspx" />
     <Content Include="EditarPrograma.aspx" />
+    <Content Include="EvaluacionEstudiante.aspx" />
+    <Content Include="EvaluacionPrograma.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Image\loading.gif" />
     <Content Include="Image\LOGG.jpg" />
@@ -462,6 +535,7 @@
     <Content Include="Image\UADEC_AZUL2.png" />
     <Content Include="Image\UADEC_BLANCO.png" />
     <Content Include="InformeEstudiante.aspx" />
+    <Content Include="LiberarEstudiante.aspx" />
     <Content Include="LoginDependencia.aspx" />
     <Content Include="css\Estilos.css" />
     <Content Include="DependenciasRegistradas.aspx" />
@@ -493,6 +567,7 @@
     <Content Include="RegistroEstudiante.aspx" />
     <Content Include="RegistroResponsable.aspx" />
     <Content Include="Reglamento.aspx" />
+    <Content Include="ReportesSS.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -626,6 +701,13 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CrystalReportViewerPage.aspx.cs">
+      <DependentUpon>CrystalReportViewerPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrystalReportViewerPage.aspx.designer.cs">
+      <DependentUpon>CrystalReportViewerPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -647,6 +729,20 @@
     <Compile Include="EditarPrograma.aspx.designer.cs">
       <DependentUpon>EditarPrograma.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EvaluacionEstudiante.aspx.cs">
+      <DependentUpon>EvaluacionEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EvaluacionEstudiante.aspx.designer.cs">
+      <DependentUpon>EvaluacionEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EvaluacionPrograma.aspx.cs">
+      <DependentUpon>EvaluacionPrograma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EvaluacionPrograma.aspx.designer.cs">
+      <DependentUpon>EvaluacionPrograma.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -660,6 +756,13 @@
     </Compile>
     <Compile Include="InformeEstudiante.aspx.designer.cs">
       <DependentUpon>InformeEstudiante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LiberarEstudiante.aspx.cs">
+      <DependentUpon>LiberarEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LiberarEstudiante.aspx.designer.cs">
+      <DependentUpon>LiberarEstudiante.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.Master.cs">
       <DependentUpon>Login.Master</DependentUpon>
@@ -856,10 +959,23 @@
     <Compile Include="Reglamento.aspx.designer.cs">
       <DependentUpon>Reglamento.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ReportesSS.aspx.cs">
+      <DependentUpon>ReportesSS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportesSS.aspx.designer.cs">
+      <DependentUpon>ReportesSS.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\InformeFinalSS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InformeFinalSS.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\TotalAlumnosRegistrados.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TotalAlumnosRegistrados.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SeleccionarPrograma.aspx.cs">
@@ -949,6 +1065,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InformeFinalSS.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\TotalAlumnosRegistrados.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TotalAlumnosRegistrados.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
