@@ -966,6 +966,17 @@
     <Compile Include="ReportesSS.aspx.designer.cs">
       <DependentUpon>ReportesSS.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\ComprobanteFinalSS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComprobanteFinalSS.rpt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ConstanciaFinal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstanciaFinal.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\InformeFinalSS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1061,6 +1072,14 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\ComprobanteFinalSS.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ComprobanteFinalSS.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ConstanciaFinal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ConstanciaFinal.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\InformeFinalSS.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InformeFinalSS.cs</LastGenOutput>

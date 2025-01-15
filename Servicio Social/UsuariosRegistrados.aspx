@@ -27,6 +27,107 @@
     .table td {
         font-size: 13px; /* Tamaño de fuente más pequeño para las celdas de datos */
     }
+
+
+
+    .container-tabla {
+    margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
+    padding: 20px;
+    max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
+}
+/* Tabla */
+.table {
+    width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
+    margin-bottom: 30px; /* Espacio debajo de la tabla */
+    border-collapse: collapse;
+    background-color: #fff; /* Fondo blanco para la tabla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+}
+/* Bordes de la tabla */
+.table th, 
+.table td {
+    padding: 12px 15px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Bordes ligeros */
+    text-align: left; /* Texto alineado a la izquierda */
+    font-size: 14px; /* Tamaño de fuente */
+}
+/* Cabecera de la tabla */
+.table thead th {
+    background-color: #495057;   /*#516e96; Color de fondo de la cabecera */
+    color: #fff; /* Color de texto blanco */
+    font-weight: 400; /* Negrita */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    text-align: center;
+}
+/* Filas alternas para mayor legibilidad */
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+/* Resaltar filas al pasar el ratón */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+.form-control {
+   /* padding: 10px;*/
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-right: 10px; /* Espacio a la derecha */
+    width: 100%;
+}
+
+
+.form-control:focus {
+    border-color: #4086b1;
+    outline: none;
+    box-shadow: 0 0 5px rgba(64, 134, 177, 0.5);
+}
+
+/* Botón de búsqueda */
+.btn-primary {
+    background-color: #f7d05a;
+    border-color: #f7d05a;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #f1c40f;
+    border-color: #f1c40f;
+}
+
+
+
+.btn-excel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #52be80; 
+    color: white;
+    padding: 10px 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    float: right;
+    transition: background-color 0.3s ease;
+}
+
+.btn-excel:hover {
+    background-color: #1d633c;
+}
+
+.btn-excel i {
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+/* Ajuste para el icono de Excel */
+.btn-excel .fa-file-excel {
+    font-size: 18px;
+    color: white;
+}
     </style>
     <script type="text/javascript">
         function setActiveNavLink(activeId) {
