@@ -105,8 +105,54 @@
             $("#<%= ddlEscuela.ClientID %>").off("change").on("change", handleEscuelaChange);
             $("#<%= txtPasswordConfirm.ClientID %>").off("keyup").on("keyup", validarPassword);
         });
-    });
-</script>
+       });
+
+
+       // Función para permitir solo números en el campo  NUEVO AÑADIDO 19/01/2025
+       function soloNumeros(event) {
+           var charCode = (event.which) ? event.which : event.keyCode;
+           // Permite solo los números del 0 al 9
+           if (charCode < 48 || charCode > 57) {
+               return false;
+           }
+           return true;
+       }
+
+       // Función para validar que la longitud no exceda de 2 caracteres
+       function validarSemestre() {
+           var txtSemestre = document.getElementById('<%= txtSemestre.ClientID %>');
+    var semestre = txtSemestre.value;
+
+    // Limitar a 2 caracteres
+    if (semestre.length > 2) {
+        txtSemestre.value = semestre.substring(0, 2);
+    }
+
+    // Usar AJAX para enviar el valor al servidor si necesitas hacer una validación
+    if (semestre.length === 2) {
+        // Llamada AJAX para validar el semestre en el servidor (si es necesario)
+        $.ajax({
+            type: "POST",
+            url: "TuPagina.aspx/ValidarSemestre",
+            data: JSON.stringify({ semestre: semestre }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.d) {
+                    // Validación exitosa
+                    document.getElementById('<%= litMensaje.ClientID %>').innerText = 'Semestre válido';
+                } else {
+                    // Mostrar mensaje de error si el semestre no es válido
+                    document.getElementById('<%= litMensaje.ClientID %>').innerText = 'Semestre inválido';
+                }
+            },
+            failure: function (response) {
+                alert('Error en la validación del semestre.');
+            }
+        });
+    }
+}
+   </script>
 
 
     <style>
@@ -222,6 +268,7 @@
                             <asp:Label runat="server" Style="color: #ff0d0d" ID="lblMensajePlanEstudio"></asp:Label>
                         </div>
                     </div>
+                     
                     <asp:Panel ID="pnlPassword" Visible="false" runat="server">
                         <div class="row">
                             <div class="col-md-6">
@@ -239,6 +286,15 @@
                             </div>
                         </div>
                     </asp:Panel>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                           <asp:Label ID="lblSemestre" runat="server" Text="Semestre:"></asp:Label>
+                           <asp:TextBox ID="txtSemestre" runat="server" CssClass="form-control" required="required"  maxlength="2" oninput="validarSemestre()"  onkeypress="return soloNumeros(event);"></asp:TextBox>
+                            <asp:Literal ID="litMensaje" runat="server" />
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <div class="text-center">
                     <asp:Label runat="server" Style="color: #ff0d0d" ID="lblError"></asp:Label>

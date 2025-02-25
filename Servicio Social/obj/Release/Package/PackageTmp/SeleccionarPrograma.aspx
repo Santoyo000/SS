@@ -1,21 +1,44 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SS.Master" AutoEventWireup="true" CodeBehind="SeleccionarPrograma.aspx.cs" Inherits="Servicio_Social.SeleccionarPrograma" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function loadModalData(id) {
-            $.ajax({
+      <%--  function loadModalData(id) {
+           $.ajax({
                 type: "POST",
                 url: '<%= ResolveUrl("SeleccionarPrograma.aspx/llenarDatosModal") %>',
                 data: JSON.stringify({ id: id }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    document.getElementById("modalBody").innerHTML = response.d;
+                    document.getElementById("modalBody<a href="Reportes / ConstanciaFinal.rpt">Reportes/ConstanciaFinal.rpt</a>").innerHTML = response.d;
                 },
                 failure: function (response) {
                     document.getElementById("modalBody").innerHTML = "Error loading data";
                 }
             });
+        }--%>
+
+
+        function loadModalData(id) {
+            $("#modalBody").html("Cargando..."); // Mensaje de carga temporal
+
+            $.ajax({
+                type: "POST",
+                url: '<%= ResolveUrl("SeleccionarPrograma.aspx/llenarDatosModal") %>',
+        data: JSON.stringify({ id: id }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $("#modalBody").html(response.d); // Inserta el HTML recibido
+            $("#myModal").modal("show"); // Asegura que el modal se muestra
+        },
+        error: function () {
+            $("#modalBody").html("Error al cargar los datos."); // Mensaje de error en el modal
+        }
+    });
         }
     </script>
     <style>

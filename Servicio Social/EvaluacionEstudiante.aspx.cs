@@ -60,6 +60,67 @@ namespace Servicio_Social
                 return false;
             }
         }
+        //protected void GuardarRespuestas(object sender, EventArgs e)
+        //{
+        //    // Número total de preguntas
+        //    int totalPreguntas = 11;
+
+        //    // Crear una lista para almacenar las respuestas
+        //    List<(int numeroPregunta, string respuesta)> respuestas = new List<(int, string)>();
+
+        //    for (int i = 1; i <= totalPreguntas; i++)
+        //    {
+
+
+        //        // IDs para cada opción en la pregunta actual
+        //        string idRadioButtonPesimo = $"rbPregunta{i}Pesimo";
+        //        string idRadioButtonDeficiente = $"rbPregunta{i}Deficiente";
+        //        string idRadioButtonSuficiente = $"rbPregunta{i}Suficiente";
+        //        string idRadioButtonAdecuado = $"rbPregunta{i}Adecuado";
+        //        string idRadioButtonExcelente = $"rbPregunta{i}Excelente";
+
+        //        RadioButton rbPesimo = (RadioButton)tbEncuesta.FindControl(idRadioButtonPesimo);
+        //        RadioButton rbDeficiente = (RadioButton)tbEncuesta.FindControl(idRadioButtonDeficiente);
+        //        RadioButton rbSuficiente = (RadioButton)tbEncuesta.FindControl(idRadioButtonSuficiente);
+        //        RadioButton rbAdecuado = (RadioButton)tbEncuesta.FindControl(idRadioButtonAdecuado);
+        //        RadioButton rbExcelente = (RadioButton)tbEncuesta.FindControl(idRadioButtonExcelente);
+
+
+
+        //        // Intentar encontrar el RadioButton seleccionado para cada opción en la pregunta actual
+        //        if (rbPesimo != null && rbPesimo.Checked)
+        //        {
+        //            respuestas.Add((i, "62071"));
+        //        }
+        //        else if (rbDeficiente != null && rbDeficiente.Checked)
+        //        {
+        //            respuestas.Add((i, "62072"));
+        //        }
+        //        else if (rbSuficiente != null && rbSuficiente.Checked)
+        //        {
+        //            respuestas.Add((i, "62073"));
+        //        }
+        //        else if (rbAdecuado != null && rbAdecuado.Checked)
+        //        {
+        //            respuestas.Add((i, "62074"));
+        //        }
+        //        else if (rbExcelente != null && rbExcelente.Checked)
+        //        {
+        //            respuestas.Add((i, "62075"));
+        //        }
+        //        else
+        //        {
+        //            ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "$('#ModalMensaje').modal('show');", true);
+        //            return;
+        //        }
+        //    }
+
+        //    // Insertar cada respuesta en la base de datos llamando a un procedimiento almacenado
+        //    foreach (var respuesta in respuestas)
+        //    {
+        //        InsertarRespuesta(respuesta.numeroPregunta, respuesta.respuesta);
+        //    }
+        //}
         protected void GuardarRespuestas(object sender, EventArgs e)
         {
             // Número total de preguntas
@@ -70,8 +131,6 @@ namespace Servicio_Social
 
             for (int i = 1; i <= totalPreguntas; i++)
             {
-
-
                 // IDs para cada opción en la pregunta actual
                 string idRadioButtonPesimo = $"rbPregunta{i}Pesimo";
                 string idRadioButtonDeficiente = $"rbPregunta{i}Deficiente";
@@ -84,8 +143,6 @@ namespace Servicio_Social
                 RadioButton rbSuficiente = (RadioButton)tbEncuesta.FindControl(idRadioButtonSuficiente);
                 RadioButton rbAdecuado = (RadioButton)tbEncuesta.FindControl(idRadioButtonAdecuado);
                 RadioButton rbExcelente = (RadioButton)tbEncuesta.FindControl(idRadioButtonExcelente);
-
-
 
                 // Intentar encontrar el RadioButton seleccionado para cada opción en la pregunta actual
                 if (rbPesimo != null && rbPesimo.Checked)
@@ -120,8 +177,16 @@ namespace Servicio_Social
             {
                 InsertarRespuesta(respuesta.numeroPregunta, respuesta.respuesta);
             }
-        }
 
+            // Llamar al método cambiarEstatus después de insertar todas las respuestas
+            string filtros = Session["idDependencia"].ToString();
+            string idDependencia = filtros.Split('|')[1];
+            string idUsuario = filtros.Split('|')[0];
+            string idAlumno = Request.QueryString["nst"];
+
+            cambiarEstatus(idAlumno, idDependencia, idUsuario);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "$('#ModalExitoso').modal('show');", true);
+        }
         public void InsertarRespuesta(int kmRubro_encuesta, string kpOpciones)
         {
             // Recuperar variables de sesión
@@ -276,7 +341,7 @@ namespace Servicio_Social
                         // Actualizar el estatus
                         using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction))
                         {
-                            updateCommand.Parameters.AddWithValue("@Estatus", 22115);
+                            updateCommand.Parameters.AddWithValue("@Estatus", 22115); // ESTATUS EVALUADO
                             updateCommand.Parameters.AddWithValue("@idProgramaAlumno", idProgramaAlumno);
                             updateCommand.ExecuteNonQuery();
                         }
@@ -285,7 +350,7 @@ namespace Servicio_Social
                         using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection, transaction))
                         {
                             insertCommand.Parameters.AddWithValue("@kmProgramaAlumno", idProgramaAlumno);
-                            insertCommand.Parameters.AddWithValue("@kpEstatus", 22115);
+                            insertCommand.Parameters.AddWithValue("@kpEstatus", 22115); // ESTATUS EVALUADO
                             insertCommand.Parameters.AddWithValue("@kmEvaluoEncuesta", idUsuario);
                             insertCommand.ExecuteNonQuery();
                         }

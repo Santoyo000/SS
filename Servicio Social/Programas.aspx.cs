@@ -41,7 +41,7 @@ namespace Servicio_Social
                 CargarModalidad();
                 CargarUnidad();
                 CargarNivel();
-                CargarConfiguracion();
+                //CargarConfiguracion();
             }
         }
         private void CargarConfiguracion()
@@ -72,9 +72,9 @@ namespace Servicio_Social
 
                             // Configurar la visibilidad de los paneles de acuerdo a la configuración
                             PANELPRINCIPAL.Visible = dentroDelRango;
-                            pnlCerrado.Visible = !dentroDelRango;
+                            //pnlCerrado.Visible = !dentroDelRango;
                             // Asignar el mensaje al control h3 del frontend
-                            lblMensajeProgramas.Text = mensaje;
+                            //lblMensajeProgramas.Text = mensaje;
                         }
                     }
                 }

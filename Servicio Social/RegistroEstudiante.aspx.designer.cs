@@ -222,6 +222,33 @@ namespace Servicio_Social
         protected global::System.Web.UI.WebControls.TextBox txtPasswordConfirm;
 
         /// <summary>
+        /// Control lblSemestre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSemestre;
+
+        /// <summary>
+        /// Control txtSemestre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSemestre;
+
+        /// <summary>
+        /// Control litMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMensaje;
+
+        /// <summary>
         /// Control lblError.
         /// </summary>
         /// <remarks>

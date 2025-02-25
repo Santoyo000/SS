@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SS.Master" AutoEventWireup="true" CodeBehind="AlumnosPostulados.aspx.cs" Inherits="Servicio_Social.AlumnosPostulados" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <script>
         function loadModalData(id) {
             $.ajax({
@@ -17,64 +18,205 @@
                 }
             });
         }
-    </script>
+
+           
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Cargar el PDF en el iframe cuando se abre el modal
+                $('#pdfModal').on('shown.bs.modal', function () {
+                    var pdfBase64 = document.getElementById('<%= hiddenPdfBase64.ClientID %>').value;
+            var pdfIframe = document.getElementById("pdfIframe");
+            pdfIframe.src = "data:application/pdf;base64," + pdfBase64;
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            function mostrarOverlay() {
+                document.getElementById("loadingOverlay").style.display = "block";
+            }
+
+            function ocultarOverlay() {
+                document.getElementById("loadingOverlay").style.display = "none";
+            }
+
+            // Ocultar overlay cuando la página se recargue (por ejemplo, después del postback)
+            if (window.addEventListener) {
+                window.addEventListener('load', ocultarOverlay, false);
+            } else if (window.attachEvent) {
+                window.attachEvent('onload', ocultarOverlay);
+            }
+        </script>
     <style>
-        .custom-header {
-            background-color: #343a40; /* Color de fondo personalizado */
-            color: white; /* Color del texto */
-        }
 
+        .container-tabla {
+            margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
+            padding: 20px;
+            max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
+        }
+        /* Tabla */
+        .table {
+            width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
+            margin-bottom: 30px; /* Espacio debajo de la tabla */
+            border-collapse: collapse;
+            background-color: #fff; /* Fondo blanco para la tabla */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+        }
+        /* Bordes de la tabla */
+        .table th, 
         .table td {
-            font-size: 12px; /* Tamaño de fuente más pequeño para las celdas de datos */
+            padding: 12px 15px; /* Espaciado interno */
+            border: 1px solid #ddd; /* Bordes ligeros */
+            text-align: left; /* Texto alineado a la izquierda */
+            font-size: 14px; /* Tamaño de fuente */
+        }
+        /* Cabecera de la tabla */
+        .table thead th {
+            background-color: #516e96; /*    Color de fondo de la cabecera */
+            color: #fff; /* Color de texto blanco */
+            font-weight: 400; /* Negrita */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            text-align: center;
+        }
+        /* Filas alternas para mayor legibilidad */
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        /* Resaltar filas al pasar el ratón */
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .form-control {
+           /* padding: 10px;*/
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-right: 10px; /* Espacio a la derecha */
+            width: 100%;
         }
 
-        /* Clase para el botón con ícono y color de Excel */
+
+        .form-control:focus {
+            border-color: #4086b1;
+            outline: none;
+            box-shadow: 0 0 5px rgba(64, 134, 177, 0.5);
+        }
+
+        /* Botón de búsqueda */
+        .btn-primary {
+        /*    background-color: #f7d05a;*/
+            border-color: #f7d05a;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #f1c40f;
+            border-color: #f1c40f;
+        }
+
+
+
         .btn-excel {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: #217346; /* Color de Excel */
+            background-color: #52be80; 
             color: white;
-            padding: 10px 20px;
+            padding: 10px 35px;
             border: none;
             border-radius: 5px;
             font-size: 14px;
             cursor: pointer;
-            float: right; /* Para alinearlo a la derecha */
+            float: right;
             transition: background-color 0.3s ease;
         }
 
-            .btn-excel:hover {
-                background-color: #1d633c; /* Un color más oscuro al hacer hover */
+        .btn-excel:hover {
+            background-color: #1d633c;
+        }
+
+        .btn-excel i {
+            margin-right: 10px; /* Espacio entre el ícono y el texto */
+        }
+
+        /* Ajuste para el icono de Excel */
+        .btn-excel .fa-file-excel {
+            font-size: 18px;
+            color: white;
+        }
+
+            /* Modal Styling */
+            .modal-content {
+                border-radius: 8px;
+                padding: 15px;
+                background-color: #f9f9f9;
+                color: #333;
             }
 
-            .btn-excel i {
-                margin-right: 10px; /* Espacio entre el ícono y el texto */
+            .modal-header, .modal-footer {
+                border: none;
+                padding: 10px;
             }
-            /* Ajuste para el icono de Excel */
-            .btn-excel .fa-file-excel {
+
+            .modal-title {
                 font-size: 18px;
-                color: white;
+                font-weight: bold;
+                color: #333;
             }
-        /*.edit-mode input[type=text] {
-        max-width: 200px;*/ /* Ajusta el ancho máximo según sea necesario */
-        /*}*/
-    </style>
+
+            .close {
+                font-size: 20px;
+                color: #666;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-footer button {
+                background-color: #1073b0;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .modal-footer button:hover {
+                background-color: #0c5a8c;
+            }
+          /* Loading Overlay */
+          #loadingOverlay {
+              display: none;
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(255, 255, 255, 0.85);
+              z-index: 1000;
+              text-align: center;
+              font-size: 16px;
+          }
+
+          #loadingOverlay img {
+              max-width: 80px;
+              margin-top: 20%;
+          }
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     <br />
-    <asp:ScriptManager runat="server">
-    </asp:ScriptManager>
-<%--    <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="0">
-        <ProgressTemplate>
-            <div id="overlay">
-                <div id="loadingContent">
-                    <asp:Image ID="imgWaitIcon" runat="server" ImageUrl="Image/loading.gif" AlternateText="Cargando..." Style="max-width: 300px;" />
-                    <div id="loadingText">Por favor, espere...</div>
-                </div>
-            </div>
-        </ProgressTemplate>
-    </asp:UpdateProgress>--%>
+    <asp:ScriptManager runat="server"> </asp:ScriptManager>
+<!-- Overlay de carga -->
+<div id="loadingOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); z-index: 1000; text-align: center;">
+    <img src="Image/loading.gif" alt="Generando formato..." style="max-width: 300px; margin-top: 20%;">
+    <div>Generando formato, por favor espere...</div>
+</div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid">
@@ -84,7 +226,12 @@
                     </div>
                     <div class="">
                         <div class="row mb-3">
-
+                        <%--    <div class="col-md-3">
+                                <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" placeholder="Matrícula..." />
+                            </div>
+                            <div class="col-md-3">
+                                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre..." />
+                            </div>--%>
                             <div class="col-md-3">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                             </div>
@@ -96,6 +243,9 @@
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
                         </div>
+                        <%-- <div class="row mb-3">
+
+                             </div>--%>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -133,6 +283,7 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <asp:LinkButton ID="btnEvaluar" Visible ="true" runat="server" CommandName="cmdEvaluar" CommandArgument='<%# Eval("IDALUMNO") %>' OnClick="btnEvaluar_Click"  CssClass="btn" style="background-color: #49207d; color: white; border: none;"><span data-toggle="tooltip" title="Evaluar Alumno" ><i class="fas fa-pen-to-square"></i></asp:LinkButton> 
+                                                        <asp:LinkButton ID="btnDOC" Visible ="true" runat="server" CommandName="cmdDOC" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnDOC_Click"  CssClass="btn" style="background-color: #055a1e; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fas fa-file-pdf"></i></asp:LinkButton>
                                                         <asp:LinkButton ID="btnLiberar" Visible ="true" runat="server" CommandName="cmdLiberar" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberar_Click"  CssClass="btn" style="background-color: #1c40a5; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fas fa-file-pdf"></i></asp:LinkButton>
                                                         <asp:LinkButton ID="btnLiberarEsc" Visible ="true" runat="server" CommandName="cmdLiberarEsc" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberarEsc_Click" OnClientClick='return confirm("¿Desea liberar alumno?");' CssClass="btn" style="background-color: #03be35; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fa-regular fa-square-check"></i></asp:LinkButton> 
                                                         <asp:LinkButton ID="btnLiberarResp" Visible ="true" runat="server" CommandName="cmdLiberarResp" CommandArgument='<%# Eval("idProgramaAlumno") %>' OnClick="btnLiberarResp_Click" OnClientClick='return confirm("¿Desea liberar alumno?");' CssClass="btn" style="background-color: #03be35; color: white; border: none;"><span data-toggle="tooltip" title="Liberar Alumno" ><i class="fa-regular fa-square-check"></i></asp:LinkButton> 
@@ -144,29 +295,8 @@
                                                     </div>
                                                 </td>
                                             </asp:Panel>
-                                            <!-- The Modal -->
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Detalle Alumno</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
 
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body" id="modalBody">
-                                                            Loading...
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- The Modal -->
+                                            
                                         </tr>
                                     </ItemTemplate>
                                     <FooterTemplate>
@@ -174,45 +304,8 @@
                                     </table>
                                     </FooterTemplate>
                                 </asp:Repeater>
-                                <asp:Repeater ID="RepeaterTemp" runat="server">
-                                <HeaderTemplate>
-                                    <table { width: 100%; border-collapse: collapse; }>
-                                            <tr>
-                                                 <th style="display: none;">ID</th>
-                                                 <th>Fecha de Registro</th>
-                                                 <th>Matrícula</th>
-                                                 <th>Alumno</th>
-                                                 <th>Programa</th>
-                                                 <th>Plan de Estudios</th>
-                                                 <th>Escuela</th>
-                                                 <th>Unidad</th>
-                                                 <th>Cupo</th>
-                                                 <th>Estatus</th>
-                                                 <th>Ver Más</th>
-                                            </tr>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <tr>
-                                           <td style="display: none;"><%# Eval("IDDEPENDENICASERVICIO") %></td>
-                                            <td><%# Eval("FECHAREGISTRO") %></td>
-                                            <td><%# Eval("MATRICULA") %></td>
-                                            <td><%# Eval("NOMBRE_COMPLETO") %></td>
-                                            <td><%# Eval("PROGRMA") %></td>
-                                            <td><%# Eval("PLANEST") %></td>
-                                            <td><%# Eval("ESCUELA") %></td>
-                                            <td><%# Eval("UNIDAD") %></td>
-                                            <td><%# Eval("ICUPO") %></td>
-                                            <td><%# Eval("ESTATUS") %></td>
-                                            <td style="display: none;"><%# Eval("idProgramaAlumno") %></td>
-                                            <td style="display: none;"><%# Eval("IDALUMNO") %></td>
-                                            <td style="display: none;"><%# Eval("idEstatus") %></td>
-                                            <td>
-                                        </tr>
-                                    </ItemTemplate>
-                                    <FooterTemplate>
-                                  </table>
-                                </FooterTemplate>
-                            </asp:Repeater> 
+                                  
+                               <asp:HiddenField ID="hiddenPdfBase64" runat="server" />
                             </tbody>
                         </table>
                        <%-- <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
@@ -242,4 +335,53 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+
+              <!-- The Modal -->
+      <div class="modal" id="myModal">
+          <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                      <h4 class="modal-title">Detalle Alumno</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body" id="modalBody">
+                      Loading...
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- The Modal -->
+         <!-- Modal PDF -->
+  <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="pdfModalLabel">Carta Comprobante</h5>
+                  <asp:HiddenField ID="hfidPrograma" runat="server" />
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                   <div class="modal-footer">
+                       <asp:Button ID="btnUpdate" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
+                       
+                 <%-- <iframe id="pdfIframe" style="width: 100%; height: 500px; border: none;" frameborder="0"></iframe>--%>
+                <iframe id="pdfIframe" style="width: 100%; height: 600px; border: none; display: none;" frameborder="0"></iframe>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 </asp:Content>

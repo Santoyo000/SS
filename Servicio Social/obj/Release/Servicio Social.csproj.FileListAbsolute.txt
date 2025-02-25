@@ -3399,3 +3399,8 @@ C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualS
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\Microsoft.VisualStudio.Shell.15.0.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\Microsoft.VisualStudio.GraphModel.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Release\Servicio.D6EA6CFA.Up2Date
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\QRCoder.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.presentation.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.xml
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.presentation.xml

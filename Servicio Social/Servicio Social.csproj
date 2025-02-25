@@ -214,6 +214,10 @@
       <HintPath>..\packages\Oracle.ManagedDataAccess.19.21.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.6.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.6.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="System.AppContext, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.1.0\lib\net463\System.AppContext.dll</HintPath>
       <Private>True</Private>
@@ -455,6 +459,12 @@
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="zxing, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net48\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net48\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -497,6 +507,8 @@
     <Content Include="assets\webfonts\fa-solid-900.svg" />
     <Content Include="assets\webfonts\slick.svg" />
     <Content Include="bootstrap.min.css" />
+    <Content Include="CartaLiberacion.aspx" />
+    <Content Include="CartaTerminacion.aspx" />
     <Content Include="ConfiguracionPagina.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -616,6 +628,17 @@
     <Content Include="assets\webfonts\slick.ttf" />
     <Content Include="assets\webfonts\slick.woff" />
     <Content Include="Login.Master" />
+    <Content Include="CartaTerminacionDataSet.xsc">
+      <DependentUpon>CartaTerminacionDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="CartaTerminacionDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CartaTerminacionDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="CartaTerminacionDataSet.xss">
+      <DependentUpon>CartaTerminacionDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -648,6 +671,7 @@
     <Content Include="Site.Master" />
     <Content Include="SitioMantenimiento.aspx" />
     <Content Include="templatemo.css" />
+    <Content Include="Temp\QRCode.png" />
     <Content Include="UsuariosRegistrados.aspx" />
     <Content Include="Validaciones.js" />
     <Content Include="VerProgramas.aspx" />
@@ -687,6 +711,28 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CartaLiberacion.aspx.cs">
+      <DependentUpon>CartaLiberacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CartaLiberacion.aspx.designer.cs">
+      <DependentUpon>CartaLiberacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CartaTerminacion.aspx.cs">
+      <DependentUpon>CartaTerminacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CartaTerminacion.aspx.designer.cs">
+      <DependentUpon>CartaTerminacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CartaTerminacionDataSet.cs">
+      <DependentUpon>CartaTerminacionDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CartaTerminacionDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CartaTerminacionDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ConfiguracionPagina.aspx.cs">
       <DependentUpon>ConfiguracionPagina.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -966,10 +1012,17 @@
     <Compile Include="ReportesSS.aspx.designer.cs">
       <DependentUpon>ReportesSS.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\CartaLiberacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CartaLiberacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\ComprobanteFinalSS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ComprobanteFinalSS.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ConstanciaFinal.cs">
       <AutoGen>True</AutoGen>
@@ -1072,6 +1125,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\CartaLiberacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CartaLiberacion.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ComprobanteFinalSS.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ComprobanteFinalSS.cs</LastGenOutput>

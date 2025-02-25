@@ -5701,10 +5701,6 @@ C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.c
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio.D6EA6CFA.Up2Date
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.dll
 C:\Users\sanju\source\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.pdb
-C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.AssemblyReference.cache
-C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.CoreCompileInputs.cache
-C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.dll
-C:\Users\cecys\Source\Repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.pdb
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Servicio Social.dll.config
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Servicio Social.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Servicio Social.pdb
@@ -5761,11 +5757,15 @@ C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\AjaxControlToolki
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Antlr3.Runtime.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\AspNet.ScriptManager.jQuery.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\BCrypt.Net-Next.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.CrystalReports.Design.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Data.AdoDotNetInterop.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.ReportSource.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Shared.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.VSDesigner.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Web.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Windows.Forms.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\DocumentFormat.OpenXml.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\DocumentFormat.OpenXml.Framework.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\DotVVM.Contrib.dll
@@ -5828,6 +5828,21 @@ C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\System.Web.Http.d
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\System.Web.Http.WebHost.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\System.Web.Optimization.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\WebGrease.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Shell.15.0.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Interop.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CRVsPackageLib.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Shell.Framework.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\VsWebSite.Interop.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Telemetry.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.RpcContracts.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.ProjectAggregator.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\EnvDTE.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.GraphModel.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Utilities.Internal.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.RemoteControl.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\stdole.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\BCrypt.Net-Next.xml
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\DocumentFormat.OpenXml.xml
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\DocumentFormat.OpenXml.Framework.xml
@@ -5882,32 +5897,22 @@ C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Newtonsoft.Json.x
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Antlr3.Runtime.pdb
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.AspNet.FriendlyUrls.xml
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.GraphModel.xml
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\System.Net.Http.Formatting.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\System.Web.Http.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\System.Web.Http.WebHost.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\System.Web.Optimization.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\Microsoft.AspNet.FriendlyUrls.resources.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.CrystalReports.Design.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Data.AdoDotNetInterop.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.VSDesigner.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CrystalDecisions.Windows.Forms.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\CRVsPackageLib.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\EnvDTE.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\VsWebSite.Interop.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\stdole.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Shell.15.0.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Interop.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.TemplateWizardInterface.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Shell.Framework.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Telemetry.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.RpcContracts.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.ProjectAggregator.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.GraphModel.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.Utilities.Internal.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.RemoteControl.dll
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
-C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\Microsoft.VisualStudio.GraphModel.xml
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\Microsoft.VisualStudio.Shell.15.0.resources.dll
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\es\Microsoft.VisualStudio.GraphModel.resources.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.AssemblyReference.cache
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.csproj.CoreCompileInputs.cache
 C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Debug\Servicio.D6EA6CFA.Up2Date
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\obj\Debug\Servicio Social.pdb
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\QRCoder.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.presentation.dll
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.xml
+C:\Users\cecys\source\repos\ServicioSocial\Servicio Social\bin\zxing.presentation.xml

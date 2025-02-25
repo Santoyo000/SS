@@ -209,6 +209,7 @@ namespace Servicio_Social
             string idAlumno = getidAlumno(escuela, plan, matricula);
             string password = txtPasswordConfirm.Text.Trim();
             string connectionString = GlobalConstants.SQL;
+            string semestre = txtSemestre.Text.Trim();
 
             if ((!isIncorporada(escuela) && tipoEscuela == "1") || (isIncorporada(escuela) && tipoEscuela == "2"))
             {
@@ -238,7 +239,7 @@ namespace Servicio_Social
                                     int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, "", tipoEscuela, connection, transaction);
 
                                     // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
-                                    InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, connection, transaction);
+                                    InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre, connection, transaction);
 
                                     // Commit de la transacción si todo fue exitoso
                                     transaction.Commit();
@@ -292,7 +293,7 @@ namespace Servicio_Social
                                 int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, password, tipoEscuela, connection, transaction);
 
                                 // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
-                                InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, connection, transaction);
+                                InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre,connection, transaction);
 
                                 // Commit de la transacción si todo fue exitoso
                                 transaction.Commit();
@@ -349,8 +350,21 @@ namespace Servicio_Social
 
             return idAlumno;
         }
-
-        private int InsertarUsuario(string _correo, string _idAlumno, string _password, string _tipo, SqlConnection connection, SqlTransaction transaction)
+        [System.Web.Services.WebMethod]
+        public static bool ValidarSemestre(string semestre)
+        {
+            // Aquí puedes hacer la lógica para validar si el semestre es correcto (por ejemplo, verificar en la base de datos)
+            // Por ejemplo:
+            if (int.TryParse(semestre, out int resultado))
+            {
+                if (resultado >= 1 && resultado <= 20)  // Ejemplo: Validar que el semestre sea un número entre 1 y 20
+                {
+                    return true; // Semestre válido
+                }
+            }
+            return false; // Semestre inválido
+        }
+        private int InsertarUsuario(string _correo, string _idAlumno, string _password, string _tipo ,SqlConnection connection, SqlTransaction transaction)
         {
             string password = SeguridadUtils.Encriptar(_password);
             if (_tipo == "1")
@@ -380,11 +394,11 @@ namespace Servicio_Social
             }
         }
 
-        private void InsertarUsuarioAlumno(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, string _sMatricula,
+        private void InsertarUsuarioAlumno(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, string _sMatricula, string _semestre,
             SqlConnection connection, SqlTransaction transaction)
         {
             // Primero, insertamos los datos proporcionados al método
-            InsertarSiNoExiste(_idUsuario, _idalumno, _PlanEstudio, _Escuela, connection, transaction);
+            InsertarSiNoExiste(_idUsuario, _idalumno, _PlanEstudio, _Escuela, _semestre,connection, transaction);
 
             // Buscar registros en SM_ALUMNO con diferente kpEscuela y kpPlan
             string searchQuery = "SELECT idAlumno, kpPlan_estudios, kpEscuelasUadeC " +
@@ -416,7 +430,7 @@ namespace Servicio_Social
             // Insertar los registros encontrados
             foreach (var (foundIdAlumno, foundPlan, foundEscuela) in registros)
             {
-                InsertarSiNoExiste(_idUsuario, foundIdAlumno, foundPlan, foundEscuela, connection, transaction);
+                InsertarSiNoExiste(_idUsuario, foundIdAlumno, foundPlan, foundEscuela, _semestre,connection, transaction);
             }
         }
 
@@ -451,7 +465,7 @@ namespace Servicio_Social
         //        }
         //    }
         //}
-        private void InsertarSiNoExiste(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, SqlConnection connection, SqlTransaction transaction)
+        private void InsertarSiNoExiste(int _idUsuario, string _idalumno, string _PlanEstudio, string _Escuela, string _semestre, SqlConnection connection, SqlTransaction transaction)
         {
             // Verificar si el registro ya existe en SM_USUARIOS_ALUMNOS
             string checkQuery = "SELECT COUNT(*) FROM SM_USUARIOS_ALUMNOS WHERE kmAlumno = @kmAlumno AND kpPlan = @kpPlan AND kpEscuela = @kpEscuela AND bAutorizado <> 99 ";
@@ -481,8 +495,8 @@ namespace Servicio_Social
                     }
 
                     // Insertar el nuevo registro en SM_USUARIOS_ALUMNOS
-                    string insertQuery = "INSERT INTO SM_USUARIOS_ALUMNOS (kmUsuario, kmAlumno, kpPlan, kpEscuela, kpPeriodo, bAutorizado) " +
-                                         "VALUES (@kmUsuario, @kmAlumno, @kpPlan, @kpEscuela, @kpPeriodo, @bAutorizado);";
+                    string insertQuery = "INSERT INTO SM_USUARIOS_ALUMNOS (kmUsuario, kmAlumno, kpPlan, kpEscuela, kpPeriodo,iSemestre, bAutorizado) " +
+                                         "VALUES (@kmUsuario, @kmAlumno, @kpPlan, @kpEscuela, @kpPeriodo, @iSemestre,@bAutorizado);";
 
                     using (SqlCommand insertCmd = new SqlCommand(insertQuery, connection, transaction))
                     {
@@ -490,6 +504,8 @@ namespace Servicio_Social
                         insertCmd.Parameters.AddWithValue("@kmAlumno", _idalumno);
                         insertCmd.Parameters.AddWithValue("@kpPlan", _PlanEstudio);
                         insertCmd.Parameters.AddWithValue("@kpEscuela", _Escuela);
+                        insertCmd.Parameters.AddWithValue("@iSemestre", _semestre);
+
 
                         if (kpPeriodo.HasValue)
                         {
