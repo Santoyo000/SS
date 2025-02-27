@@ -90,6 +90,7 @@ namespace Servicio_Social
             public string ApellidoPaterno { get; set; }
             public string ApellidoMaterno { get; set; }
             public List<EscuelaDto> Escuelas { get; set; }
+            public List<PlanEstudioDto> PlanesEstudio { get; set; } // <-- Agregar esta propiedad
         }
 
         public class EscuelaDto
@@ -107,50 +108,46 @@ namespace Servicio_Social
         [WebMethod]
         public static AlumnoDto GetAlumnoInfo(string buscar)
         {
-            string connectionString = GlobalConstants.SQL;
+            string oracleConnectionString = GlobalConstants.ORA;
+            string sqlConnectionString = GlobalConstants.SQL;
 
             AlumnoDto alumno = null;
             List<EscuelaDto> escuelas = new List<EscuelaDto>();
+            List<PlanEstudioDto> planesEstudio = new List<PlanEstudioDto>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string claveEscuela = "";
+            string nombreEscuela = "";
+            string clavePlan = "";
+            string nombrePlan = "";
+
+            using (OracleConnection connection = new OracleConnection(oracleConnectionString))
             {
                 connection.Open();
-                
-                using (SqlCommand command = new SqlCommand("sp_obtenerInformacionAlumno_ss", connection))
+                using (OracleCommand command = new OracleCommand(@"
+            SELECT A.MATRICULA, A.NOM_COMP AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
+                   A.CURP, CASE WHEN A.SEXO = 1 THEN 'FEMENINO' ELSE 'MASCULINO' END AS SEXO, 
+                   P.CLAVE, P.NOMBRE AS PLAN_ESTUDIO, U.UNI_ORG, U.NOM_UNI_OR, A.EMAIL
+            FROM AA.GALU_ESC E
+            JOIN AA.GALUMNOS A ON A.MATRICULA = E.MATRICULA
+            JOIN PLANESTUDIO.PLAN P ON P.CLAVE = E.CVE_PLAN
+            JOIN AA.GUNI_ORG U ON U.UNI_ORG = E.UNI_ORG
+            WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI', 'NI')", connection))
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@matricula", buscar);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    command.Parameters.Add(new OracleParameter("smatricula", buscar ?? string.Empty));
+                    using (OracleDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             alumno = new AlumnoDto
                             {
-                                Nombre = reader.GetString(0),
-                                ApellidoPaterno = reader.GetString(1),
-                                ApellidoMaterno = reader.GetString(2)
+                                Nombre = reader["NOMBRE_ALUMNO"].ToString(),
+                                ApellidoPaterno = reader["APE_PAT"].ToString(),
+                                ApellidoMaterno = reader["APE_MAT"].ToString()
                             };
-                        }
-                    }
-                }
-                if (alumno != null)
-                {
-                    using (SqlCommand command = new SqlCommand("sp_obtenerEscuelasAlumno_ss", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@matricula", buscar);
-
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                escuelas.Add(new EscuelaDto
-                                {
-                                    Id = Convert.ToString(reader[0]),
-                                    Nombre = reader.GetString(1)
-                                });
-                            }
+                            claveEscuela = reader["UNI_ORG"].ToString();
+                            nombreEscuela = reader["NOM_UNI_OR"].ToString();
+                            clavePlan = reader["CLAVE"].ToString();
+                            nombrePlan = reader["PLAN_ESTUDIO"].ToString();
                         }
                     }
                 }
@@ -158,11 +155,119 @@ namespace Servicio_Social
 
             if (alumno != null)
             {
+                using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+                {
+                    sqlConnection.Open();
+
+                    // Obtener las escuelas
+                    using (SqlCommand sqlCommand = new SqlCommand(@"
+                SELECT idEscuelaUAC, sClave, sDescripcion 
+                FROM SP_ESCUELA_UAC 
+                WHERE sClave = @claveEscuela ", sqlConnection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@claveEscuela", claveEscuela);
+                        sqlCommand.Parameters.AddWithValue("@nombreEscuela", nombreEscuela);
+                        using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
+                        {
+                            while (sqlReader.Read())
+                            {
+                                escuelas.Add(new EscuelaDto
+                                {
+                                    Id = sqlReader["idEscuelaUAC"].ToString(),
+                                    Nombre = sqlReader["sDescripcion"].ToString()
+                                });
+                            }
+                        }
+                    }
+
+                    // Obtener los planes de estudio
+                    using (SqlCommand sqlCommand = new SqlCommand(@"
+                SELECT idPlanEstudio, sClave, sDescripcion 
+                FROM SP_PLAN_ESTUDIO 
+                WHERE sClave = @clavePlan", sqlConnection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@clavePlan", clavePlan);
+                        sqlCommand.Parameters.AddWithValue("@nombrePlan", nombrePlan);
+                        using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
+                        {
+                            while (sqlReader.Read())
+                            {
+                                planesEstudio.Add(new PlanEstudioDto
+                                {
+                                    Id = sqlReader["idPlanEstudio"].ToString(),
+                                    Nombre = sqlReader["sDescripcion"].ToString()
+                                });
+                            }
+                        }
+                    }
+                }
+
                 alumno.Escuelas = escuelas;
+                alumno.PlanesEstudio = planesEstudio;
             }
 
             return alumno;
         }
+
+
+        //public static AlumnoDto GetAlumnoInfo(string buscar)
+        //{
+        //    string connectionString = GlobalConstants.SQL;
+
+        //    AlumnoDto alumno = null;
+        //    List<EscuelaDto> escuelas = new List<EscuelaDto>();
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+
+        //        using (SqlCommand command = new SqlCommand("sp_obtenerInformacionAlumno_ss", connection))
+        //        {
+        //            command.CommandType = System.Data.CommandType.StoredProcedure;
+        //            command.Parameters.AddWithValue("@matricula", buscar);
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                if (reader.Read())
+        //                {
+        //                    alumno = new AlumnoDto
+        //                    {
+        //                        Nombre = reader.GetString(0),
+        //                        ApellidoPaterno = reader.GetString(1),
+        //                        ApellidoMaterno = reader.GetString(2)
+        //                    };
+        //                }
+        //            }
+        //        }
+        //        if (alumno != null)
+        //        {
+        //            using (SqlCommand command = new SqlCommand("sp_obtenerEscuelasAlumno_ss", connection))
+        //            {
+        //                command.CommandType = System.Data.CommandType.StoredProcedure;
+        //                command.Parameters.AddWithValue("@matricula", buscar);
+
+        //                using (SqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        escuelas.Add(new EscuelaDto
+        //                        {
+        //                            Id = Convert.ToString(reader[0]),
+        //                            Nombre = reader.GetString(1)
+        //                        });
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    if (alumno != null)
+        //    {
+        //        alumno.Escuelas = escuelas;
+        //    }
+
+        //    return alumno;
+        //}
 
         [System.Web.Services.WebMethod]
         public static string GetPlanesEstudio(string escuelaId, string matricula)
@@ -324,27 +429,85 @@ namespace Servicio_Social
             }
         }
 
+        //public string getidAlumno(string escuela, string plan, string matricula)
+        //{
+        //    string idAlumno = "";
+        //    string conString = GlobalConstants.SQL;
+        //    using (SqlConnection connection = new SqlConnection(conString))
+        //    {
+        //        string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC; ";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@sMatricula", matricula);
+        //            command.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //            command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+        //            connection.Open();
+        //            object result = command.ExecuteScalar();
+        //            if (result != null)
+        //            {
+        //                idAlumno = result.ToString();
+        //            }
+        //            else
+        //                idAlumno = null;
+        //        }
+        //    }
+
+        //    return idAlumno;
+        //}
+
         public string getidAlumno(string escuela, string plan, string matricula)
         {
             string idAlumno = "";
             string conString = GlobalConstants.SQL;
+
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC; ";
+                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@sMatricula", matricula);
                     command.Parameters.AddWithValue("@kpPlan_estudios", plan);
                     command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
                     connection.Open();
                     object result = command.ExecuteScalar();
+
                     if (result != null)
                     {
                         idAlumno = result.ToString();
                     }
                     else
-                        idAlumno = null;
+                    {
+                        // Si no se encuentra el alumno, se inserta
+                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @kpEscuelasUadeC, @kpPlan_estudios;";
+                        using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                        {
+                            insertCommand.Parameters.AddWithValue("@sMatricula", matricula);
+                            insertCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+                            insertCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+                            insertCommand.ExecuteNonQuery();
+                        }
+
+                        // Intentamos obtener nuevamente el idAlumno
+                        using (SqlCommand retryCommand = new SqlCommand(query, connection))
+                        {
+                            retryCommand.Parameters.AddWithValue("@sMatricula", matricula);
+                            retryCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+                            retryCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
+                            object retryResult = retryCommand.ExecuteScalar();
+                            if (retryResult != null)
+                            {
+                                idAlumno = retryResult.ToString();
+                            }
+                            else
+                            {
+                                idAlumno = null; // Si por alguna razón no se inserta correctamente
+                            }
+                        }
+                    }
                 }
             }
 

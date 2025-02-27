@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\registroestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\registroestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\registroestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\registroestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 183,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,20 +42,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AlumnosPostulados.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
-              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx.cs",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs*",
-              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx.cs*",
-              "ViewState": "AgIAAOQDAAAAAAAAAAAAAJ0DAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T14:51:16.306Z",
+              "DocumentIndex": 3,
+              "Title": "RegistroEstudiante.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\RegistroEstudiante.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx",
+              "RelativeToolTip": "Servicio Social\\RegistroEstudiante.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-02-25T19:23:33.968Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AlumnosPostulados.aspx",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
               "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx",
@@ -71,6 +79,74 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "751b4ae7-e106-4167-b2c0-196d8f5acad5",
+        "Display": 1,
+        "X": 692,
+        "Y": 23,
+        "Width": 1378,
+        "Height": 608,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AlumnosPostulados.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx.cs",
+              "ViewState": "AgIAAE8CAAAAAAAAAAAAAFgCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T14:51:16.306Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "4fed6efe-fd9e-4fa0-97a0-de6431877237",
+        "Display": 1,
+        "X": 392,
+        "Y": 414,
+        "Width": 1006,
+        "Height": 543,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RegistroEstudiante.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\RegistroEstudiante.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\RegistroEstudiante.aspx.cs",
+              "ViewState": "AgIAAMkBAAAAAAAAAAAuwOYBAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-25T19:14:26.836Z",
+              "EditorCaption": ""
             }
           ]
         }

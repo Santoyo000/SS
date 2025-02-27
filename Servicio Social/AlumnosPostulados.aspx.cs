@@ -216,7 +216,8 @@ namespace Servicio_Social
                 string queryString = @"SELECT sClave + ' - ' + sDescripcion [Descripcion], idPlanEstudio 
                                         FROM SP_PLAN_ESTUDIO  
                                         WHERE bActivo = 1 AND bVigente = 1  
-                                        AND sClave IS NOT NULL AND LEN(sClave) = 3 AND kpNivel != 3  ORDER BY sClave";
+                                        AND sClave IS NOT NULL AND LEN(sClave) = 3 AND kpNivel != 3  
+										AND idPlanEstudio  NOT IN (132,2354817)  ORDER BY sClave";
 
                 // Crea un DataSet para almacenar los resultados de la consulta
 
@@ -252,7 +253,9 @@ namespace Servicio_Social
                 con.Open();
                 string queryString = @" SELECT DISTINCT ESC.sClave + ' - ' + ESC.sDescripcion [Descripcion], ESC.idEscuelaUAC, PLA.kpEscuela_UAdeC 
                                         FROM SM_PLAN_EST_ESCUELA AS PLA 
+										JOIN SP_PLAN_ESTUDIO AS PE ON PLA.kpPlan_Estudio = PE.idPlanEstudio
                                         JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC 
+										WHERE PE.kpNivel != 3
                                         ORDER BY [Descripcion]";
 
                 // Crea un DataSet para almacenar los resultados de la consulta
@@ -338,6 +341,56 @@ namespace Servicio_Social
                 ddlPeriodo.DataBind();
             }
 
+        }
+        protected void DDLUnidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idUnidadSeleccionado = DDLUnidad.SelectedValue;
+
+            // 🚀 Si el usuario selecciona "Seleccione Unidad...", se recargan los valores iniciales
+            if (string.IsNullOrEmpty(idUnidadSeleccionado) || idUnidadSeleccionado == "0")
+            {
+                CargarPlan(); // Recupera todos los planes originales
+                CargarEscuela(); // Recupera todas las escuelas originales
+                return;
+            }
+
+            // 🔹 Query corregida con alias AS y mejor estructura
+            string queryStringEscuela = @"
+        SELECT DISTINCT ESC.sClave + ' - ' + ESC.sDescripcion AS Descripcion, 
+                        PLA.kpEscuela_UAdeC 
+        FROM SM_PLAN_EST_ESCUELA AS PLA 
+        JOIN SP_ESCUELA_UAC AS ESC ON PLA.kpEscuela_UAdeC = ESC.idEscuelaUAC 
+        WHERE ESC.idEscuelaUAC NOT IN (149,150,151,153)
+          AND ESC.kpUnidad = @idUnidad 
+        ORDER BY 1";
+
+            using (SqlConnection con = new SqlConnection(SQL))
+            {
+                con.Open();
+
+                using (SqlCommand cmdEscuela = new SqlCommand(queryStringEscuela, con))
+                {
+                    cmdEscuela.Parameters.Add("@idUnidad", SqlDbType.Int).Value = Convert.ToInt32(idUnidadSeleccionado);
+
+                    using (SqlDataReader readerEscuela = cmdEscuela.ExecuteReader())
+                    {
+                        DataTable dtEscuela = new DataTable();
+                        dtEscuela.Columns.Add("Descripcion", typeof(string));
+                        dtEscuela.Columns.Add("kpEscuela_UAdeC", typeof(string));
+                        dtEscuela.Rows.Add("Seleccione la Escuela...", "");
+
+                        while (readerEscuela.Read())
+                        {
+                            dtEscuela.Rows.Add(readerEscuela["Descripcion"], readerEscuela["kpEscuela_UAdeC"]);
+                        }
+
+                        ddlEscuela.DataSource = dtEscuela;
+                        ddlEscuela.DataTextField = "Descripcion";
+                        ddlEscuela.DataValueField = "kpEscuela_UAdeC";
+                        ddlEscuela.DataBind();
+                    }
+                }
+            }
         }
         protected void DDLPlan_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -875,15 +928,15 @@ namespace Servicio_Social
 
             // Filtros generales
             if (!string.IsNullOrEmpty(selectedUnidad) && selectedUnidad != "0")
-                F.Add(" DS.kpUnidad = @selectedUnidad");
+                F.Add(" UO.kpUnidad = @selectedUnidad");
             if (!string.IsNullOrEmpty(selectedNivel) && selectedNivel != "0")
                 F.Add(" PE.kpNivel = @selectedNivel");
             if (!string.IsNullOrEmpty(selectedEstatus) && selectedEstatus != "0")
                 F.Add(" PA.KPESTATUS = @selectedEstatus");
             if (!string.IsNullOrEmpty(selectedEscuela) && selectedEscuela != "0")
-                F.Add(" DP.kpEscuela = @selectedEscuela");
+                F.Add(" AL.kpEscuelasUadeC = @selectedEscuela");
             if (!string.IsNullOrEmpty(selectedPlan) && selectedPlan != "0")
-                F.Add(" DP.kpPlanEstudio = @selectedPlan");
+                F.Add(" AL.kpPlan_estudios = @selectedPlan");
             if (!string.IsNullOrEmpty(selectedPeriodo) && selectedPeriodo != "0")
                 F.Add("  P.kpPeriodo = @selectedPeriodo");
             if (!string.IsNullOrEmpty(matricula))

@@ -19,32 +19,8 @@
             });
         }
 
-        <%--$(document).ready(function () {
-            $("#<%= txtBuscarPlan.ClientID %>").autocomplete({
-                      source: function (request, response) {
-                          $.ajax({
-                              url: "AlumnosPostulados.aspx/BuscarPlanes",
-                              type: "POST",
-                              contentType: "application/json; charset=utf-8",
-                              data: JSON.stringify({ termino: request.term }),
-                              dataType: "json",
-                              success: function (data) {
-                                  response(data.d); // La respuesta del servidor
-                              },
-                              error: function () {
-                                  alert("Error al buscar planes de estudio");
-                              }
-                          });
-                      },
-                      minLength: 2, // Número mínimo de caracteres antes de buscar
-                      select: function (event, ui) {
-                          // Cuando se selecciona un elemento, se asigna al TextBox
-                          $("#<%= txtBuscarPlan.ClientID %>").val(ui.item.value);
-            }
-        });
-              });--%>
+       
     </script> 
-        </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 // Cargar el PDF en el iframe cuando se abre el modal
@@ -72,44 +48,90 @@
             }
         </script>
     <style>
+        /* Contenedor principal del formulario */
+    .container-fluid {
+        max-width: 100%;
+        padding: 10px 20px;
+    }
 
-        .container-tabla {
-            margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
-            padding: 20px;
-            max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
-        }
-        /* Tabla */
-        .table {
-            width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
-            margin-bottom: 30px; /* Espacio debajo de la tabla */
-            border-collapse: collapse;
-            background-color: #fff; /* Fondo blanco para la tabla */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
-        }
-        /* Bordes de la tabla */
-        .table th, 
-        .table td {
-            padding: 12px 15px; /* Espaciado interno */
-            border: 1px solid #ddd; /* Bordes ligeros */
-            text-align: left; /* Texto alineado a la izquierda */
-            font-size: 14px; /* Tamaño de fuente */
-        }
-        /* Cabecera de la tabla */
-        .table thead th {
-            background-color: #516e96; /*    Color de fondo de la cabecera */
-            color: #fff; /* Color de texto blanco */
-            font-weight: 400; /* Negrita */
-            text-transform: uppercase; /* Texto en mayúsculas */
-            text-align: center;
-        }
-        /* Filas alternas para mayor legibilidad */
-        .table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        /* Resaltar filas al pasar el ratón */
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
+    /* Ajuste de cada fila del formulario */
+    .form-group {
+        margin-bottom: 5px; /* Espacio entre filas */
+    }
+
+    /* Estilo para los labels */
+    label {
+        text-align: right;
+        font-weight: normal;
+        width: 160px; /* Mantener uniforme el ancho de los labels */
+        margin-right: 10px;
+    }
+
+    /* Estilo para los inputs y dropdowns */
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    /* Espaciado entre los campos */
+    .row .col-md-6 {
+        margin-bottom: 15px;
+    }
+
+    /* Alinear botón de búsqueda a la derecha */
+    .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    /* Botón de búsqueda */
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .container-tabla {
+        margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
+        padding: 20px;
+        max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
+    }
+    /* Tabla */
+    .table {
+        width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
+        margin-bottom: 30px; /* Espacio debajo de la tabla */
+        border-collapse: collapse;
+        background-color: #fff; /* Fondo blanco para la tabla */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+    }
+    /* Bordes de la tabla */
+    .table th, 
+    .table td {
+        padding: 12px 15px; /* Espaciado interno */
+        border: 1px solid #ddd; /* Bordes ligeros */
+        text-align: left; /* Texto alineado a la izquierda */
+        font-size: 14px; /* Tamaño de fuente */
+    }
+    /* Cabecera de la tabla */
+    .table thead th {
+        background-color: #516e96; /* Color de fondo de la cabecera */
+        color: #fff; /* Color de texto blanco */
+        font-weight: 400; /* Negrita */
+        text-transform: uppercase; /* Texto en mayúsculas */
+        text-align: center;
+    }
+    /* Filas alternas para mayor legibilidad */
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    /* Resaltar filas al pasar el ratón */
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
         .form-control {
            /* padding: 10px;*/
             border-radius: 4px;
@@ -126,9 +148,9 @@
         }
 
         /* Botón de búsqueda */
-        .btn-primary {
+        /*.btn-primary {*/
         /*    background-color: #f7d05a;*/
-            border-color: #f7d05a;
+            /*border-color: #f7d05a;
             color: white;
             padding: 10px 20px;
             font-size: 14px;
@@ -139,7 +161,7 @@
         .btn-primary:hover {
             background-color: #f1c40f;
             border-color: #f1c40f;
-        }
+        }*/
 
 
 
@@ -269,7 +291,7 @@
                             </div>
                             <div class="col-md-6 d-flex align-items-center">
                                 <label for="txtUnidad" class="me-2" style="width: 150px;">Unidad:</label>
-                                  <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad...">  
+                                  <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  OnSelectedIndexChanged="DDLUnidad_SelectedIndexChanged " AutoPostBack="true">  
                                   </asp:DropDownList>
                             </div>
                              <div class="col-md-6 d-flex align-items-center">
@@ -299,7 +321,7 @@
                               
                          
                          <div class="col-md-2">
-                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn-primary" OnClick="btnBuscar_Click" />
                          </div>
                          
                         <table class="table table-bordered">
