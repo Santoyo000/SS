@@ -314,15 +314,19 @@
                                   <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
                                </asp:DropDownList>
                             </div>
+                             <div class="col-md-6 d-flex justify-content-end">
+                                 <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
+                                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                            </div>
                           </div>
                           <%--  <div class="col-md-3">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                             </div>--%>   
                               
                          
-                         <div class="col-md-2">
-                             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn-primary" OnClick="btnBuscar_Click" />
-                         </div>
+                         <%--<div class="col-12 d-flex justify-content-end btn-container">
+                            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                        </div>--%>
                          
                         <table class="table table-bordered">
                             <thead>
@@ -387,9 +391,30 @@
                             </tbody>
                         </table>
                        <%-- <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
-                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
+<%--                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />
+                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />--%>
+                       <div class="text-center mb-2">
+                            Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
+                            de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="pagination d-flex align-items-center">
+                                <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
+
+                                <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" Text='<%# Eval("PageNumber") %>' 
+                                                    CommandArgument='<%# Eval("PageIndex") %>' 
+                                                    CommandName="PageChange" 
+                                                    CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
+                                <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                            </div>
+                        </div>
                         <div style="text-align: left;">
                             <% 
                                 if (Session["filtros"] != null)

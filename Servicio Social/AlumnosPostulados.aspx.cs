@@ -45,12 +45,16 @@ namespace Servicio_Social
                 CargarPeriodo();
             }
         }
-        private int CurrentPage
+        //private int CurrentPage
+        //{
+        //    get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
+        //    set { ViewState["CurrentPage"] = value; }
+        //}
+        protected int CurrentPage
         {
             get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
             set { ViewState["CurrentPage"] = value; }
         }
-
         private int TotalPages
         {
             get { return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0; }
@@ -70,31 +74,27 @@ namespace Servicio_Social
         #region Operaciones
         protected void CargarDatos(int pageIndex, string matricula, string programa, string nombre)
         {
-            int pageSize = 20; // Cantidad de registros por página
+            int pageSize = 20;
             int totalRecords;
-            string selectedEstatus = ddlEstatus.SelectedValue;
-            string selectedUnidad = DDLUnidad.SelectedValue;
-            string selectedNivel = ddlNivel.SelectedValue;
-            string selectedEscuela = ddlEscuela.SelectedValue;
-            string selectedPlan = ddlPlan.SelectedValue;
-            string selectedPeriodo = ddlPeriodo.SelectedValue;
 
+            DataTable dt = ObtenerDatos(pageIndex, pageSize, matricula, programa, nombre,
+                                        ddlEstatus.SelectedValue, DDLUnidad.SelectedValue,
+                                        ddlNivel.SelectedValue, ddlEscuela.SelectedValue,
+                                        ddlPlan.SelectedValue, ddlPeriodo.SelectedValue, out totalRecords);
 
-
-            DataTable dt = ObtenerDatos(pageIndex, pageSize, matricula, programa, nombre, selectedEstatus,  selectedUnidad, selectedNivel, selectedEscuela, selectedPlan, selectedPeriodo, out totalRecords);
-                
             Repeater1.DataSource = dt;
             Repeater1.DataBind();
 
-            // Calcula el número total de páginas
             TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
-            // Configura el estado de los botones
             btnPrevious.Enabled = pageIndex > 0;
             btnNext.Enabled = pageIndex < TotalPages - 1;
 
-            // Actualiza la etiqueta de número de página
-            lblPageNumber.Text = $"Página {pageIndex + 1} de {TotalPages}";
+            lblPageNumber.Text = (pageIndex + 1).ToString(); // Solo el número de página
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // 🔹 Actualiza la paginación después de cargar datos
+            BindPagination();
         }
 
         protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -172,6 +172,46 @@ namespace Servicio_Social
                 }
             }
         }
+        private void BindPagination()
+        {
+            List<object> pagination = new List<object>();
+            int maxPagesToShow = 10; // Máximo de números a mostrar en la paginación
+
+            int startPage = Math.Max(0, CurrentPage - (maxPagesToShow / 2));
+            int endPage = Math.Min(TotalPages, startPage + maxPagesToShow);
+
+            for (int i = startPage; i < endPage; i++)
+            {
+                pagination.Add(new { PageNumber = i + 1, PageIndex = i });
+            }
+
+            rptPagination.DataSource = pagination;
+            rptPagination.DataBind();
+
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // Habilita o deshabilita los botones de anterior y siguiente
+            btnPrevious.Enabled = CurrentPage > 0;
+            btnNext.Enabled = CurrentPage < TotalPages - 1;
+        }
+        protected void rptPagination_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "PageChange")
+            {
+                // Convertir el argumento de la página seleccionada
+                int newPage;
+                if (int.TryParse(e.CommandArgument.ToString(), out newPage))
+                {
+                    CurrentPage = newPage; // Actualiza la página actual
+                    string matricula = txtMatricula.Text.Trim();
+                    string programa = txtPrograma.Text.Trim();
+                    string nombre = txtNombre.Text.Trim();
+
+                    // Recargar los datos con los filtros actuales
+                    CargarDatos(CurrentPage, matricula, programa, nombre);
+                }
+            }
+        }
         private void CargarUnidad()
         {
           
@@ -195,7 +235,7 @@ namespace Servicio_Social
                 // Agregar manualmente el primer elemento "Seleccione la unidad"
                 DataTable dt = ds6.Tables[0];
                 DataRow newRow = dt.NewRow();
-                newRow["sCiudad"] = "Seleccione la unidad...";
+                newRow["sCiudad"] = "Seleccione la Unidad...";
                 dt.Rows.InsertAt(newRow, 0);
 
                 // Asigna los resultados al DropDownList
@@ -232,7 +272,7 @@ namespace Servicio_Social
                 // Agregar manualmente el primer elemento "Seleccione la unidad"
                 DataTable dt = ds6.Tables[0];
                 DataRow newRow = dt.NewRow();
-                newRow["Descripcion"] = "Seleccione Plan...";
+                newRow["Descripcion"] = "Seleccione el Plan de Estudios...";
                 dt.Rows.InsertAt(newRow, 0);
 
                 // Asigna los resultados al DropDownList
@@ -271,7 +311,7 @@ namespace Servicio_Social
                 // Agregar manualmente el primer elemento "Seleccione la unidad"
                 DataTable dt = ds6.Tables[0];
                 DataRow newRow = dt.NewRow();
-                newRow["Descripcion"] = "Seleccione Escuela...";
+                newRow["Descripcion"] = "Seleccione la Escuela...";
                 dt.Rows.InsertAt(newRow, 0);
 
                 // Asigna los resultados al DropDownList
@@ -331,7 +371,7 @@ namespace Servicio_Social
                 }
                 DataTable dt = ds3.Tables[0];
                 DataRow newRow = dt.NewRow();
-                newRow["sDescripcion"] = "Seleccione el Periodo...";
+                newRow["sDescripcion"] = "Seleccione el Periodo Escolar...";
                 dt.Rows.InsertAt(newRow, 0);
 
                 // Asigna los resultados al DropDownList
@@ -1147,6 +1187,32 @@ namespace Servicio_Social
                 }
             }
         }
+        protected void btnBorrar_Click(object sender, EventArgs e)
+        {
+            // Limpiar los TextBox
+            txtMatricula.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtPrograma.Text = string.Empty;
+
+            // Restablecer los DropDownList al primer valor (si tienen un "Seleccione...")
+            ddlEstatus.ClearSelection();
+            if (ddlEstatus.Items.Count > 0) ddlEstatus.SelectedIndex = 0;
+
+            DDLUnidad.ClearSelection();
+            if (DDLUnidad.Items.Count > 0) DDLUnidad.SelectedIndex = 0;
+
+            ddlNivel.ClearSelection();
+            if (ddlNivel.Items.Count > 0) ddlNivel.SelectedIndex = 0;
+
+            ddlPlan.ClearSelection();
+            if (ddlPlan.Items.Count > 0) ddlPlan.SelectedIndex = 0;
+
+            ddlEscuela.ClearSelection();
+            if (ddlEscuela.Items.Count > 0) ddlEscuela.SelectedIndex = 0;
+
+            ddlPeriodo.ClearSelection();
+            if (ddlPeriodo.Items.Count > 0) ddlPeriodo.SelectedIndex = 0;
+        }
         protected void btnLiberar_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)(sender);
@@ -1813,7 +1879,7 @@ namespace Servicio_Social
 
           
         }
-        protected void lnkNext_Click(object sender, EventArgs e)
+        protected void btnNext_Click(object sender, EventArgs e)
         {
             string matricula = txtMatricula.Text.Trim();
             string programa= txtPrograma.Text.Trim();
@@ -1853,7 +1919,7 @@ namespace Servicio_Social
             //    }
             //}
         }
-        protected void lnkPrev_Click(object sender, EventArgs e)
+        protected void btnPrevious_Click(object sender, EventArgs e)
         {
             string matricula = txtMatricula.Text.Trim();
             string programa = txtPrograma.Text.Trim();

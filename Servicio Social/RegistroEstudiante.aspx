@@ -133,7 +133,7 @@
         // Llamada AJAX para validar el semestre en el servidor (si es necesario)
         $.ajax({
             type: "POST",
-            url: "TuPagina.aspx/ValidarSemestre",
+            url: "RegistroEstudiante.aspx/ValidarSemestre",
             data: JSON.stringify({ semestre: semestre }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

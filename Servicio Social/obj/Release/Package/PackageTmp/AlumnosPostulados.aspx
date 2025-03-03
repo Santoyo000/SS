@@ -19,8 +19,8 @@
             });
         }
 
-           
-        </script>
+       
+    </script> 
         <script type="text/javascript">
             $(document).ready(function () {
                 // Cargar el PDF en el iframe cuando se abre el modal
@@ -48,44 +48,90 @@
             }
         </script>
     <style>
+        /* Contenedor principal del formulario */
+    .container-fluid {
+        max-width: 100%;
+        padding: 10px 20px;
+    }
 
-        .container-tabla {
-            margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
-            padding: 20px;
-            max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
-        }
-        /* Tabla */
-        .table {
-            width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
-            margin-bottom: 30px; /* Espacio debajo de la tabla */
-            border-collapse: collapse;
-            background-color: #fff; /* Fondo blanco para la tabla */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
-        }
-        /* Bordes de la tabla */
-        .table th, 
-        .table td {
-            padding: 12px 15px; /* Espaciado interno */
-            border: 1px solid #ddd; /* Bordes ligeros */
-            text-align: left; /* Texto alineado a la izquierda */
-            font-size: 14px; /* Tamaño de fuente */
-        }
-        /* Cabecera de la tabla */
-        .table thead th {
-            background-color: #516e96; /*    Color de fondo de la cabecera */
-            color: #fff; /* Color de texto blanco */
-            font-weight: 400; /* Negrita */
-            text-transform: uppercase; /* Texto en mayúsculas */
-            text-align: center;
-        }
-        /* Filas alternas para mayor legibilidad */
-        .table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        /* Resaltar filas al pasar el ratón */
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
+    /* Ajuste de cada fila del formulario */
+    .form-group {
+        margin-bottom: 5px; /* Espacio entre filas */
+    }
+
+    /* Estilo para los labels */
+    label {
+        text-align: right;
+        font-weight: normal;
+        width: 160px; /* Mantener uniforme el ancho de los labels */
+        margin-right: 10px;
+    }
+
+    /* Estilo para los inputs y dropdowns */
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    /* Espaciado entre los campos */
+    .row .col-md-6 {
+        margin-bottom: 15px;
+    }
+
+    /* Alinear botón de búsqueda a la derecha */
+    .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    /* Botón de búsqueda */
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .container-tabla {
+        margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
+        padding: 20px;
+        max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
+    }
+    /* Tabla */
+    .table {
+        width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
+        margin-bottom: 30px; /* Espacio debajo de la tabla */
+        border-collapse: collapse;
+        background-color: #fff; /* Fondo blanco para la tabla */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+    }
+    /* Bordes de la tabla */
+    .table th, 
+    .table td {
+        padding: 12px 15px; /* Espaciado interno */
+        border: 1px solid #ddd; /* Bordes ligeros */
+        text-align: left; /* Texto alineado a la izquierda */
+        font-size: 14px; /* Tamaño de fuente */
+    }
+    /* Cabecera de la tabla */
+    .table thead th {
+        background-color: #516e96; /* Color de fondo de la cabecera */
+        color: #fff; /* Color de texto blanco */
+        font-weight: 400; /* Negrita */
+        text-transform: uppercase; /* Texto en mayúsculas */
+        text-align: center;
+    }
+    /* Filas alternas para mayor legibilidad */
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    /* Resaltar filas al pasar el ratón */
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
         .form-control {
            /* padding: 10px;*/
             border-radius: 4px;
@@ -102,9 +148,9 @@
         }
 
         /* Botón de búsqueda */
-        .btn-primary {
+        /*.btn-primary {*/
         /*    background-color: #f7d05a;*/
-            border-color: #f7d05a;
+            /*border-color: #f7d05a;
             color: white;
             padding: 10px 20px;
             font-size: 14px;
@@ -115,7 +161,7 @@
         .btn-primary:hover {
             background-color: #f1c40f;
             border-color: #f1c40f;
-        }
+        }*/
 
 
 
@@ -225,27 +271,63 @@
                         <h2 class="text-gray-900 mb-4" style="color: #2e5790">Alumnos Registrados En Programas</h2>
                     </div>
                     <div class="">
-                        <div class="row mb-3">
-                        <%--    <div class="col-md-3">
+                        <div class="row mb-2">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtBuscarUsuario" class="me-2" style="width: 150px;">Matrícula:</label>
                                 <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" placeholder="Matrícula..." />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtNombre" class="me-2" style="width: 150px;">Nombre Alumno:</label>
                                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre..." />
-                            </div>--%>
-                            <div class="col-md-3">
-                                <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                             </div>
-                              <div class="col-md-3">
-                                <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > <%--OnSelectedIndexChanged="ddlEstatus_SelectedIndexChanged"--%>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtPrograma" class="me-2" style="width: 150px;">Programa:</label>
+                                <asp:TextBox ID="txtPrograma" runat="server" CssClass="form-control" placeholder="Programa..." />
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtEstatus" class="me-2" style="width: 150px;">Estatus:</label>
+                               <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > 
+                               </asp:DropDownList>          
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtUnidad" class="me-2" style="width: 150px;">Unidad:</label>
+                                  <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  OnSelectedIndexChanged="DDLUnidad_SelectedIndexChanged " AutoPostBack="true">  
+                                  </asp:DropDownList>
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtPlan" class="me-2" style="width: 150px;">Nivel:</label>
+                                   <asp:DropDownList ID="ddlNivel" runat="server" CssClass="form-control" placeholder="Seleccione un Nivel..." OnSelectedIndexChanged="DDLPlan_SelectedIndexChanged " AutoPostBack="true">  
+                                   </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtPlan" class="me-2" style="width: 150px;">Plan de estudios:</label>
+                                   <asp:DropDownList ID="ddlPlan" runat="server" CssClass="form-control" placeholder="Seleccione un Plan de Estudios..." DataTextField="Descripcion" DataValueField="idPlanEstudio" OnSelectedIndexChanged="DDLEscuela_SelectedIndexChanged" AutoPostBack="true">  
+                                   </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtEscuela" class="me-2" style="width: 150px;">Escuela:</label>
+                                   <asp:DropDownList ID="ddlEscuela" runat="server" CssClass="form-control" placeholder="Seleccione una Escuela..." >  
                                 </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtPeriodo" class="me-2" style="width: 150px;">Periodo:</label>
+                                  <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
+                               </asp:DropDownList>
                             </div>
-                            <div class="col-md-2">
+                             <div class="col-md-6 d-flex justify-content-end">
+                                 <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
-                        </div>
-                        <%-- <div class="row mb-3">
-
-                             </div>--%>
+                          </div>
+                          <%--  <div class="col-md-3">
+                                <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
+                            </div>--%>   
+                              
+                         
+                         <%--<div class="col-12 d-flex justify-content-end btn-container">
+                            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                        </div>--%>
+                         
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -309,9 +391,30 @@
                             </tbody>
                         </table>
                        <%-- <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
-                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
+<%--                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />
+                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />--%>
+                       <div class="text-center mb-2">
+                            Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
+                            de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="pagination d-flex align-items-center">
+                                <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
+
+                                <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" Text='<%# Eval("PageNumber") %>' 
+                                                    CommandArgument='<%# Eval("PageIndex") %>' 
+                                                    CommandName="PageChange" 
+                                                    CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
+                                <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                            </div>
+                        </div>
                         <div style="text-align: left;">
                             <% 
                                 if (Session["filtros"] != null)

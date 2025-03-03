@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
 
-    <asp:Panel ID="pnlCerrado" runat="server" Visible="false">
+   <%-- <asp:Panel ID="pnlCerrado" runat="server" Visible="false">
     <div style="text-align: center">
         <div class="form-group">
             <br />
@@ -18,7 +18,7 @@
         </div>
     </div>
     </asp:Panel>
-     
+     --%>
     <asp:Panel ID="PANELPRINCIPAL" runat="server" Visible="true">
         <div style="text-align: center">
             <div class="form-group">

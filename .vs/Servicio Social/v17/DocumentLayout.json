@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\usuariosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\usuariosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\registroestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\registroestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\usuariosregistrados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\usuariosregistrados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\registroestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 183,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,32 +35,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RegistroEstudiante.aspx",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx",
-              "RelativeDocumentMoniker": "Servicio Social\\RegistroEstudiante.aspx",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx",
-              "RelativeToolTip": "Servicio Social\\RegistroEstudiante.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-02-25T19:23:33.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AlumnosPostulados.aspx",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
-              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
-              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-01-26T23:37:30.945Z",
-              "EditorCaption": ""
             }
           ]
         },
@@ -88,64 +58,56 @@
       "Orientation": 0,
       "VerticalTabListWidth": 256,
       "FloatingWindowState": {
-        "Id": "751b4ae7-e106-4167-b2c0-196d8f5acad5",
-        "Display": 0,
-        "X": -5,
-        "Y": 23,
-        "Width": 1376,
-        "Height": 608,
+        "Id": "f57f917c-1118-4a78-8c12-3567679b3f15",
+        "Display": 1,
+        "X": 395,
+        "Y": 284,
+        "Width": 1089,
+        "Height": 633,
         "WindowState": 2
       },
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AlumnosPostulados.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
-              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx.cs",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
-              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx.cs",
-              "ViewState": "AgIAAOoAAAAAAAAAAAAtwP8AAAA0AAAAAAAAAA==",
+              "Title": "UsuariosRegistrados.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\UsuariosRegistrados.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\UsuariosRegistrados.aspx.cs",
+              "ViewState": "AgIAAN8BAAAAAAAAAAAmwPYBAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T14:51:16.306Z",
+              "WhenOpened": "2025-02-28T15:09:56.633Z",
               "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "4fed6efe-fd9e-4fa0-97a0-de6431877237",
-        "Display": 1,
-        "X": 392,
-        "Y": 414,
-        "Width": 1006,
-        "Height": 543,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "UsuariosRegistrados.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\UsuariosRegistrados.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx",
+              "RelativeToolTip": "Servicio Social\\UsuariosRegistrados.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-02-28T15:05:52.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "RegistroEstudiante.aspx.cs",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx.cs",
               "RelativeDocumentMoniker": "Servicio Social\\RegistroEstudiante.aspx.cs",
               "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\RegistroEstudiante.aspx.cs",
               "RelativeToolTip": "Servicio Social\\RegistroEstudiante.aspx.cs",
-              "ViewState": "AgIAAMkBAAAAAAAAAAAuwOYBAABcAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAqwHoAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T19:14:26.836Z",
+              "WhenOpened": "2025-03-03T15:28:23.336Z",
               "EditorCaption": ""
             }
           ]
