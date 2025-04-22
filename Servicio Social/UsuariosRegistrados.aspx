@@ -195,7 +195,7 @@
                 if (query.length >= 12 && expediente.length >= 3) {
                     $.ajax({
                         type: "POST",
-                        url: '<%= ResolveUrl("RegistroResponsable.aspx/buscarCorreo") %>',
+                        url: '<%= ResolveUrl("UsuariosRegistrados.aspx/buscarCorreo") %>',
                         data: JSON.stringify({ correo: query, exp: expediente }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -267,55 +267,59 @@
             // Define las funciones de manejo de eventos
             function handleMatriculaInput() {
                 var valor = $("#<%= txtMatriculaAl.ClientID %>").val();
-                if (valor.length > 7 && valor.length > 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: '<%= ResolveUrl("UsuariosRegistrados.aspx/GetAlumnoInfo") %>',
-                       data: JSON.stringify({ buscar: valor }),
-                       contentType: "application/json; charset=utf-8",
-                       dataType: "json",
-                       success: function (response) {
-                           if (response.d) {
-                               var alumno = response.d;
-                               $("#<%= txtNombreAl.ClientID %>").val(alumno.Nombre);
-                            $("#<%= txtApePatAl.ClientID %>").val(alumno.ApellidoPaterno);
-                            $("#<%= txtApeMatAl.ClientID %>").val(alumno.ApellidoMaterno);
+         if (valor.length > 7 && valor.length > 0) {
+             $.ajax({
+                 type: "POST",
+                 url: '<%= ResolveUrl("UsuariosRegistrados.aspx/GetAlumnoInfo") %>',
+              data: JSON.stringify({ buscar: valor }),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (response) {
+                  if (response.d) {
+                      var alumno = response.d;
+                      $("#<%= txtNombreAl.ClientID %>").val(alumno.Nombre);
+                      $("#<%= txtApePatAl.ClientID %>").val(alumno.ApellidoPaterno);
+                      $("#<%= txtApeMatAl.ClientID %>").val(alumno.ApellidoMaterno);
 
-                            var ddlEscuelas = $("#<%= ddlEscuelaAl.ClientID %>");
-                            ddlEscuelas.empty();
-                            var ddlPlanEstudio = $("#<%= ddlPlanEstudioAl.ClientID %>");
-                            ddlPlanEstudio.empty();
-                            ddlEscuelas.append($('<option>', { value: '', text: '-- Seleccione --' }));
-                            $.each(alumno.Escuelas, function (index, escuela) {
-                                ddlEscuelas.append($('<option>', { value: escuela.Id, text: escuela.Nombre }));
-                            });
-                            $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", false);
-                            $("#<%= lblErrorAl.ClientID %>").text('');
-                        } else {
-                            $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
-                            $("#<%= lblErrorAl.ClientID %>").text('La matrícula ingresada no fue encontrada o cuenta con estatus de Baja/Exalumno, favor de revisar.');
-                           }
-                       },
-                       error: function (error) {
-                           console.log(error);
-                           $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
-                        $("#<%= lblErrorAl.ClientID %>").text('La matrícula ingresada no fue encontrada o cuenta con estatus de Baja/Exalumno, favor de revisar.');
-                       }
-                   });
-               } else {
-                   $("#<%= txtNombreAl.ClientID %>").val('');
-                   $("#<%= txtApePatAl.ClientID %>").val('');
-                   $("#<%= txtApeMatAl.ClientID %>").val('');
-                   var ddlEscuelas = $("#<%= ddlEscuelaAl.ClientID %>");
-                   ddlEscuelas.empty();
-                   var ddlPlanEstudio = $("#<%= ddlPlanEstudioAl.ClientID %>");
-                   ddlPlanEstudio.empty();
-                   $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
-                   $("#<%= lblErrorAl.ClientID %>").text('');
-                }
-            }
+                      var ddlEscuelas = $("#<%= ddlEscuelaAl.ClientID %>");
+                      ddlEscuelas.empty();
+                      var ddlPlanEstudio = $("#<%= ddlPlanEstudioAl.ClientID %>");
+                      ddlPlanEstudio.empty();
+                      ddlEscuelas.append($('<option>', { value: '', text: '-- Seleccione --' }));
+                      $.each(alumno.Escuelas, function (index, escuela) {
+                          ddlEscuelas.append($('<option>', { value: escuela.Id, text: escuela.Nombre }));
+                      });
+                      ddlPlanEstudio.append($('<option>', { value: '', text: '-- Seleccione --' }));
+                      $.each(alumno.PlanesEstudio, function (index, plan) {
+                          ddlPlanEstudio.append($('<option>', { value: plan.Id, text: plan.Nombre, text: plan.Nombre }));
+                      });
+                      $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", false);
+                      $("#<%= lblErrorAl.ClientID %>").text('');
+                  } else {
+                      $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
+                      $("#<%= lblErrorAl.ClientID %>").text('La matrícula ingresada no fue encontrada o cuenta con estatus de Baja/Exalumno, favor de revisar.');
+                  }
+              },
+              error: function (error) {
+                  console.log(error);
+                  $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
+                  $("#<%= lblErrorAl.ClientID %>").text('La matrícula ingresada no fue encontrada o cuenta con estatus de Baja/Exalumno, favor de revisar.');
+              }
+          });
+      } else {
+          $("#<%= txtNombreAl.ClientID %>").val('');
+          $("#<%= txtApePatAl.ClientID %>").val('');
+          $("#<%= txtApeMatAl.ClientID %>").val('');
+          var ddlEscuelas = $("#<%= ddlEscuelaAl.ClientID %>");
+          ddlEscuelas.empty();
+          var ddlPlanEstudio = $("#<%= ddlPlanEstudioAl.ClientID %>");
+          ddlPlanEstudio.empty();
+          $("#<%= btnRegistrarAl.ClientID %>").prop("disabled", true);
+             $("#<%= lblErrorAl.ClientID %>").text('');
+         }
+     }
 
-            function handleEscuelaChange() {
+           <%-- function handleEscuelaChange() {
                 var escuelaId = $("#<%= ddlEscuelaAl.ClientID %>").val();
             var matricula = $("#<%= txtMatriculaAl.ClientID %>").val();
             $.ajax({
@@ -339,7 +343,7 @@
                     console.log(error);
                 }
             });
-            }
+            }--%>
 
             function validarPassword() {
                 var password = $("#<%= txtPasswordAl.ClientID %>").val();
@@ -357,13 +361,13 @@
 
             // Asigna los manejadores de eventos iniciales
             $("#<%= txtMatriculaAl.ClientID %>").on("input", handleMatriculaInput);
-            $("#<%= ddlEscuelaAl.ClientID %>").on("change", handleEscuelaChange);
+         <%--   $("#<%= ddlEscuelaAl.ClientID %>").on("change", handleEscuelaChange);--%>
             $("#<%= txtPasswordConfirmAl.ClientID %>").on("keyup", validarPassword);
 
             // Reasigna los manejadores de eventos después de cada actualización parcial del UpdatePanel
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
                 $("#<%= txtMatriculaAl.ClientID %>").off("input").on("input", handleMatriculaInput);
-            $("#<%= ddlEscuelaAl.ClientID %>").off("change").on("change", handleEscuelaChange);
+           <%-- $("#<%= ddlEscuelaAl.ClientID %>").off("change").on("change", handleEscuelaChange);--%>
             $("#<%= txtPasswordConfirmAl.ClientID %>").off("keyup").on("keyup", validarPassword);
         });
         });

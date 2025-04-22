@@ -28,6 +28,10 @@
                             $.each(alumno.Escuelas, function (index, escuela) {
                                 ddlEscuelas.append($('<option>', { value: escuela.Id, text: escuela.Nombre }));
                             });
+                            ddlPlanEstudio.append($('<option>', { value: '', text: '-- Seleccione --' }));
+                            $.each(alumno.PlanesEstudio, function (index, plan) {
+                                ddlPlanEstudio.append($('<option>', { value: plan.Id, text: plan.Nombre, text: plan.Nombre }));
+                            });
                             $("#<%= btnRegistrar.ClientID %>").prop("disabled", false);
                             $("#<%= lblError.ClientID %>").text('');
                         } else {
@@ -54,7 +58,7 @@
             }
         }
 
-        function handleEscuelaChange() {
+        <%--function handleEscuelaChange() {
             var escuelaId = $("#<%= ddlEscuela.ClientID %>").val();
             var matricula = $("#<%= txtMatricula.ClientID %>").val();
             $.ajax({
@@ -78,9 +82,8 @@
                     console.log(error);
                 }
             });
-        }
-
-        function validarPassword() {
+           }--%>
+           function validarPassword() {
             var password = $("#<%= txtPassword.ClientID %>").val();
             var confirmPassword = $("#<%= txtPasswordConfirm.ClientID %>").val();
             var btnSubmit = $("#<%= btnRegistrar.ClientID %>");
@@ -96,13 +99,13 @@
 
         // Asigna los manejadores de eventos iniciales
         $("#<%= txtMatricula.ClientID %>").on("input", handleMatriculaInput);
-        $("#<%= ddlEscuela.ClientID %>").on("change", handleEscuelaChange);
+        <%--$("#<%= ddlEscuela.ClientID %>").on("change", handleEscuelaChange);--%>
         $("#<%= txtPasswordConfirm.ClientID %>").on("keyup", validarPassword);
 
         // Reasigna los manejadores de eventos después de cada actualización parcial del UpdatePanel
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
             $("#<%= txtMatricula.ClientID %>").off("input").on("input", handleMatriculaInput);
-            $("#<%= ddlEscuela.ClientID %>").off("change").on("change", handleEscuelaChange);
+            <%--$("#<%= ddlEscuela.ClientID %>").off("change").on("change", handleEscuelaChange);--%>
             $("#<%= txtPasswordConfirm.ClientID %>").off("keyup").on("keyup", validarPassword);
         });
        });
@@ -180,7 +183,7 @@
 </asp:UpdateProgress>
    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <asp:Panel ID="PanelCerrado" runat="server" Visible="false">
+           <asp:Panel ID="PanelCerrado" runat="server" Visible="false">
                 <div style="text-align: center">
                     <div class="form-group">
                         <br />
@@ -191,7 +194,7 @@
                     </div>
                 </div>
             </asp:Panel>
-            <asp:Panel ID="pnlRegistro" Visible="true" runat="server">
+               <asp:Panel ID="pnlRegistro" Visible="true" runat="server">
                 <div style="text-align: center">
                     <div class="form-group">
                         <br />

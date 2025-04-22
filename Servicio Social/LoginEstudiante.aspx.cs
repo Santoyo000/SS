@@ -64,8 +64,9 @@ namespace Servicio_Social
                     lblError.Text = "Usuario y/o contraseña incorrecta." + ex.Message;
                     response = false;
                 }
-            }
 
+            }
+                
             return response;
         }
 
@@ -231,7 +232,7 @@ namespace Servicio_Social
             if (usuario.Contains("@uadec.edu.mx"))
             {
                 if (autenticarAD(usuario, password))
-                {
+                 {
                     lblError.Text = ""; // Limpiar el mensaje de error si son correctos
                     lblError.Visible = false; // Ocultar la etiqueta de error
 
@@ -245,7 +246,10 @@ namespace Servicio_Social
                     {
                         Response.Redirect("PanelEstudiante");
                     }
+
                 }
+                    
+                
             }
             //Alumnos incorporados
             else

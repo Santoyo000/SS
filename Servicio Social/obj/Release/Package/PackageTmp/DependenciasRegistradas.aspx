@@ -134,6 +134,19 @@
             color: white;
         }
     </style>
+    <!-- Agregar jQuery UI Datepicker -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
 
@@ -162,6 +175,39 @@
                             <h2 class="text-gray-900 mb-4" style="color: #2e5790">Dependencias Registradas</h2>
                         </div>
                         <div class="">
+<%--                         <div class="row mb-2">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtDependencia" class="me-2" style="width: 150px;">Nombre Dependencia:</label>
+                                <asp:TextBox ID="txtDependencia" runat="server" CssClass="form-control" placeholder="Nombre Dependencia..." />
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtCorreo" class="me-2" style="width: 150px;">Correo Dependencia:</label>
+                                <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control" placeholder="Correo Dependencia..." />
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtEstatus" class="me-2" style="width: 150px;">Estatus:</label>
+                               <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > 
+                               </asp:DropDownList>          
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtUnidad" class="me-2" style="width: 150px;">Unidad:</label>
+                                  <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  >  
+                                  </asp:DropDownList>
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtPeriodo" class="me-2" style="width: 150px;">Periodo:</label>
+                                  <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
+                               </asp:DropDownList>
+                            </div>
+                              <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtFecha" class="me-2" style="width: 150px;">Fecha:</label>
+                                <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control datepicker" placeholder="dd/mm/aa" />
+                            </div>
+                             <div class="col-md-6 d-flex justify-content-end">
+                                 <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
+                                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                            </div>
+                          </div>--%>
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
@@ -176,13 +222,9 @@
                                         <th style="display: none;">ID</th>
                                         <th>Fecha Registro</th>
                                         <th>Dependencia</th>
-                                        <%--<th>Responsable</th>--%>
-                                        <%--<th>Área Responsable</th>--%>
                                         <th>Unidad</th>
-                                        <%-- <th>Organismo</th>--%>
                                         <th>Telefono</th>
                                         <th>Correo</th>
-                                        <%-- <th>Domicilio</th>--%>
                                         <th>Estatus</th>
                                         <th>Acciones</th>
                                     </tr>

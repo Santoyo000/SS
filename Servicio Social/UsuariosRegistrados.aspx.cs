@@ -1544,6 +1544,63 @@ namespace Servicio_Social
                     break;
             }
         }
+        //public string getidAlumno(string escuela, string plan, string matricula)
+        //{
+        //    string idAlumno = "";
+        //    string conString = GlobalConstants.SQL;
+
+        //    using (SqlConnection connection = new SqlConnection(conString))
+        //    {
+        //        string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@sMatricula", matricula);
+        //            command.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //            command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
+        //            connection.Open();
+        //            object result = command.ExecuteScalar();
+
+        //            if (result != null)
+        //            {
+        //                idAlumno = result.ToString();
+        //            }
+        //            else
+        //            {
+        //                // Si no se encuentra el alumno, se inserta
+        //                string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @kpEscuelasUadeC, @kpPlan_estudios;";
+        //                using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+        //                {
+        //                    insertCommand.Parameters.AddWithValue("@sMatricula", matricula);
+        //                    insertCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+        //                    insertCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //                    insertCommand.ExecuteNonQuery();
+        //                }
+
+        //                // Intentamos obtener nuevamente el idAlumno
+        //                using (SqlCommand retryCommand = new SqlCommand(query, connection))
+        //                {
+        //                    retryCommand.Parameters.AddWithValue("@sMatricula", matricula);
+        //                    retryCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //                    retryCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
+        //                    object retryResult = retryCommand.ExecuteScalar();
+        //                    if (retryResult != null)
+        //                    {
+        //                        idAlumno = retryResult.ToString();
+        //                    }
+        //                    else
+        //                    {
+        //                        idAlumno = null; // Si por alguna razón no se inserta correctamente
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return idAlumno;
+        //}
         public string getidAlumno(string escuela, string plan, string matricula)
         {
             string idAlumno = "";
@@ -1551,15 +1608,18 @@ namespace Servicio_Social
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
+                connection.Open();
 
+
+
+                // Consultar si el alumno ya existe
+                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@sMatricula", matricula);
                     command.Parameters.AddWithValue("@kpPlan_estudios", plan);
                     command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
 
-                    connection.Open();
                     object result = command.ExecuteScalar();
 
                     if (result != null)
@@ -1568,13 +1628,46 @@ namespace Servicio_Social
                     }
                     else
                     {
-                        // Si no se encuentra el alumno, se inserta
-                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @kpEscuelasUadeC, @kpPlan_estudios;";
+                        // Si no se encuentra el alumno, se inserta con el procedimiento almacenado
+
+                        // Obtener la clave de la escuela
+                        string sClaveEscuela = null;
+                        string queryEscuela = "SELECT sClave FROM SP_ESCUELA_UAC WHERE idEscuelaUAC = @idEscuelaUAC;";
+                        using (SqlCommand commandEscuela = new SqlCommand(queryEscuela, connection))
+                        {
+                            commandEscuela.Parameters.AddWithValue("@idEscuelaUAC", escuela);
+                            object resultEscuela = commandEscuela.ExecuteScalar();
+                            if (resultEscuela != null)
+                            {
+                                sClaveEscuela = resultEscuela.ToString();
+                            }
+                        }
+
+                        // Obtener la clave del plan de estudios
+                        string sClavePlan = null;
+                        string queryPlan = "SELECT sClave FROM SP_PLAN_ESTUDIO WHERE idPlanEstudio = @idPlanEstudio;";
+                        using (SqlCommand commandPlan = new SqlCommand(queryPlan, connection))
+                        {
+                            commandPlan.Parameters.AddWithValue("@idPlanEstudio", plan);
+                            object resultPlan = commandPlan.ExecuteScalar();
+                            if (resultPlan != null)
+                            {
+                                sClavePlan = resultPlan.ToString();
+                            }
+                        }
+
+                        // Validar que se obtuvieron las claves antes de continuar
+                        if (string.IsNullOrEmpty(sClaveEscuela) || string.IsNullOrEmpty(sClavePlan))
+                        {
+                            return null; // Si alguna clave no se encontró, retornar null
+                        }
+
+                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @sClaveEscuela, @sClavePlan;";
                         using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                         {
                             insertCommand.Parameters.AddWithValue("@sMatricula", matricula);
-                            insertCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
-                            insertCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+                            insertCommand.Parameters.AddWithValue("@sClaveEscuela", sClaveEscuela);
+                            insertCommand.Parameters.AddWithValue("@sClavePlan", sClavePlan);
                             insertCommand.ExecuteNonQuery();
                         }
 
@@ -1840,7 +1933,7 @@ namespace Servicio_Social
             {
                 connection.Open();
                 using (OracleCommand command = new OracleCommand(@"
-                    SELECT A.MATRICULA, A.NOM_COMP AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
+                    SELECT A.MATRICULA, A.NOMBRE AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
                            A.CURP, CASE WHEN A.SEXO = 1 THEN 'FEMENINO' ELSE 'MASCULINO' END AS SEXO, 
                            P.CLAVE, P.NOMBRE AS PLAN_ESTUDIO, U.UNI_ORG, U.NOM_UNI_OR, A.EMAIL
                     FROM AA.GALU_ESC E

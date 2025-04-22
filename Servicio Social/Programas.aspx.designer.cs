@@ -24,6 +24,24 @@ namespace Servicio_Social
         protected global::System.Web.UI.ScriptManager ScriptManager;
 
         /// <summary>
+        /// Control pnlCerrado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCerrado;
+
+        /// <summary>
+        /// Control lblMensajeProgramas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeProgramas;
+
+        /// <summary>
         /// Control PANELPRINCIPAL.
         /// </summary>
         /// <remarks>

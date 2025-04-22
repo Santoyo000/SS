@@ -17,7 +17,7 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["idUser"] == null)
+            //if (Session["idUser"] == null || Session["idDependencia"] == null)
             //{
             //    Response.Redirect("Home.aspx");
             //}

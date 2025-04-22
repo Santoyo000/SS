@@ -110,7 +110,9 @@ namespace Servicio_Social
                 }
 
                 // Si no hay datos en SM_DATOS_INFORME_PROGRAMA, cargar los datos del programa y del alumno
-                string queryPrograma = @"SELECT PA.dfechaRegistro, PER.sNombres + ' ' + PER.sApellido_Paterno + ' ' + PER.sApellido_Materno AS sNombre_Completo,
+                string queryPrograma = @"SELECT PA.dfechaRegistro, COALESCE(PER.sNombres, '') + ' ' + 
+                                        COALESCE(PER.sApellido_Paterno, '') + ' ' + 
+                                        COALESCE(PER.sApellido_Materno, '') AS sNombre_Completo,
                                  P.sNombre_Programa, sResponsable
                                  FROM SM_PROGRAMA AS P
                                  INNER JOIN SM_DETALLE_PROGRAMA AS DP ON P.idPrograma = DP.kmPrograma

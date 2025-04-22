@@ -22,12 +22,13 @@ namespace Servicio_Social
 {
     public partial class DependenciasRegistradas1 : System.Web.UI.Page
     {
+        string SQL = GlobalConstants.SQL;
         protected void Page_Load(object sender, EventArgs e)
         {
             // Declarar la variable
 
-            //if (Session["idUser"] == null)
-            //{ 
+            //if (Session["idUser"] == null || Session["idDependencia"] == null)
+            //{
             //    Response.Redirect("Home.aspx");
             //}
 
@@ -36,6 +37,9 @@ namespace Servicio_Social
                 CargarDatos(0, "");
                 llenarUnidadModal();
                 llenarOrganismoModal();
+                //CargarUnidad();
+                //CargarPeriodo();
+            //    CargarEstatus();
             }
         }
 
@@ -57,6 +61,85 @@ namespace Servicio_Social
             pnlDependencias.Visible = true;
             CargarDatos(0, "");
         }
+        //private void CargarUnidad()
+        //{
+
+        //    // Define la conexión SQL y la consulta
+        //    using (SqlConnection con = new SqlConnection(SQL))
+        //    {
+        //        con.Open();
+        //        string queryString = "SELECT sCiudad,idUnidad FROM NP_UNIDAD WHERE IDUNIDAD != 1";
+
+        //        // Crea un DataSet para almacenar los resultados de la consulta
+
+        //        DataSet ds6 = new DataSet();
+
+        //        // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+        //        using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+        //        {
+        //            data.Fill(ds6);
+        //        }
+        //        // Agregar manualmente el primer elemento "Seleccione la unidad"
+        //        DataTable dt = ds6.Tables[0];
+        //        DataRow newRow = dt.NewRow();
+        //        newRow["sCiudad"] = "Seleccione la Unidad...";
+        //        dt.Rows.InsertAt(newRow, 0);
+
+        //        // Asigna los resultados al DropDownList
+        //        DDLUnidad.DataSource = ds6;
+        //        DDLUnidad.DataTextField = "sCiudad"; // Utiliza el alias "Descripcion" como texto visible
+        //        DDLUnidad.DataValueField = "idUnidad";
+        //        DDLUnidad.DataBind();
+        //    }
+
+        //}
+        //private void CargarPeriodo()
+        //{
+        //    // Define la conexión SQL y la consulta
+        //    using (SqlConnection con = new SqlConnection(SQL))
+        //    {
+        //        con.Open();
+        //        string queryString = @"SELECT idCiclo, sDescripcion FROM SP_CICLO 
+        //                                WHERE dFecha_Inicio >='2024-08-05 00:00:00.000' 
+        //                                AND idCiclo NOT IN (0,34)  ";
+
+        //        // Crea un DataSet para almacenar los resultados de la consulta
+        //        DataSet ds3 = new DataSet();
+
+        //        // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+        //        using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+        //        {
+        //            data.Fill(ds3);
+        //        }
+        //        DataTable dt = ds3.Tables[0];
+        //        DataRow newRow = dt.NewRow();
+        //        newRow["sDescripcion"] = "Seleccione el Periodo Escolar...";
+        //        dt.Rows.InsertAt(newRow, 0);
+
+        //        // Asigna los resultados al DropDownList
+        //        ddlPeriodo.DataSource = ds3;
+        //        ddlPeriodo.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
+        //        ddlPeriodo.DataValueField = "idCiclo";
+        //        ddlPeriodo.DataBind();
+        //    }
+
+        //}
+        //private void CargarEstatus()
+        //{
+        //    string query = @"SELECT idEstatus,sClave, sDescripcion  FROM NP_ESTATUS WHERE sClave IN ('11','1','2') ORDER BY sDescripcion"; // Ajusta la condición según tu criterio
+        //    string connectionString = GlobalConstants.SQL;
+        //    using (SqlConnection con = new SqlConnection(connectionString))
+        //    {
+        //        SqlCommand cmd = new SqlCommand(query, con);
+        //        con.Open();
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        ddlEstatus.DataSource = reader;
+        //        ddlEstatus.DataTextField = "sDescripcion";
+        //        ddlEstatus.DataValueField = "idEstatus";
+        //        ddlEstatus.DataBind();
+        //        ddlEstatus.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Seleccione un estatus......", "")); // Agrega una opción por defecto
+        //    }
+        //}
         protected void btnExportarExcel_Click(object sender, EventArgs e)
         {
             // Verificar si el Repeater contiene elementos
@@ -426,7 +509,7 @@ namespace Servicio_Social
 
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);    
                 con.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -729,6 +812,19 @@ namespace Servicio_Social
                 CargarDatos(pageIndex, "");
             }
         }
+        //protected void btnBorrar_Click(object sender, EventArgs e)
+        //{
+        //    // Limpiar los TextBox
+        //    txtNombreDependencia.Text = string.Empty;
+        //    txtFecha.Text = string.Empty;
+        //    txtCorreo.Text = string.Empty;
+
+        //    ddlEstatus.ClearSelection();
+        //    if (ddlEstatus.Items.Count > 0) ddlEstatus.SelectedIndex = 0;
+
+        //    ddlPeriodo.ClearSelection();
+        //    if (ddlPeriodo.Items.Count > 0) ddlPeriodo.SelectedIndex = 0;
+        //}
         #endregion
 
         #region Botones

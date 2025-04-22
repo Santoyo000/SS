@@ -105,7 +105,7 @@ namespace Servicio_Social
             public string Nombre { get; set; }
         }
 
-        [WebMethod]
+        [System.Web.Services.WebMethod]
         public static AlumnoDto GetAlumnoInfo(string buscar)
         {
             string oracleConnectionString = GlobalConstants.ORA;
@@ -124,14 +124,14 @@ namespace Servicio_Social
             {
                 connection.Open();
                 using (OracleCommand command = new OracleCommand(@"
-            SELECT A.MATRICULA, A.NOM_COMP AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
-                   A.CURP, CASE WHEN A.SEXO = 1 THEN 'FEMENINO' ELSE 'MASCULINO' END AS SEXO, 
-                   P.CLAVE, P.NOMBRE AS PLAN_ESTUDIO, U.UNI_ORG, U.NOM_UNI_OR, A.EMAIL
-            FROM AA.GALU_ESC E
-            JOIN AA.GALUMNOS A ON A.MATRICULA = E.MATRICULA
-            JOIN PLANESTUDIO.PLAN P ON P.CLAVE = E.CVE_PLAN
-            JOIN AA.GUNI_ORG U ON U.UNI_ORG = E.UNI_ORG
-            WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI', 'NI')", connection))
+        SELECT A.MATRICULA, A.NOMBRE AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
+               A.CURP, CASE WHEN A.SEXO = 1 THEN 'FEMENINO' ELSE 'MASCULINO' END AS SEXO, 
+               P.CLAVE, P.NOMBRE AS PLAN_ESTUDIO, U.UNI_ORG, U.NOM_UNI_OR, A.EMAIL
+        FROM AA.GALU_ESC E
+        JOIN AA.GALUMNOS A ON A.MATRICULA = E.MATRICULA
+        JOIN PLANESTUDIO.PLAN P ON P.CLAVE = E.CVE_PLAN
+        JOIN AA.GUNI_ORG U ON U.UNI_ORG = E.UNI_ORG
+        WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI', 'NI')", connection))
                 {
                     command.Parameters.Add(new OracleParameter("smatricula", buscar ?? string.Empty));
                     using (OracleDataReader reader = command.ExecuteReader())
@@ -161,12 +161,11 @@ namespace Servicio_Social
 
                     // Obtener las escuelas
                     using (SqlCommand sqlCommand = new SqlCommand(@"
-                SELECT idEscuelaUAC, sClave, sDescripcion 
-                FROM SP_ESCUELA_UAC 
-                WHERE sClave = @claveEscuela ", sqlConnection))
+            SELECT idEscuelaUAC, sClave, sDescripcion 
+            FROM SP_ESCUELA_UAC 
+            WHERE sClave = @claveEscuela", sqlConnection))
                     {
                         sqlCommand.Parameters.AddWithValue("@claveEscuela", claveEscuela);
-                        sqlCommand.Parameters.AddWithValue("@nombreEscuela", nombreEscuela);
                         using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
                         {
                             while (sqlReader.Read())
@@ -182,12 +181,11 @@ namespace Servicio_Social
 
                     // Obtener los planes de estudio
                     using (SqlCommand sqlCommand = new SqlCommand(@"
-                SELECT idPlanEstudio, sClave, sDescripcion 
-                FROM SP_PLAN_ESTUDIO 
-                WHERE sClave = @clavePlan", sqlConnection))
+            SELECT idPlanEstudio, sClave, sDescripcion 
+            FROM SP_PLAN_ESTUDIO 
+            WHERE sClave = @clavePlan", sqlConnection))
                     {
                         sqlCommand.Parameters.AddWithValue("@clavePlan", clavePlan);
-                        sqlCommand.Parameters.AddWithValue("@nombrePlan", nombrePlan);
                         using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
                         {
                             while (sqlReader.Read())
@@ -202,12 +200,117 @@ namespace Servicio_Social
                     }
                 }
 
-                alumno.Escuelas = escuelas;
-                alumno.PlanesEstudio = planesEstudio;
+                // Asegurar que se devuelvan las listas correctamente
+                alumno.Escuelas = escuelas.Count > 0 ? escuelas : new List<EscuelaDto>();
+                alumno.PlanesEstudio = planesEstudio.Count > 0 ? planesEstudio : new List<PlanEstudioDto>();
             }
 
             return alumno;
         }
+
+
+        //public static AlumnoDto GetAlumnoInfo(string buscar)
+        //{
+        //    string oracleConnectionString = GlobalConstants.ORA;
+        //    string sqlConnectionString = GlobalConstants.SQL;
+
+        //    AlumnoDto alumno = null;
+        //    List<EscuelaDto> escuelas = new List<EscuelaDto>();
+        //    List<PlanEstudioDto> planesEstudio = new List<PlanEstudioDto>();
+
+        //    string claveEscuela = "";
+        //    string nombreEscuela = "";
+        //    string clavePlan = "";
+        //    string nombrePlan = "";
+
+        //    using (OracleConnection connection = new OracleConnection(oracleConnectionString))
+        //    {
+        //        connection.Open();
+        //        using (OracleCommand command = new OracleCommand(@"
+        //    SELECT A.MATRICULA, A.NOMBRE AS NOMBRE_ALUMNO, A.APE_PAT, A.APE_MAT, 
+        //           A.CURP, CASE WHEN A.SEXO = 1 THEN 'FEMENINO' ELSE 'MASCULINO' END AS SEXO, 
+        //           P.CLAVE, P.NOMBRE AS PLAN_ESTUDIO, U.UNI_ORG, U.NOM_UNI_OR, A.EMAIL
+        //    FROM AA.GALU_ESC E
+        //    JOIN AA.GALUMNOS A ON A.MATRICULA = E.MATRICULA
+        //    JOIN PLANESTUDIO.PLAN P ON P.CLAVE = E.CVE_PLAN
+        //    JOIN AA.GUNI_ORG U ON U.UNI_ORG = E.UNI_ORG
+        //    WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI', 'NI')", connection))
+        //        {
+        //            command.Parameters.Add(new OracleParameter("smatricula", buscar ?? string.Empty));
+        //            using (OracleDataReader reader = command.ExecuteReader())
+        //            {
+        //                if (reader.Read())
+        //                {
+        //                    alumno = new AlumnoDto
+        //                    {
+        //                        Nombre = reader["NOMBRE_ALUMNO"].ToString(),
+        //                        ApellidoPaterno = reader["APE_PAT"].ToString(),
+        //                        ApellidoMaterno = reader["APE_MAT"].ToString()
+        //                    };
+        //                    claveEscuela = reader["UNI_ORG"].ToString();
+        //                    nombreEscuela = reader["NOM_UNI_OR"].ToString();
+        //                    clavePlan = reader["CLAVE"].ToString();
+        //                    nombrePlan = reader["PLAN_ESTUDIO"].ToString();
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    if (alumno != null)
+        //    {
+        //        using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+        //        {
+        //            sqlConnection.Open();
+
+        //            // Obtener las escuelas
+        //            using (SqlCommand sqlCommand = new SqlCommand(@"
+        //        SELECT idEscuelaUAC, sClave, sDescripcion 
+        //        FROM SP_ESCUELA_UAC 
+        //        WHERE sClave = @claveEscuela ", sqlConnection))
+        //            {
+        //                sqlCommand.Parameters.AddWithValue("@claveEscuela", claveEscuela);
+        //                sqlCommand.Parameters.AddWithValue("@nombreEscuela", nombreEscuela);
+        //                using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
+        //                {
+        //                    while (sqlReader.Read())
+        //                    {
+        //                        escuelas.Add(new EscuelaDto
+        //                        {
+        //                            Id = sqlReader["idEscuelaUAC"].ToString(),
+        //                            Nombre = sqlReader["sDescripcion"].ToString()
+        //                        });
+        //                    }
+        //                }
+        //            }
+
+        //            // Obtener los planes de estudio
+        //            using (SqlCommand sqlCommand = new SqlCommand(@"
+        //        SELECT idPlanEstudio, sClave, sDescripcion 
+        //        FROM SP_PLAN_ESTUDIO 
+        //        WHERE sClave = @clavePlan", sqlConnection))
+        //            {
+        //                sqlCommand.Parameters.AddWithValue("@clavePlan", clavePlan);
+        //                sqlCommand.Parameters.AddWithValue("@nombrePlan", nombrePlan);
+        //                using (SqlDataReader sqlReader = sqlCommand.ExecuteReader())
+        //                {
+        //                    while (sqlReader.Read())
+        //                    {
+        //                        planesEstudio.Add(new PlanEstudioDto
+        //                        {
+        //                            Id = sqlReader["idPlanEstudio"].ToString(),
+        //                            Nombre = sqlReader["sDescripcion"].ToString()
+        //                        });
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        alumno.Escuelas = escuelas;
+        //        alumno.PlanesEstudio = planesEstudio;
+        //    }
+
+        //    return alumno;
+        //}
 
 
         //public static AlumnoDto GetAlumnoInfo(string buscar)
@@ -303,7 +406,6 @@ namespace Servicio_Social
             return Newtonsoft.Json.JsonConvert.SerializeObject(planesEstudio);
 
         }
-
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
             string tipoEscuela = ddlTipoEscuela.SelectedValue;
@@ -311,10 +413,17 @@ namespace Servicio_Social
             string plan = Request.Form[ddlPlanEstudio.UniqueID];
             string matricula = txtMatricula.Text;
             string correo = txtCorreo.Text.Trim();
-            string idAlumno = getidAlumno(escuela, plan, matricula);
+            string idAlumno = getidAlumno(escuela, plan, matricula); // Obtener el id del alumno
             string password = txtPasswordConfirm.Text.Trim();
             string connectionString = GlobalConstants.SQL;
             string semestre = txtSemestre.Text.Trim();
+
+            // **Nueva validación**: Si el idAlumno es null o vacío, no continuar con el registro
+            if (string.IsNullOrEmpty(idAlumno))
+            {
+                lblError.Text = "No se pudo obtener el ID del alumno. Verifique los datos e intente nuevamente.";
+                return; // Detener la ejecución del método
+            }
 
             if ((!isIncorporada(escuela) && tipoEscuela == "1") || (isIncorporada(escuela) && tipoEscuela == "2"))
             {
@@ -322,7 +431,7 @@ namespace Servicio_Social
                 {
                     if (verificarCorreoExistente(correo, matricula))
                     {
-                        if (VerificarCorreo(correo, escuela, plan, matricula))
+                        if (VerificarCorreo(correo, escuela, plan, matricula, idAlumno))
                         {
                             lblError.Text = "Los datos ingresados ya se encuentran registrados";
                             txtMatricula.Text = "";
@@ -335,48 +444,40 @@ namespace Servicio_Social
                             using (SqlConnection connection = new SqlConnection(connectionString))
                             {
                                 connection.Open();
-
                                 SqlTransaction transaction = connection.BeginTransaction();
 
                                 try
                                 {
-                                    // Primero, insertar en la tabla SM_USUARIO
+                                    // Insertar en la tabla SM_USUARIO
                                     int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, "", tipoEscuela, connection, transaction);
 
-                                    // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
+                                    // Insertar en la tabla SM_DEPENDENCIA_SERVICIO
                                     InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre, connection, transaction);
 
-                                    // Commit de la transacción si todo fue exitoso
+                                    // Commit de la transacción
                                     transaction.Commit();
-
 
                                     pnlRegistro.Visible = false;
                                     pnlRegistroExitoso.Visible = true;
-                                    //string cambio = "1";
-                                    //enviarCorreo(_email, cambio);
-                                    ////Response.Redirect("Dependencias.aspx", false);
                                 }
                                 catch
                                 {
-                                    // Si ocurre algún error, realizar un rollback de la transacción
+                                    // Rollback si hay un error
                                     transaction.Rollback();
-
-                                    // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
-                                    //Response.Write("Error: " + ex.Message);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        lblError.Text = "La matrícula ingresada no cuenta con correo institucional o el correo ingresado no corresponde a la matrícula.";
+                        lblError.Text = "La matrícula ingresada no cuenta con correo institucional o el correo ingresado no corresponde a la matrícula.";
                         txtMatricula.Text = "";
                         ddlTipoEscuela.Focus();
                     }
                 }
                 else
                 {
-                    if (VerificarCorreo(correo, escuela, plan, matricula))
+                    if (VerificarCorreo(correo, escuela, plan, matricula, idAlumno))
                     {
                         lblError.Text = "Los datos ingresados ya se encuentran registrados";
                         txtMatricula.Text = "";
@@ -389,31 +490,26 @@ namespace Servicio_Social
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
                             connection.Open();
-
                             SqlTransaction transaction = connection.BeginTransaction();
 
                             try
                             {
-                                // Primero, insertar en la tabla SM_USUARIO
+                                // Insertar en la tabla SM_USUARIO
                                 int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, password, tipoEscuela, connection, transaction);
 
-                                // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
-                                InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre,connection, transaction);
+                                // Insertar en la tabla SM_DEPENDENCIA_SERVICIO
+                                InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre, connection, transaction);
 
-                                // Commit de la transacción si todo fue exitoso
+                                // Commit de la transacción
                                 transaction.Commit();
-
 
                                 pnlRegistro.Visible = false;
                                 pnlRegistroExitoso.Visible = true;
                             }
                             catch
                             {
-                                // Si ocurre algún error, realizar un rollback de la transacción
+                                // Rollback si hay un error
                                 transaction.Rollback();
-
-                                // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
-                                //Response.Write("Error: " + ex.Message);
                             }
                         }
                     }
@@ -428,6 +524,131 @@ namespace Servicio_Social
                 ddlTipoEscuela.Focus();
             }
         }
+
+        //protected void btnRegistrar_Click(object sender, EventArgs e)
+        //{
+        //    string tipoEscuela = ddlTipoEscuela.SelectedValue;
+        //    string escuela = Request.Form[ddlEscuela.UniqueID];
+        //    string plan = Request.Form[ddlPlanEstudio.UniqueID];
+        //    string matricula = txtMatricula.Text;
+        //    string correo = txtCorreo.Text.Trim();
+        //    string idAlumno = getidAlumno(escuela, plan, matricula);
+        //    string password = txtPasswordConfirm.Text.Trim();
+        //    string connectionString = GlobalConstants.SQL;
+        //    string semestre = txtSemestre.Text.Trim();
+
+        //    if ((!isIncorporada(escuela) && tipoEscuela == "1") || (isIncorporada(escuela) && tipoEscuela == "2"))
+        //    {
+        //        if (tipoEscuela == "1")
+        //        {
+        //            if (verificarCorreoExistente(correo, matricula))
+        //            {
+        //                if (VerificarCorreo(correo, escuela, plan, matricula))
+        //                {
+        //                    lblError.Text = "Los datos ingresados ya se encuentran registrados";
+        //                    txtMatricula.Text = "";
+        //                    txtCorreo.Text = "";
+        //                    ddlTipoEscuela.SelectedValue = "";
+        //                    ddlTipoEscuela.Focus();
+        //                }
+        //                else
+        //                {
+        //                    using (SqlConnection connection = new SqlConnection(connectionString))
+        //                    {
+        //                        connection.Open();
+
+        //                        SqlTransaction transaction = connection.BeginTransaction();
+
+        //                        try
+        //                        {
+        //                            // Primero, insertar en la tabla SM_USUARIO
+        //                            int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, "", tipoEscuela, connection, transaction);
+
+        //                            // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
+        //                            InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre, connection, transaction);
+
+        //                            // Commit de la transacción si todo fue exitoso
+        //                            transaction.Commit();
+
+
+        //                            pnlRegistro.Visible = false;
+        //                            pnlRegistroExitoso.Visible = true;
+        //                            //string cambio = "1";
+        //                            //enviarCorreo(_email, cambio);
+        //                            ////Response.Redirect("Dependencias.aspx", false);
+        //                        }
+        //                        catch
+        //                        {
+        //                            // Si ocurre algún error, realizar un rollback de la transacción
+        //                            transaction.Rollback();
+
+        //                            // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+        //                            //Response.Write("Error: " + ex.Message);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                lblError.Text = "La matrícula ingresada no cuenta con correo institucional o el correo ingresado no corresponde a la matrícula.";
+        //                txtMatricula.Text = "";
+        //                ddlTipoEscuela.Focus();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (VerificarCorreo(correo, escuela, plan, matricula))
+        //            {
+        //                lblError.Text = "Los datos ingresados ya se encuentran registrados";
+        //                txtMatricula.Text = "";
+        //                txtCorreo.Text = "";
+        //                ddlTipoEscuela.SelectedValue = "";
+        //                ddlTipoEscuela.Focus();
+        //            }
+        //            else
+        //            {
+        //                using (SqlConnection connection = new SqlConnection(connectionString))
+        //                {
+        //                    connection.Open();
+
+        //                    SqlTransaction transaction = connection.BeginTransaction();
+
+        //                    try
+        //                    {
+        //                        // Primero, insertar en la tabla SM_USUARIO
+        //                        int idUsuarioInsertado = InsertarUsuario(correo, idAlumno, password, tipoEscuela, connection, transaction);
+
+        //                        // Luego, insertar en la tabla SM_DEPENDENCIA_SERVICIO usando el ID del usuario insertado
+        //                        InsertarUsuarioAlumno(idUsuarioInsertado, idAlumno, plan, escuela, matricula, semestre,connection, transaction);
+
+        //                        // Commit de la transacción si todo fue exitoso
+        //                        transaction.Commit();
+
+
+        //                        pnlRegistro.Visible = false;
+        //                        pnlRegistroExitoso.Visible = true;
+        //                    }
+        //                    catch
+        //                    {
+        //                        // Si ocurre algún error, realizar un rollback de la transacción
+        //                        transaction.Rollback();
+
+        //                        // Manejar el error (por ejemplo, mostrar un mensaje de error en la página)
+        //                        //Response.Write("Error: " + ex.Message);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        lblError.Text = "La escuela seleccionada no corresponde al tipo de escuela.";
+        //        txtMatricula.Text = "";
+        //        txtCorreo.Text = "";
+        //        ddlTipoEscuela.SelectedValue = "";
+        //        ddlTipoEscuela.Focus();
+        //    }
+        //}
 
         //public string getidAlumno(string escuela, string plan, string matricula)
         //{
@@ -456,6 +677,64 @@ namespace Servicio_Social
         //    return idAlumno;
         //}
 
+        //public string getidAlumno(string escuela, string plan, string matricula)
+        //{
+        //    string idAlumno = "";
+        //    string conString = GlobalConstants.SQL;
+
+        //    using (SqlConnection connection = new SqlConnection(conString))
+        //    {
+        //        string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@sMatricula", matricula);
+        //            command.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //            command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
+        //            connection.Open();
+        //            object result = command.ExecuteScalar();
+
+        //            if (result != null)
+        //            {
+        //                idAlumno = result.ToString();
+        //            }
+        //            else
+        //            {
+        //                // Si no se encuentra el alumno, se inserta
+        //                string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @kpEscuelasUadeC, @kpPlan_estudios;";
+        //                using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+        //                {
+        //                    insertCommand.Parameters.AddWithValue("@sMatricula", matricula);
+        //                    insertCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+        //                    insertCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //                    insertCommand.ExecuteNonQuery();
+        //                }
+
+        //                // Intentamos obtener nuevamente el idAlumno
+        //                using (SqlCommand retryCommand = new SqlCommand(query, connection))
+        //                {
+        //                    retryCommand.Parameters.AddWithValue("@sMatricula", matricula);
+        //                    retryCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+        //                    retryCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
+
+        //                    object retryResult = retryCommand.ExecuteScalar();
+        //                    if (retryResult != null)
+        //                    {
+        //                        idAlumno = retryResult.ToString();
+        //                    }
+        //                    else
+        //                    {
+        //                        idAlumno = null; // Si por alguna razón no se inserta correctamente
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return idAlumno;
+        //}
+
         public string getidAlumno(string escuela, string plan, string matricula)
         {
             string idAlumno = "";
@@ -463,15 +742,18 @@ namespace Servicio_Social
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
+                connection.Open();
 
+             
+
+                // Consultar si el alumno ya existe
+                string query = "SELECT idAlumno FROM SM_ALUMNO WHERE sMatricula = @sMatricula AND kpPlan_estudios = @kpPlan_estudios AND kpEscuelasUadeC = @kpEscuelasUadeC;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@sMatricula", matricula);
                     command.Parameters.AddWithValue("@kpPlan_estudios", plan);
                     command.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
 
-                    connection.Open();
                     object result = command.ExecuteScalar();
 
                     if (result != null)
@@ -480,13 +762,46 @@ namespace Servicio_Social
                     }
                     else
                     {
-                        // Si no se encuentra el alumno, se inserta
-                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @kpEscuelasUadeC, @kpPlan_estudios;";
+                        // Si no se encuentra el alumno, se inserta con el procedimiento almacenado
+
+                        // Obtener la clave de la escuela
+                        string sClaveEscuela = null;
+                        string queryEscuela = "SELECT sClave FROM SP_ESCUELA_UAC WHERE idEscuelaUAC = @idEscuelaUAC;";
+                        using (SqlCommand commandEscuela = new SqlCommand(queryEscuela, connection))
+                        {
+                            commandEscuela.Parameters.AddWithValue("@idEscuelaUAC", escuela);
+                            object resultEscuela = commandEscuela.ExecuteScalar();
+                            if (resultEscuela != null)
+                            {
+                                sClaveEscuela = resultEscuela.ToString();
+                            }
+                        }
+
+                        // Obtener la clave del plan de estudios
+                        string sClavePlan = null;
+                        string queryPlan = "SELECT sClave FROM SP_PLAN_ESTUDIO WHERE idPlanEstudio = @idPlanEstudio;";
+                        using (SqlCommand commandPlan = new SqlCommand(queryPlan, connection))
+                        {
+                            commandPlan.Parameters.AddWithValue("@idPlanEstudio", plan);
+                            object resultPlan = commandPlan.ExecuteScalar();
+                            if (resultPlan != null)
+                            {
+                                sClavePlan = resultPlan.ToString();
+                            }
+                        }
+
+                        // Validar que se obtuvieron las claves antes de continuar
+                        if (string.IsNullOrEmpty(sClaveEscuela) || string.IsNullOrEmpty(sClavePlan))
+                        {
+                            return null; // Si alguna clave no se encontró, retornar null
+                        }
+
+                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @sClaveEscuela, @sClavePlan;";
                         using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                         {
                             insertCommand.Parameters.AddWithValue("@sMatricula", matricula);
-                            insertCommand.Parameters.AddWithValue("@kpEscuelasUadeC", escuela);
-                            insertCommand.Parameters.AddWithValue("@kpPlan_estudios", plan);
+                            insertCommand.Parameters.AddWithValue("@sClaveEscuela", sClaveEscuela);
+                            insertCommand.Parameters.AddWithValue("@sClavePlan", sClavePlan);
                             insertCommand.ExecuteNonQuery();
                         }
 
@@ -685,10 +1000,10 @@ namespace Servicio_Social
                 }
             }
         }
-        public bool VerificarCorreo(string correo, string escuela, string plan, string matricula)
+        public bool VerificarCorreo(string correo, string escuela, string plan, string matricula, string idAlumno)
         {
             string connectionString = GlobalConstants.SQL; // Reemplaza esto con tu cadena de conexión real
-            string idAlumno = getidAlumno(escuela, plan, matricula);
+            //string idAlumno = getidAlumno(escuela, plan, matricula);
 
             // Query para verificar si el correo existe en la base de datos
             string query = "SELECT COUNT(*) " +
@@ -749,9 +1064,9 @@ namespace Servicio_Social
             if (_correoDominio.Contains("@uadec.edu.mx"))
             {
                 // Query para verificar si el correo existe en la base de datos
-                string query = "SELECT LOGIN " +
-                    "FROM MAILEDU.V_ALUMNOS_CON_CORREO " +
-                    "WHERE MATRICULA = :matricula";
+                string query = @"SELECT LOGIN 
+                                FROM MAILEDU.V_ALUMNOS_CON_CORREO 
+                               WHERE MATRICULA = :matricula";
 
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
