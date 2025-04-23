@@ -1676,16 +1676,16 @@ namespace Servicio_Social
             string nombre = txtNombre.Text.Trim();
 
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "","","");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "","","");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
                 CargarDatos(page, matricula, programa, nombre);
-            }
+            //}
 
         }
         protected void btnLiberarResp_Click(object sender, EventArgs e)
@@ -1708,16 +1708,16 @@ namespace Servicio_Social
             string programa = txtPrograma.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "", "", "");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
                 CargarDatos(page, matricula, programa, nombre);
-            }
+            //}
 
         }
         protected void btnLiberarEsc_Click(object sender, EventArgs e)
@@ -1740,16 +1740,16 @@ namespace Servicio_Social
             string programa = txtPrograma.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "", "", "");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
                 CargarDatos(page, matricula, programa, nombre);
-            }
+            //}
 
         }
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -1796,16 +1796,16 @@ namespace Servicio_Social
             string programa = txtPrograma.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "", "", "");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
                 CargarDatos(page, matricula,programa, nombre);
-            }
+            //}
         }
         protected void btnAutorizar_Click(object sender, EventArgs e)
         {
@@ -1848,16 +1848,16 @@ namespace Servicio_Social
             string programa = txtPrograma.Text.Trim();
             string nombre = txtNombre.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "", "", "");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(matricula) || string.IsNullOrEmpty(programa) || string.IsNullOrEmpty(nombre))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
                 CargarDatos(page, matricula, programa, nombre);
-            }
+            //}
         }
        protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -1884,21 +1884,10 @@ namespace Servicio_Social
             string matricula = txtMatricula.Text.Trim();
             string programa= txtPrograma.Text.Trim();
             string nombre =txtNombre.Text.Trim();
-            if (string.IsNullOrEmpty(matricula))
+            if (CurrentPage < TotalPages - 1)
             {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, "","","");
-                }
-            }
-            else
-            {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, matricula,programa,nombre);
-                }
+                CurrentPage += 1;
+                CargarDatos(CurrentPage, matricula, programa, nombre);
             }
 
             //string searchTerm = txtBusqueda.Text.Trim();
@@ -1924,21 +1913,10 @@ namespace Servicio_Social
             string matricula = txtMatricula.Text.Trim();
             string programa = txtPrograma.Text.Trim();
             string nombre = txtNombre.Text.Trim();
-            if (string.IsNullOrEmpty(matricula))
+            if (CurrentPage > 0)
             {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, "","","");
-                }
-            }
-            else
-            {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, matricula, programa, nombre);
-                }
+                CurrentPage -= 1;
+                CargarDatos(CurrentPage, matricula, programa, nombre);
             }
 
 

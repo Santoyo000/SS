@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SS.Master" AutoEventWireup="true" CodeBehind="DependenciasRegistradas.aspx.cs" Inherits="Servicio_Social.DependenciasRegistradas1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function loadModalData(id) {
             $.ajax({
@@ -18,6 +19,20 @@
             });
         }
 
+    </script>
+    <script>
+        function cerrarModalEdicion() {
+            $('#editModal').modal('hide');
+        }
+
+        function cerrarModalDetalle() {
+            $('#myModal').modal('hide');
+        }
+    </script>
+    <script>
+        function abrirEditModal() {
+            $('#editModal').modal('show');
+        }
     </script>
     <style>
         .custom-header {
@@ -175,7 +190,7 @@
                             <h2 class="text-gray-900 mb-4" style="color: #2e5790">Dependencias Registradas</h2>
                         </div>
                         <div class="">
-<%--                         <div class="row mb-2">
+                         <div class="row mb-2">
                             <div class="col-md-6 d-flex align-items-center">
                                 <label for="txtDependencia" class="me-2" style="width: 150px;">Nombre Dependencia:</label>
                                 <asp:TextBox ID="txtDependencia" runat="server" CssClass="form-control" placeholder="Nombre Dependencia..." />
@@ -194,11 +209,11 @@
                                   <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  >  
                                   </asp:DropDownList>
                             </div>
-                             <div class="col-md-6 d-flex align-items-center">
+                            <%-- <div class="col-md-6 d-flex align-items-center">
                                 <label for="txtPeriodo" class="me-2" style="width: 150px;">Periodo:</label>
                                   <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
                                </asp:DropDownList>
-                            </div>
+                            </div>--%>
                               <div class="col-md-6 d-flex align-items-center">
                                 <label for="txtFecha" class="me-2" style="width: 150px;">Fecha:</label>
                                 <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control datepicker" placeholder="dd/mm/aa" />
@@ -207,15 +222,15 @@
                                  <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
-                          </div>--%>
-                            <div class="row mb-3">
+                          </div>
+                      <%--      <div class="row mb-3">
                                 <div class="col-md-3">
                                     <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                                 </div>
                                 <div class="col-md-2">
                                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                                 </div>
-                            </div>
+                            </div>--%>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -331,9 +346,29 @@
                                 </tbody>
                             </table>
                             <%-- <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" OnClick="btnExportarExcel_Click" CssClass="btn btn-success" />--%>
-                            <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary"/>
-                            <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                            <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>
+                           <%-- <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary"/>--%>
+                           <%-- <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
+                            <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>--%>
+                             <div class="text-center mb-2">
+                                  Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
+                                  de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                              </div>
+                             <div class="d-flex justify-content-center">
+                                 <div class="pagination d-flex align-items-center">
+                                     <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
+
+                                     <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                         <ItemTemplate>
+                                             <asp:Button runat="server" Text='<%# Eval("PageNumber") %>' 
+                                                         CommandArgument='<%# Eval("PageIndex") %>' 
+                                                         CommandName="PageChange" 
+                                                         CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                         </ItemTemplate>
+                                     </asp:Repeater>
+
+                                     <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                                 </div>
+                             </div>
                             <div style="text-align: left;">
                                 <asp:Button ID="Button2" runat="server" Text="Regresar" CssClass="btn btn-primary miBoton" OnClick="btnRegresar_Click" />
                             </div>
@@ -341,14 +376,12 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal" id="editModal">
+                <div class="modal" id="editModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Editar Dependencia</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <asp:HiddenField ID="hfDependenciaId" runat="server" />
@@ -399,7 +432,7 @@
                             </div>
                             <div class="modal-footer">
                                 <asp:Button ID="btnUpdate" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

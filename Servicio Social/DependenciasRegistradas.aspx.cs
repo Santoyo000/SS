@@ -17,6 +17,10 @@ using System.IO;
 using System.Web.Services;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 using AjaxControlToolkit;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using WebListItem = System.Web.UI.WebControls.ListItem;
 
 namespace Servicio_Social
 {
@@ -34,65 +38,63 @@ namespace Servicio_Social
 
             if (!IsPostBack)
             {
-                CargarDatos(0, "");
+                CargarDatos(0, "","","");
                 llenarUnidadModal();
                 llenarOrganismoModal();
-                //CargarUnidad();
+                CargarUnidad();
                 //CargarPeriodo();
-            //    CargarEstatus();
+                CargarEstatus();
             }
         }
 
-        private int CurrentPage
+        protected int CurrentPage
         {
             get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
             set { ViewState["CurrentPage"] = value; }
         }
-
         private int TotalPages
         {
             get { return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0; }
             set { ViewState["TotalPages"] = value; }
         }
-
         #region Operaciones 
         protected void lbnDependencias_Click(object sender, EventArgs e)
         {
             pnlDependencias.Visible = true;
-            CargarDatos(0, "");
+            CargarDatos(0, "", "", "");
         }
-        //private void CargarUnidad()
-        //{
+        private void CargarUnidad()
+        {
 
-        //    // Define la conexión SQL y la consulta
-        //    using (SqlConnection con = new SqlConnection(SQL))
-        //    {
-        //        con.Open();
-        //        string queryString = "SELECT sCiudad,idUnidad FROM NP_UNIDAD WHERE IDUNIDAD != 1";
+            // Define la conexión SQL y la consulta
+            using (SqlConnection con = new SqlConnection(SQL))
+            {
+                con.Open();
+                string queryString = "SELECT sCiudad,idUnidad FROM NP_UNIDAD WHERE IDUNIDAD != 1";
 
-        //        // Crea un DataSet para almacenar los resultados de la consulta
+                // Crea un DataSet para almacenar los resultados de la consulta
 
-        //        DataSet ds6 = new DataSet();
+                DataSet ds6 = new DataSet();
 
-        //        // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
-        //        using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
-        //        {
-        //            data.Fill(ds6);
-        //        }
-        //        // Agregar manualmente el primer elemento "Seleccione la unidad"
-        //        DataTable dt = ds6.Tables[0];
-        //        DataRow newRow = dt.NewRow();
-        //        newRow["sCiudad"] = "Seleccione la Unidad...";
-        //        dt.Rows.InsertAt(newRow, 0);
+                // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
+                using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
+                {
+                    data.Fill(ds6);
+                }
+                // Agregar manualmente el primer elemento "Seleccione la unidad"
+                DataTable dt = ds6.Tables[0];
+                DataRow newRow = dt.NewRow();
+                newRow["sCiudad"] = "Seleccione la Unidad...";
+                dt.Rows.InsertAt(newRow, 0);
 
-        //        // Asigna los resultados al DropDownList
-        //        DDLUnidad.DataSource = ds6;
-        //        DDLUnidad.DataTextField = "sCiudad"; // Utiliza el alias "Descripcion" como texto visible
-        //        DDLUnidad.DataValueField = "idUnidad";
-        //        DDLUnidad.DataBind();
-        //    }
+                // Asigna los resultados al DropDownList
+                DDLUnidad.DataSource = ds6;
+                DDLUnidad.DataTextField = "sCiudad"; // Utiliza el alias "Descripcion" como texto visible
+                DDLUnidad.DataValueField = "idUnidad";
+                DDLUnidad.DataBind();
+            }
 
-        //}
+        }
         //private void CargarPeriodo()
         //{
         //    // Define la conexión SQL y la consulta
@@ -124,22 +126,22 @@ namespace Servicio_Social
         //    }
 
         //}
-        //private void CargarEstatus()
-        //{
-        //    string query = @"SELECT idEstatus,sClave, sDescripcion  FROM NP_ESTATUS WHERE sClave IN ('11','1','2') ORDER BY sDescripcion"; // Ajusta la condición según tu criterio
-        //    string connectionString = GlobalConstants.SQL;
-        //    using (SqlConnection con = new SqlConnection(connectionString))
-        //    {
-        //        SqlCommand cmd = new SqlCommand(query, con);
-        //        con.Open();
-        //        SqlDataReader reader = cmd.ExecuteReader();
-        //        ddlEstatus.DataSource = reader;
-        //        ddlEstatus.DataTextField = "sDescripcion";
-        //        ddlEstatus.DataValueField = "idEstatus";
-        //        ddlEstatus.DataBind();
-        //        ddlEstatus.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Seleccione un estatus......", "")); // Agrega una opción por defecto
-        //    }
-        //}
+        private void CargarEstatus()
+        {
+            string query = @"SELECT idEstatus,sClave, sDescripcion  FROM NP_ESTATUS WHERE sClave IN ('11','23','2') ORDER BY sDescripcion"; // Ajusta la condición según tu criterio
+            string connectionString = GlobalConstants.SQL;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                ddlEstatus.DataSource = reader;
+                ddlEstatus.DataTextField = "sDescripcion";
+                ddlEstatus.DataValueField = "idEstatus";
+                ddlEstatus.DataBind();
+                ddlEstatus.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Seleccione un estatus......", "")); // Agrega una opción por defecto
+            }
+        }
         protected void btnExportarExcel_Click(object sender, EventArgs e)
         {
             // Verificar si el Repeater contiene elementos
@@ -231,87 +233,237 @@ namespace Servicio_Social
                 // Puedes agregar aquí el código para manejar este caso según tus necesidades
             }
         }
-        protected DataTable ObtenerDatos(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+
+
+        protected DataTable ObtenerDatos(int pageIndex, int pageSize, string NombreDep, string Correo, string Fecha, string selectedEstatus, string selectedUnidad,  out int totalRecords)
         {
-            string conString = GlobalConstants.SQL;
-            int rowsToSkip = pageIndex * pageSize;
+                    string conString = GlobalConstants.SQL;
+                    int rowsToSkip = pageIndex * pageSize;
 
-            string filtros = Session["filtros"].ToString();
-            string tipoUsuario = filtros.Split('|')[0];
-            string unidadUsuario = filtros.Split('|')[1];
-            string filtroquery = "";
+                    string filtros = Session["filtros"].ToString();
+                    string tipoUsuario = filtros.Split('|')[0];
+                    string unidadUsuario = filtros.Split('|')[1];
 
-            // Consulta SQL para obtener los datos paginados
-            string query = "SELECT DS.idDependenicaServicio, DS.sDescripcion, CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) AS dFechaRegistroDep, DS.sResponsable, DS.sAreaResponsable, U.idUnidad, U.sCiudad AS sUnidad, " +
-                "DS.sTelefono, USU.sCorreo, DS.sDomicilio, DS.bAutorizado, E.sDescripcion AS Estatus, ORG.idOrganismo, ORG.sDescripcion AS sOrganismo " +
-                "FROM SM_DEPENDENCIA_SERVICIO DS " +
-                "INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad " +
-                "INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo " +
-                "INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado " +
-                "INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario ";
+                    List<string> condiciones = new List<string>();
 
-            if (tipoUsuario == "1")
-            {
-                filtroquery = "WHERE DS.kpUnidad IN (2,3,4) ";
-            }
-            else if (tipoUsuario == "3")
-            {
-                filtroquery = "WHERE DS.kpUnidad = " + unidadUsuario + " ";
-            }
-            query += filtroquery;
+                    if (!string.IsNullOrEmpty(selectedUnidad) && selectedUnidad != "0")
+                        condiciones.Add("DS.kpUnidad = @selectedUnidad");
 
-            // Consulta SQL para contar el total de registros
-            string countQuery = "SELECT COUNT(*) FROM SM_DEPENDENCIA_SERVICIO DS " +
-                "INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad " +
-                "INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo " +
-                "INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado " +
-                "INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario ";
-            countQuery += filtroquery;
+                    if (!string.IsNullOrEmpty(selectedEstatus) && selectedEstatus != "0")
+                        condiciones.Add("DS.bAutorizado = @selectedEstatus");
 
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                string searchCondition = "AND (DS.sDescripcion LIKE @searchTerm OR DS.sResponsable LIKE @searchTerm " +
-                                         "OR U.sCiudad LIKE @searchTerm " +
-                                         "OR USU.sCorreo LIKE @searchTerm " +
-                                         "OR E.sDescripcion LIKE @searchTerm OR CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) LIKE @searchTerm) ";
-                query += searchCondition;
-                countQuery += searchCondition;
-            }
+                    if (!string.IsNullOrEmpty(NombreDep))
+                        condiciones.Add("DS.sDescripcion LIKE @NombreDep");
 
-            query += "ORDER BY DS.bAutorizado DESC " +
-                     "OFFSET @rowsToSkip ROWS " +
-                     "FETCH NEXT @pageSize ROWS ONLY;";
+                    if (!string.IsNullOrEmpty(Correo))
+                        condiciones.Add("USU.sCorreo LIKE @Correo");
 
-            DataTable dt = new DataTable();
-            totalRecords = 0;
+                    if (!string.IsNullOrEmpty(Fecha))
+                        condiciones.Add("CONVERT(VARCHAR, DS.DFECHAREGISTRODEP, 103) = @Fecha");
 
-            using (SqlConnection con = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
-                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+                    //if (!string.IsNullOrEmpty(selectedPeriodo))
+                    //    condiciones.Add("DS.kpPeriodo = @selectedPeriodo"); 
 
-                SqlCommand countCmd = new SqlCommand(countQuery, con);
-                if (!string.IsNullOrEmpty(searchTerm))
-                {
-                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
-                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    // Restricciones por tipo de usuario
+                    if (tipoUsuario == "3" || tipoUsuario == "4")
+                        condiciones.Add("DS.kpUnidad = @unidadUsuario");
 
-                }
+                    string whereClause = condiciones.Count > 0 ? "WHERE " + string.Join(" AND ", condiciones) : "";
 
-                con.Open();
+                    string query = $@"
+                SELECT DS.idDependenicaServicio, DS.sDescripcion, CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) AS dFechaRegistroDep,
+                       DS.sResponsable, DS.sAreaResponsable, U.idUnidad, U.sCiudad AS sUnidad,
+                       DS.sTelefono, USU.sCorreo, DS.sDomicilio, DS.bAutorizado,
+                       E.sDescripcion AS Estatus, ORG.idOrganismo, ORG.sDescripcion AS sOrganismo
+                FROM SM_DEPENDENCIA_SERVICIO DS
+                INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad
+                INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo
+                INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado
+                INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario
+                {whereClause}
+                ORDER BY DS.bAutorizado DESC
+                OFFSET @rowsToSkip ROWS FETCH NEXT @pageSize ROWS ONLY;
+            ";
 
-                // Obtener el número total de registros
-                totalRecords = (int)countCmd.ExecuteScalar();
+                    string countQuery = $@"
+                SELECT COUNT(*)
+                FROM SM_DEPENDENCIA_SERVICIO DS
+                INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad
+                INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo
+                INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado
+                INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario
+                {whereClause};
+            ";
 
-                // Obtener los datos paginados
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-            }
+                    DataTable dt = new DataTable();
+                    totalRecords = 0;
 
-            return dt;
+                    using (SqlConnection con = new SqlConnection(conString))
+                    {
+                        SqlCommand cmd = new SqlCommand(query, con);
+                        SqlCommand countCmd = new SqlCommand(countQuery, con);
 
+                        // Parámetros
+                        if (!string.IsNullOrEmpty(selectedUnidad) && selectedUnidad != "0")
+                        {
+                            cmd.Parameters.AddWithValue("@selectedUnidad", selectedUnidad);
+                            countCmd.Parameters.AddWithValue("@selectedUnidad", selectedUnidad);
+                        }
+
+                        if (!string.IsNullOrEmpty(selectedEstatus) && selectedEstatus != "0")
+                        {
+                            cmd.Parameters.AddWithValue("@selectedEstatus", selectedEstatus);
+                            countCmd.Parameters.AddWithValue("@selectedEstatus", selectedEstatus);
+                        }
+
+                        if (!string.IsNullOrEmpty(NombreDep))
+                        {
+                            cmd.Parameters.AddWithValue("@NombreDep", $"%{NombreDep}%");
+                            countCmd.Parameters.AddWithValue("@NombreDep", $"%{NombreDep}%");
+                        }
+
+                        if (!string.IsNullOrEmpty(Correo))
+                        {
+                            cmd.Parameters.AddWithValue("@Correo", $"%{Correo}%");
+                            countCmd.Parameters.AddWithValue("@Correo", $"%{Correo}%");
+                        }
+
+                        if (!string.IsNullOrEmpty(Fecha))
+                        {
+                            cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                            countCmd.Parameters.AddWithValue("@Fecha", Fecha);
+                        }
+
+                        //if (!string.IsNullOrEmpty(selectedPeriodo))
+                        //{
+                        //    cmd.Parameters.AddWithValue("@selectedPeriodo", selectedPeriodo);
+                        //    countCmd.Parameters.AddWithValue("@selectedPeriodo", selectedPeriodo);
+                        //}
+
+                        if (tipoUsuario == "3" || tipoUsuario == "4")
+                        {
+                            cmd.Parameters.AddWithValue("@unidadUsuario", unidadUsuario);
+                            countCmd.Parameters.AddWithValue("@unidadUsuario", unidadUsuario);
+                        }
+
+                        cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                        cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                        con.Open();
+                        totalRecords = (int)countCmd.ExecuteScalar();
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dt);
+                    }
+
+                    return dt;
         }
+        protected void btnPrevious_Click(object sender, EventArgs e)
+        {
+            string NombreDep = txtDependencia.Text.Trim();
+            string Correo = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
+
+            if (CurrentPage > 0)
+            {
+                CurrentPage -= 1;
+                CargarDatos(CurrentPage, NombreDep, Correo, Fecha);
+            }
+        }
+
+        protected void btnNext_Click(object sender, EventArgs e)
+        {
+            string NombreDep = txtDependencia.Text.Trim();
+            string Correo = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
+
+            if (CurrentPage < TotalPages - 1)
+            {
+                CurrentPage += 1;
+                CargarDatos(CurrentPage, NombreDep, Correo, Fecha);
+            }
+        }
+        //protected DataTable ObtenerDatos(int pageIndex, int pageSize, string searchTerm, out int totalRecords) RESPALDO DE METODO ANTERIOR
+        //{
+        //    string conString = GlobalConstants.SQL;
+        //    int rowsToSkip = pageIndex * pageSize;
+
+        //    string filtros = Session["filtros"].ToString();
+        //    string tipoUsuario = filtros.Split('|')[0];
+        //    string unidadUsuario = filtros.Split('|')[1];
+        //    string filtroquery = "";
+
+        //    // Consulta SQL para obtener los datos paginados
+        //    string query = "SELECT DS.idDependenicaServicio, DS.sDescripcion, CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) AS dFechaRegistroDep, DS.sResponsable, DS.sAreaResponsable, U.idUnidad, U.sCiudad AS sUnidad, " +
+        //        "DS.sTelefono, USU.sCorreo, DS.sDomicilio, DS.bAutorizado, E.sDescripcion AS Estatus, ORG.idOrganismo, ORG.sDescripcion AS sOrganismo " +
+        //        "FROM SM_DEPENDENCIA_SERVICIO DS " +
+        //        "INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad " +
+        //        "INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo " +
+        //        "INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado " +
+        //        "INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario ";
+
+        //    if (tipoUsuario == "1")
+        //    {
+        //        filtroquery = "WHERE DS.kpUnidad IN (2,3,4) ";
+        //    }
+        //    else if (tipoUsuario == "3")
+        //    {
+        //        filtroquery = "WHERE DS.kpUnidad = " + unidadUsuario + " ";
+        //    }
+        //    query += filtroquery;
+
+        //    // Consulta SQL para contar el total de registros
+        //    string countQuery = "SELECT COUNT(*) FROM SM_DEPENDENCIA_SERVICIO DS " +
+        //        "INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad " +
+        //        "INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo " +
+        //        "INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado " +
+        //        "INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario ";
+        //    countQuery += filtroquery;
+
+        //    if (!string.IsNullOrEmpty(searchTerm))
+        //    {
+        //        string searchCondition = "AND (DS.sDescripcion LIKE @searchTerm OR DS.sResponsable LIKE @searchTerm " +
+        //                                 "OR U.sCiudad LIKE @searchTerm " +
+        //                                 "OR USU.sCorreo LIKE @searchTerm " +
+        //                                 "OR E.sDescripcion LIKE @searchTerm OR CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) LIKE @searchTerm) ";
+        //        query += searchCondition;
+        //        countQuery += searchCondition;
+        //    }
+
+        //    query += "ORDER BY DS.bAutorizado DESC " +
+        //             "OFFSET @rowsToSkip ROWS " +
+        //             "FETCH NEXT @pageSize ROWS ONLY;";
+
+        //    DataTable dt = new DataTable();
+        //    totalRecords = 0;
+
+        //    using (SqlConnection con = new SqlConnection(conString))
+        //    {
+        //        SqlCommand cmd = new SqlCommand(query, con);
+        //        cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+        //        cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+        //        SqlCommand countCmd = new SqlCommand(countQuery, con);
+        //        if (!string.IsNullOrEmpty(searchTerm))
+        //        {
+        //            cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+        //            countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+        //        }
+
+        //        con.Open();
+
+        //        // Obtener el número total de registros
+        //        totalRecords = (int)countCmd.ExecuteScalar();
+
+        //        // Obtener los datos paginados
+        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+        //        adapter.Fill(dt);
+        //    }
+
+        //    return dt;
+
+        //}
 
         //protected DataTable ObtenerDatos2(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
         //{
@@ -481,7 +633,7 @@ namespace Servicio_Social
             string query = "SELECT idUnidad, sCiudad FROM NP_UNIDAD WHERE idUnidad NOT IN (1);";
 
             ddl.Items.Clear();
-            ddl.Items.Add(new ListItem("Selecciona una opción", ""));
+            ddl.Items.Add(new WebListItem("Selecciona una opción", ""));
 
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -492,12 +644,14 @@ namespace Servicio_Social
 
                 while (reader.Read())
                 {
-                    ddl.Items.Add(new ListItem(reader["sCiudad"].ToString(), reader["idUnidad"].ToString()));
+                    ddl.Items.Add(new WebListItem(reader["sCiudad"].ToString(), reader["idUnidad"].ToString()));
                 }
 
                 con.Close();
             }
         }
+
+
 
         private void cargarOrganismo(DropDownList ddl)
         {
@@ -505,7 +659,7 @@ namespace Servicio_Social
             string query = "SELECT idOrganismo, sDescripcion FROM SP_ORGANISMO;";
 
             ddl.Items.Clear();
-            ddl.Items.Add(new ListItem("Selecciona una opción", ""));
+            ddl.Items.Add(new WebListItem("Selecciona una opción", ""));
 
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -516,19 +670,20 @@ namespace Servicio_Social
 
                 while (reader.Read())
                 {
-                    ddl.Items.Add(new ListItem(reader["sDescripcion"].ToString(), reader["idOrganismo"].ToString()));
+                    ddl.Items.Add(new WebListItem(reader["sDescripcion"].ToString(), reader["idOrganismo"].ToString()));
                 }
 
                 con.Close();
             }
         }
 
-        protected void CargarDatos(int pageIndex, string searchTerm)
+        protected void CargarDatos(int pageIndex, string NombreDep, string CorreoDep, string Fecha)
         {
             int pageSize = 30; // Cantidad de registros por página
             int totalRecords;
 
-            DataTable dt = ObtenerDatos(pageIndex, pageSize, searchTerm, out totalRecords);
+            DataTable dt = ObtenerDatos(pageIndex, pageSize, NombreDep, CorreoDep, Fecha, 
+                                        ddlEstatus.SelectedValue, DDLUnidad.SelectedValue, out totalRecords);
 
             Repeater1.DataSource = dt;
             Repeater1.DataBind();
@@ -540,8 +695,51 @@ namespace Servicio_Social
             btnPrevious.Enabled = pageIndex > 0;
             btnNext.Enabled = pageIndex < TotalPages - 1;
 
-            // Actualiza la etiqueta de número de página
-            lblPageNumber.Text = $"Página {pageIndex + 1} de {TotalPages}";
+            lblPageNumber.Text = (pageIndex + 1).ToString(); // Solo el número de página
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // 🔹 Actualiza la paginación después de cargar datos
+            BindPagination();
+        }
+        private void BindPagination()
+        {
+            List<object> pagination = new List<object>();
+            int maxPagesToShow = 10; // Máximo de números a mostrar en la paginación
+
+            int startPage = Math.Max(0, CurrentPage - (maxPagesToShow / 2));
+            int endPage = Math.Min(TotalPages, startPage + maxPagesToShow);
+
+            for (int i = startPage; i < endPage; i++)
+            {
+                pagination.Add(new { PageNumber = i + 1, PageIndex = i });
+            }
+
+            rptPagination.DataSource = pagination;
+            rptPagination.DataBind();
+
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // Habilita o deshabilita los botones de anterior y siguiente
+            btnPrevious.Enabled = CurrentPage > 0;
+            btnNext.Enabled = CurrentPage < TotalPages - 1;
+        }
+        protected void rptPagination_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "PageChange")
+            {
+                // Convertir el argumento de la página seleccionada
+                int newPage;
+                if (int.TryParse(e.CommandArgument.ToString(), out newPage))
+                {
+                    CurrentPage = newPage; // Actualiza la página actual
+                    string NombreDep = txtDependencia.Text.Trim();
+                    string CorreoDep = txtCorreo.Text.Trim();
+                    string Fecha = txtFecha.Text.Trim();
+
+                    // Recargar los datos con los filtros actuales
+                    CargarDatos(CurrentPage, NombreDep, CorreoDep, Fecha);
+                }
+            }
         }
         //protected void CargarDatos2(int pageIndex, string searchTerm)
         //{
@@ -635,7 +833,7 @@ namespace Servicio_Social
                     //DataRowView row = (DataRowView)e.Item.DataItem;
                     string unidadValue = row["sUnidad"].ToString().Trim();
 
-                    ListItem itemToSelect = ddlUnidad.Items.FindByText(unidadValue);
+                    WebListItem itemToSelect = ddlUnidad.Items.FindByText(unidadValue);
                     if (itemToSelect != null)
                     {
                         ddlUnidad.SelectedValue = itemToSelect.Value;
@@ -651,7 +849,7 @@ namespace Servicio_Social
                     //DataRowView row = (DataRowView)e.Item.DataItem;
                     string OrganismoValue = row["sOrganismo"].ToString().Trim();
 
-                    ListItem itemToSelect = ddlOrganismo.Items.FindByText(OrganismoValue);
+                    WebListItem itemToSelect = ddlOrganismo.Items.FindByText(OrganismoValue);
                     if (itemToSelect != null)
                     {
                         ddlOrganismo.SelectedValue = itemToSelect.Value;
@@ -781,18 +979,34 @@ namespace Servicio_Social
                 if (pnlEditMode.Visible)
                     pnlEditMode.CssClass = "edit-mode";
 
-                string searchTerm = txtBusqueda.Text.Trim();
+                // Volver a cargar con filtros activos
+                string NombreDep = txtDependencia.Text.Trim();
+                string Correo = txtCorreo.Text.Trim();
+                string Fecha = txtFecha.Text.Trim();
                 int page = CurrentPage;
-                if (string.IsNullOrEmpty(searchTerm))
+
+                if (string.IsNullOrEmpty(NombreDep) || string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Fecha))
                 {
                     // Vuelve a enlazar los datos al Repeater
-                    CargarDatos(page, "");
+                    CargarDatos(page, "", "", "");
                 }
                 else
                 {
                     // Vuelve a enlazar los datos al Repeater
-                    CargarDatos(page, searchTerm);
+                    CargarDatos(page, NombreDep, Correo, Fecha);
                 }
+                //string searchTerm = txtBusqueda.Text.Trim();
+                //int page = CurrentPage;
+                //if (string.IsNullOrEmpty(searchTerm))
+                //{
+                //    // Vuelve a enlazar los datos al Repeater
+                //    CargarDatos(page, "");
+                //}
+                //else
+                //{
+                //    // Vuelve a enlazar los datos al Repeater
+                //    CargarDatos(page, searchTerm);
+                //}
 
 
             }
@@ -809,162 +1023,248 @@ namespace Servicio_Social
             if (e.CommandName == "Page")
             {
                 int pageIndex = int.Parse(e.CommandArgument.ToString());
-                CargarDatos(pageIndex, "");
+                CargarDatos(pageIndex, "","","");
             }
         }
-        //protected void btnBorrar_Click(object sender, EventArgs e)
-        //{
-        //    // Limpiar los TextBox
-        //    txtNombreDependencia.Text = string.Empty;
-        //    txtFecha.Text = string.Empty;
-        //    txtCorreo.Text = string.Empty;
+        protected void btnBorrar_Click(object sender, EventArgs e)
+        {
+            // Limpiar los TextBox
+            txtDependencia.Text = string.Empty;
+            txtFecha.Text = string.Empty;
+            txtCorreo.Text = string.Empty;
 
-        //    ddlEstatus.ClearSelection();
-        //    if (ddlEstatus.Items.Count > 0) ddlEstatus.SelectedIndex = 0;
+            ddlEstatus.ClearSelection();
+            if (ddlEstatus.Items.Count > 0) ddlEstatus.SelectedIndex = 0;
 
-        //    ddlPeriodo.ClearSelection();
-        //    if (ddlPeriodo.Items.Count > 0) ddlPeriodo.SelectedIndex = 0;
-        //}
+            DDLUnidad.ClearSelection();
+            if (DDLUnidad.Items.Count > 0) DDLUnidad.SelectedIndex = 0;
+
+
+        }
         #endregion
 
         #region Botones
         protected void btnAutorizar_Click(object sender, EventArgs e)
         {
+
             LinkButton lnkUpdate = (LinkButton)sender;
-
-            // Encuentra el RepeaterItem asociado al LinkButton
             RepeaterItem item = (RepeaterItem)lnkUpdate.NamingContainer;
-
-            // Encuentra el HiddenField dentro del RepeaterItem
             HiddenField hdnID = (HiddenField)item.FindControl("hdnID");
 
-            // Obtén el valor del HiddenField
             string[] valores = hdnID.Value.Split('|');
             string idDependenicaServicio = valores[0];
             string sCorreo = valores[1];
 
-            //LinkButton button = sender as LinkButton;
-            //string id = button.CommandArgument.ToString();
-            //string correo = button.CommandArgument.ToString().Split('|')[1];
-            string cambio;
             string filtros = Session["filtros"].ToString();
             string tipoUsuario = filtros.Split('|')[0];
 
+            string cambio = tipoUsuario == "1" ? "11" : "9"; // Admin: 11, Responsable: 9
+
+            cambiarEstatus(idDependenicaServicio, cambio);
+
             if (tipoUsuario == "1")
             {
-                cambio = "11";
-                cambiarEstatus(idDependenicaServicio, cambio);
                 enviarCorreo(sCorreo, cambio);
                 mensajeScript("Registrado Autorizado con éxito");
             }
-            else if (tipoUsuario == "3")
-            {
-                cambio = "9";
-                cambiarEstatus(idDependenicaServicio, cambio);
-            }
-            else
-            {
-                // Tipo de usuario no reconocido, manejar el error o la lógica correspondiente
-                return;
-            }
 
-
-            string searchTerm = txtBusqueda.Text.Trim();
+            // Volver a cargar con filtros activos
+            string NombreDep = txtDependencia.Text.Trim();
+            string Correo = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(searchTerm))
-            {
+
+            //if (string.IsNullOrEmpty(NombreDep) || string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Fecha))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "");
-            }
-            else
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, searchTerm);
-            }
+                CargarDatos(page, NombreDep, Correo, Fecha);
+           // }
+
+            //LinkButton lnkUpdate = (LinkButton)sender;
+
+            //// Encuentra el RepeaterItem asociado al LinkButton
+            //RepeaterItem item = (RepeaterItem)lnkUpdate.NamingContainer;
+
+            //// Encuentra el HiddenField dentro del RepeaterItem
+            //HiddenField hdnID = (HiddenField)item.FindControl("hdnID");
+
+            //// Obtén el valor del HiddenField
+            //string[] valores = hdnID.Value.Split('|');
+            //string idDependenicaServicio = valores[0];
+            //string sCorreo = valores[1];
+
+            ////LinkButton button = sender as LinkButton;
+            ////string id = button.CommandArgument.ToString();
+            ////string correo = button.CommandArgument.ToString().Split('|')[1];
+            //string cambio;
+            //string filtros = Session["filtros"].ToString();
+            //string tipoUsuario = filtros.Split('|')[0];
+
+            //if (tipoUsuario == "1")
+            //{
+            //    cambio = "11";
+            //    cambiarEstatus(idDependenicaServicio, cambio);
+            //    enviarCorreo(sCorreo, cambio);
+            //    mensajeScript("Registrado Autorizado con éxito");
+            //}
+            //else if (tipoUsuario == "3")
+            //{
+            //    cambio = "9";
+            //    cambiarEstatus(idDependenicaServicio, cambio);
+            //}
+            //else
+            //{
+            //    // Tipo de usuario no reconocido, manejar el error o la lógica correspondiente
+            //    return;
+            //}
+
+
+            //string searchTerm = txtBusqueda.Text.Trim();
+            //int page = CurrentPage;
+            //if (string.IsNullOrEmpty(searchTerm))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "");
+            //}
+            //else
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, searchTerm);
+            //}
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
 
             LinkButton lnkUpdate = (LinkButton)sender;
-
-            // Encuentra el RepeaterItem asociado al LinkButton
             RepeaterItem item = (RepeaterItem)lnkUpdate.NamingContainer;
-
-            // Encuentra el HiddenField dentro del RepeaterItem
             HiddenField hdnID = (HiddenField)item.FindControl("hdnID");
 
-            // Obtén el valor del HiddenField
             string[] valores = hdnID.Value.Split('|');
             string idDependenicaServicio = valores[0];
             string sCorreo = valores[1];
 
             string filtros = Session["filtros"].ToString();
             string tipoUsuario = filtros.Split('|')[0];
-            string cambio = "2";
+            string cambio = "2"; // No Autorizado
+
+            cambiarEstatus(idDependenicaServicio, cambio);
+
             if (tipoUsuario == "1")
             {
-
-                cambiarEstatus(idDependenicaServicio, cambio);
-            //    enviarCorreo(sCorreo, cambio);
+                // enviarCorreo(sCorreo, cambio); // Solo si deseas enviar correo también
                 mensajeScript("Registrado NO Autorizado con éxito");
             }
-            else if (tipoUsuario == "3")
-            {
-                cambiarEstatus(idDependenicaServicio, cambio);
-            }
-            else
-            {
-                // Tipo de usuario no reconocido, manejar el error o la lógica correspondiente
-                return;
-            }
 
-
-            string searchTerm = txtBusqueda.Text.Trim();
+            // Volver a cargar con filtros activos
+            string NombreDep = txtDependencia.Text.Trim();
+            string Correo = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
             int page = CurrentPage;
-            if (string.IsNullOrEmpty(searchTerm))
-            {
+
+            //if (string.IsNullOrEmpty(NombreDep) || string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Fecha))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "", "", "");
+            //}
+            //else
+            //{
                 // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "");
-            }
-            else
-            {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, searchTerm);
-            }
+                CargarDatos(page, NombreDep, Correo, Fecha);
+           // }
+
+            //LinkButton lnkUpdate = (LinkButton)sender;
+
+            //// Encuentra el RepeaterItem asociado al LinkButton
+            //RepeaterItem item = (RepeaterItem)lnkUpdate.NamingContainer;
+
+            //// Encuentra el HiddenField dentro del RepeaterItem
+            //HiddenField hdnID = (HiddenField)item.FindControl("hdnID");
+
+            //// Obtén el valor del HiddenField
+            //string[] valores = hdnID.Value.Split('|');
+            //string idDependenicaServicio = valores[0];
+            //string sCorreo = valores[1];
+
+            //string filtros = Session["filtros"].ToString();
+            //string tipoUsuario = filtros.Split('|')[0];
+            //string cambio = "2";
+            //if (tipoUsuario == "1")
+            //{
+
+            //    cambiarEstatus(idDependenicaServicio, cambio);
+            ////    enviarCorreo(sCorreo, cambio);
+            //    mensajeScript("Registrado NO Autorizado con éxito");
+            //}
+            //else if (tipoUsuario == "3")
+            //{
+            //    cambiarEstatus(idDependenicaServicio, cambio);
+            //}
+            //else
+            //{
+            //    // Tipo de usuario no reconocido, manejar el error o la lógica correspondiente
+            //    return;
+            //}
+
+
+            //string searchTerm = txtBusqueda.Text.Trim();
+            //int page = CurrentPage;
+            //if (string.IsNullOrEmpty(searchTerm))
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, "");
+            //}
+            //else
+            //{
+            //    // Vuelve a enlazar los datos al Repeater
+            //    CargarDatos(page, searchTerm);
+            //}
         }
 
         protected void lnkNext_Click(object sender, EventArgs e)
         {
-            string searchTerm = txtBusqueda.Text.Trim();
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, "");
-                }
-            }
-            else
-            {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, searchTerm);
-                }
-            }
+            //string searchTerm = txtBusqueda.Text.Trim();
+            //if (string.IsNullOrEmpty(searchTerm))
+            //{
+            //    if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+            //    {
+            //        CurrentPage += 1;
+            //        CargarDatos(CurrentPage, "");
+            //    }
+            //}
+            //else
+            //{
+            //    if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+            //    {
+            //        CurrentPage += 1;
+            //        CargarDatos(CurrentPage, searchTerm);
+            //    }
+            //}
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             // Obtén el término de búsqueda del cuadro de texto
-            string searchTerm = txtBusqueda.Text.Trim();
+            //string searchTerm = txtBusqueda.Text.Trim();
 
+            string NombreDep = txtDependencia.Text.Trim();
+            string CorreoDep = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
             // Establece la página actual en cero para volver a la primera página después de la búsqueda
             CurrentPage = 0;
 
             // Carga los datos con el término de búsqueda y la página actual
-            CargarDatos(CurrentPage, searchTerm);
+            //CargarDatos(CurrentPage, searchTerm);
+
+            CargarDatos(CurrentPage, NombreDep, CorreoDep, Fecha);
+
+
+
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
@@ -986,23 +1286,23 @@ namespace Servicio_Social
 
         protected void lnkPrev_Click(object sender, EventArgs e)
         {
-            string searchTerm = txtBusqueda.Text.Trim();
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, "");
-                }
-            }
-            else
-            {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, searchTerm);
-                }
-            }
+            //string searchTerm = txtBusqueda.Text.Trim();
+            //if (string.IsNullOrEmpty(searchTerm))
+            //{
+            //    if (CurrentPage > 0)
+            //    {
+            //        CurrentPage -= 1;
+            //        CargarDatos(CurrentPage, "");
+            //    }
+            //}
+            //else
+            //{
+            //    if (CurrentPage > 0)
+            //    {
+            //        CurrentPage -= 1;
+            //        CargarDatos(CurrentPage, searchTerm);
+            //    }
+            //}
 
 
         }
@@ -1155,7 +1455,8 @@ namespace Servicio_Social
                 }
             }
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "editModalScript", "$('#editModal').modal('show');", true);
+            //ScriptManager.RegisterStartupScript(this, GetType(), "editModalScript", "$('#editModal').modal('show');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "abrirEditModal", "abrirEditModal();", true);
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
@@ -1189,19 +1490,28 @@ namespace Servicio_Social
                 }
             }
 
-            string searchTerm = txtBusqueda.Text.Trim();
-            int page = CurrentPage;
-            if (string.IsNullOrEmpty(searchTerm))
+
+            string NombreDep = txtDependencia.Text.Trim();
+            string Correo = txtCorreo.Text.Trim();
+            string Fecha = txtFecha.Text.Trim();
+            if (string.IsNullOrEmpty(NombreDep))
             {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, "");
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatos(CurrentPage, "", "", "");
+                }
             }
             else
             {
-                // Vuelve a enlazar los datos al Repeater
-                CargarDatos(page, searchTerm);
+                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
+                {
+                    CurrentPage += 1;
+                    CargarDatos(CurrentPage, NombreDep, Correo, Fecha);
+                }
             }
-            ScriptManager.RegisterStartupScript(this, GetType(), "editModalScript", "$('#editModal').modal('hide');", true);
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "editModalScript", "var modal = bootstrap.Modal.getInstance(document.getElementById('editModal')); if(modal) modal.hide();", true);
         }
     }
 }
