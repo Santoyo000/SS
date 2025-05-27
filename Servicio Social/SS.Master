@@ -184,9 +184,9 @@
                             </a>
                         </li>
                         <li class="nav-item" id="li_administradorReportes" runat="server" visible="false">
-                            <a class="nav-link logout-icon" href="#" data-toggle="tooltip" title="Reportes">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Reportes</span>
+                            <a class="nav-link logout-icon" href="ConfiguracionPagina.aspx" data-toggle="tooltip" title="Reportes">
+                                <i class="fas fa-screwdriver-wrench card-icon"></i> <%--fas  fa-chart-bar--%>
+                                <span>Configuración</span> <span>de Página</span>
                             </a>
                         </li>
                         <%--Menú Responsable Unidad--%>

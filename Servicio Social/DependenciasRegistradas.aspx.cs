@@ -21,6 +21,8 @@ using DocumentFormat.OpenXml.Drawing.Diagrams;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using WebListItem = System.Web.UI.WebControls.ListItem;
+using System.Text;
+using System.Web.UI.HtmlControls;
 
 namespace Servicio_Social
 {
@@ -95,37 +97,7 @@ namespace Servicio_Social
             }
 
         }
-        //private void CargarPeriodo()
-        //{
-        //    // Define la conexión SQL y la consulta
-        //    using (SqlConnection con = new SqlConnection(SQL))
-        //    {
-        //        con.Open();
-        //        string queryString = @"SELECT idCiclo, sDescripcion FROM SP_CICLO 
-        //                                WHERE dFecha_Inicio >='2024-08-05 00:00:00.000' 
-        //                                AND idCiclo NOT IN (0,34)  ";
 
-        //        // Crea un DataSet para almacenar los resultados de la consulta
-        //        DataSet ds3 = new DataSet();
-
-        //        // Utiliza un SqlDataAdapter para ejecutar la consulta y llenar el DataSet
-        //        using (SqlDataAdapter data = new SqlDataAdapter(queryString, con))
-        //        {
-        //            data.Fill(ds3);
-        //        }
-        //        DataTable dt = ds3.Tables[0];
-        //        DataRow newRow = dt.NewRow();
-        //        newRow["sDescripcion"] = "Seleccione el Periodo Escolar...";
-        //        dt.Rows.InsertAt(newRow, 0);
-
-        //        // Asigna los resultados al DropDownList
-        //        ddlPeriodo.DataSource = ds3;
-        //        ddlPeriodo.DataTextField = "sDescripcion"; // Utiliza el alias "Descripcion" como texto visible
-        //        ddlPeriodo.DataValueField = "idCiclo";
-        //        ddlPeriodo.DataBind();
-        //    }
-
-        //}
         private void CargarEstatus()
         {
             string query = @"SELECT idEstatus,sClave, sDescripcion  FROM NP_ESTATUS WHERE sClave IN ('11','23','2') ORDER BY sDescripcion"; // Ajusta la condición según tu criterio
@@ -142,99 +114,7 @@ namespace Servicio_Social
                 ddlEstatus.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Seleccione un estatus......", "")); // Agrega una opción por defecto
             }
         }
-        protected void btnExportarExcel_Click(object sender, EventArgs e)
-        {
-            // Verificar si el Repeater contiene elementos
-            if (Repeater1.Items.Count > 0)
-            {
-                // Crear el archivo Excel en memoria
-                using (ExcelPackage excelPackage = new ExcelPackage())
-                {
-                    // Agregar una hoja de trabajo al archivo Excel
-                    ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Dependencias");
-
-                    // Definir los encabezados de las columnas
-                    string[] headers = { "Dependencia", "Responsable", "Área Responsable", "Unidad", "Organismo", "Telefono", "Correo", "Domicilio", "Estatus" };
-                    // Escribir los encabezados en la primera fila
-                    for (int i = 0; i < headers.Length; i++)
-                    {
-                        worksheet.Cells[1, i + 1].Value = headers[i];
-                    }
-                    int rowIndex = 2; // Comenzar desde la fila 2 (después de los encabezados)
-
-                    foreach (RepeaterItem item in Repeater1.Items)
-                    {
-                        // Verificar si el Repeater está en modo de edición o de visualización
-                        if (item.FindControl("pnlViewMode").Visible)
-                        {
-
-
-                            TextBox txtDependencia = (TextBox)item.FindControl("txtDescripcion");
-                            TextBox txtResponsable = (TextBox)item.FindControl("txtResponsable");
-                            TextBox txtAreaResponsable = (TextBox)item.FindControl("txtAreaResponsable");
-                            DropDownList ddlUnidad = (DropDownList)item.FindControl("ddlUnidad");
-                            DropDownList ddlOrganismo = (DropDownList)item.FindControl("ddlOrganismo");
-                            TextBox txtTelefono = (TextBox)item.FindControl("txtTelefono");
-                            Label lblCorreo = (Label)item.FindControl("sCorreo");
-                            TextBox txtDomicilio = (TextBox)item.FindControl("txtDomicilio");
-                            Label lblEstatus = (Label)item.FindControl("Estatus");
-
-                            // Escribir los datos en las celdas correspondientes
-                            worksheet.Cells[rowIndex, 1].Value = txtDependencia?.Text ?? "";
-                            worksheet.Cells[rowIndex, 2].Value = txtResponsable?.Text ?? "";
-                            worksheet.Cells[rowIndex, 3].Value = txtAreaResponsable?.Text ?? "";
-                            worksheet.Cells[rowIndex, 4].Value = ddlUnidad?.SelectedItem?.Text ?? "";
-                            worksheet.Cells[rowIndex, 5].Value = ddlOrganismo?.SelectedItem?.Text ?? "";
-                            worksheet.Cells[rowIndex, 6].Value = txtTelefono?.Text ?? "";
-                            worksheet.Cells[rowIndex, 7].Value = lblCorreo?.Text ?? "";
-                            worksheet.Cells[rowIndex, 8].Value = txtDomicilio?.Text ?? "";
-                            worksheet.Cells[rowIndex, 9].Value = lblEstatus?.Text ?? "";
-                        }
-                        else // Si está en modo de visualización
-                        {
-                            Label lblDependencia = (Label)item.FindControl("sDescripcion");
-                            Label lblResponsable = (Label)item.FindControl("sResponsable");
-                            Label lblAreaResponsable = (Label)item.FindControl("sAreaResponsable");
-                            Label lblUnidad = (Label)item.FindControl("sUnidad");
-                            Label lblOrganismo = (Label)item.FindControl("sOrganismo");
-                            Label lblTelefono = (Label)item.FindControl("sTelefono");
-                            Label lblCorreo = (Label)item.FindControl("sCorreo");
-                            Label lblDomicilio = (Label)item.FindControl("sDomicilio");
-                            Label lblEstatus = (Label)item.FindControl("Estatus");
-
-                            // Escribir los datos en las celdas correspondientes
-                            worksheet.Cells[rowIndex, 1].Value = lblDependencia?.Text ?? "";
-                            worksheet.Cells[rowIndex, 2].Value = lblResponsable?.Text ?? "";
-                            worksheet.Cells[rowIndex, 3].Value = lblAreaResponsable?.Text ?? "";
-                            worksheet.Cells[rowIndex, 4].Value = lblUnidad?.Text ?? "";
-                            worksheet.Cells[rowIndex, 5].Value = lblOrganismo?.Text ?? "";
-                            worksheet.Cells[rowIndex, 6].Value = lblTelefono?.Text ?? "";
-                            worksheet.Cells[rowIndex, 7].Value = lblCorreo?.Text ?? "";
-                            worksheet.Cells[rowIndex, 8].Value = lblDomicilio?.Text ?? "";
-                            worksheet.Cells[rowIndex, 9].Value = lblEstatus?.Text ?? "";
-                        }
-
-                        rowIndex++; // Mover a la siguiente fila
-                    }
-
-
-
-                    // Configurar el tipo de respuesta y escribir el archivo en la respuesta HTTP
-                    Response.Clear();
-                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    Response.AddHeader("content-disposition", "attachment;  filename=Dependencias.xlsx");
-                    Response.BinaryWrite(excelPackage.GetAsByteArray());
-                    Response.End();
-                }
-            }
-            else
-            {
-                // Si el Repeater está vacío, mostrar un mensaje o realizar alguna acción adicional
-                // Puedes agregar aquí el código para manejar este caso según tus necesidades
-            }
-        }
-
-
+       
         protected DataTable ObtenerDatos(int pageIndex, int pageSize, string NombreDep, string Correo, string Fecha, string selectedEstatus, string selectedUnidad,  out int totalRecords)
         {
                     string conString = GlobalConstants.SQL;
@@ -334,12 +214,6 @@ namespace Servicio_Social
                             countCmd.Parameters.AddWithValue("@Fecha", Fecha);
                         }
 
-                        //if (!string.IsNullOrEmpty(selectedPeriodo))
-                        //{
-                        //    cmd.Parameters.AddWithValue("@selectedPeriodo", selectedPeriodo);
-                        //    countCmd.Parameters.AddWithValue("@selectedPeriodo", selectedPeriodo);
-                        //}
-
                         if (tipoUsuario == "3" || tipoUsuario == "4")
                         {
                             cmd.Parameters.AddWithValue("@unidadUsuario", unidadUsuario);
@@ -358,6 +232,68 @@ namespace Servicio_Social
 
                     return dt;
         }
+        protected void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            ExportToExcel();
+        }
+
+        private void ExportToExcel()
+        {
+            // 🔥 Obtén los datos
+            DataTable dt = ObtenerDatosExportacion(
+                txtDependencia.Text.Trim(),
+                txtCorreo.Text.Trim(),
+                txtFecha.Text.Trim(),
+                ddlEstatus.SelectedValue,
+                DDLUnidad.SelectedValue
+            );
+
+            if (dt.Rows.Count > 0)
+            {
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=DependenciasRegistradas.xls");
+                Response.Charset = "utf-8"; // ⚡ muy importante
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.ContentEncoding = Encoding.UTF8;
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<table border='1'>");
+                sb.Append("<tr>");
+                sb.Append("<th>Fecha Registro</th>");
+                sb.Append("<th>Dependencia</th>");
+                sb.Append("<th>Unidad</th>");
+                sb.Append("<th>Telefono</th>");
+                sb.Append("<th>Correo</th>");
+                sb.Append("<th>Estatus</th>");
+                sb.Append("</tr>");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    sb.Append("<tr>");
+                    sb.AppendFormat("<td>{0}</td>", row["dFechaRegistroDep"]);
+                    sb.AppendFormat("<td>{0}</td>", row["sDescripcion"]);
+                    sb.AppendFormat("<td>{0}</td>", row["sUnidad"]);
+                    sb.AppendFormat("<td>{0}</td>", row["sTelefono"]);
+                    sb.AppendFormat("<td>{0}</td>", row["sCorreo"]);
+                    sb.AppendFormat("<td>{0}</td>", row["Estatus"]);
+                    sb.Append("</tr>");
+                }
+
+                sb.Append("</table>");
+                Response.Write("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>");
+                Response.Write(sb.ToString());
+                Response.Flush();
+                Response.End();
+            }
+        }
+        private DataTable ObtenerDatosExportacion(string nombreDep, string correo, string fecha, string estatus, string unidad)
+        {
+            // pageIndex = 0, pageSize MUY GRANDE para traer todo
+            int totalRecords;
+            return ObtenerDatos(0, 100000, nombreDep, correo, fecha, estatus, unidad, out totalRecords);
+        }
+       
         protected void btnPrevious_Click(object sender, EventArgs e)
         {
             string NombreDep = txtDependencia.Text.Trim();
@@ -862,7 +798,7 @@ namespace Servicio_Social
 
                 switch (autorizado)
                 {
-                    case "1":
+                    case "20707":
                         btnAutorizar.Visible = true;
                         btnEliminar.Visible = true;
                         break;
@@ -1314,17 +1250,19 @@ namespace Servicio_Social
         {
             string connectionString = GlobalConstants.SQL;
             string query =
-                "SELECT DS.idDependenicaServicio, DS.sDescripcion, CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) AS dFechaRegistroDep, DS.sResponsable, " +
-                "DS.sAreaResponsable, U.idUnidad, U.sCiudad AS sUnidad, DS.sTelefono, USU.sCorreo, DS.sDomicilio, DS.bAutorizado, E.sDescripcion AS Estatus, " +
-                "ORG.idOrganismo, ORG.sDescripcion AS sOrganismo, PE_valido.sNombre_completo AS PersonaValido, PE_autorizo.sNombre_completo AS PersonaAutorizo " +
-                "FROM SM_DEPENDENCIA_SERVICIO DS " +
-                "INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad " +
-                "INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo " +
-                "INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado " +
-                "INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario " +
-                "LEFT JOIN NM_PERSONA PE_valido ON DS.kmValido = PE_valido.idPersona " +
-                "LEFT JOIN NM_PERSONA PE_autorizo ON DS.kmAutorizo = PE_autorizo.idPersona " +
-                "WHERE DS.idDependenicaServicio = @Id";
+                @"SELECT DS.idDependenicaServicio, DS.sDescripcion, CONVERT(varchar, DS.DFECHAREGISTRODEP, 103) AS dFechaRegistroDep, DS.sResponsable, 
+                DS.sAreaResponsable, U.idUnidad, U.sCiudad AS sUnidad, DS.sTelefono, USU.sCorreo, DS.sDomicilio, DS.bAutorizado, E.sDescripcion AS Estatus, 
+                ORG.idOrganismo, ORG.sDescripcion AS sOrganismo, PE_valido.sNombre_completo AS PersonaValido, PE_autorizo.sNombre_completo AS PersonaAutorizo 
+                FROM SM_DEPENDENCIA_SERVICIO DS
+                INNER JOIN NP_UNIDAD U ON U.idUnidad = DS.kpUnidad
+                INNER JOIN SP_ORGANISMO ORG ON ORG.idOrganismo = DS.kpOrganismo 
+                INNER JOIN NP_ESTATUS E ON E.idEstatus = DS.bAutorizado
+                INNER JOIN SM_USUARIO USU ON USU.idUsuario = DS.kmUsuario
+                LEFT JOIN SM_USUARIO USU_VALIDO ON USU_VALIDO.idUsuario = DS.kmValido
+                LEFT JOIN NM_PERSONA PE_valido ON PE_valido.idPersona = USU_VALIDO.kmIdentificador
+                 LEFT JOIN SM_USUARIO USU_AUTORIZO ON USU_AUTORIZO.idUsuario = DS.kmAutorizo
+                 LEFT JOIN NM_PERSONA PE_autorizo ON PE_autorizo.idPersona = USU_AUTORIZO.kmIdentificador
+                WHERE DS.idDependenicaServicio = @Id";
 
             string htmlResult = "";
 
@@ -1456,7 +1394,10 @@ namespace Servicio_Social
             }
 
             //ScriptManager.RegisterStartupScript(this, GetType(), "editModalScript", "$('#editModal').modal('show');", true);
-            ScriptManager.RegisterStartupScript(this, GetType(), "abrirEditModal", "abrirEditModal();", true);
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "abrirModal", "abrirEditModal();", true);
+            string scriptKey = Guid.NewGuid().ToString();
+            //ScriptManager.RegisterStartupScript(this, typeof(System.Web.UI.Page), scriptKey, "setTimeout(function(){ abrirEditModal(); }, 200);", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "mostrarModal", "var modal = new bootstrap.Modal(document.getElementById('editModal')); modal.show();", true);
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)

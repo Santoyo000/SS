@@ -45,11 +45,6 @@ namespace Servicio_Social
                 CargarPeriodo();
             }
         }
-        //private int CurrentPage
-        //{
-        //    get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
-        //    set { ViewState["CurrentPage"] = value; }
-        //}
         protected int CurrentPage
         {
             get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
@@ -961,6 +956,7 @@ namespace Servicio_Social
                             INNER JOIN NM_PERSONA PER ON PER.idPersona = AL.kmPersona
                             INNER JOIN NP_ESTATUS NPEST ON PA.KPESTATUS = NPEST.IDESTATUS
                             INNER JOIN NP_UNIDAD UN ON UO.KPUNIDAD = UN.IDUNIDAD
+                            
                             WHERE PA.KPESTATUS != 7";
 
 
@@ -970,7 +966,7 @@ namespace Servicio_Social
             if (!string.IsNullOrEmpty(selectedUnidad) && selectedUnidad != "0")
                 F.Add(" UO.kpUnidad = @selectedUnidad");
             if (!string.IsNullOrEmpty(selectedNivel) && selectedNivel != "0")
-                F.Add(" PE.kpNivel = @selectedNivel");
+                F.Add(" PE.idPlanEstudio = @selectedNivel");
             if (!string.IsNullOrEmpty(selectedEstatus) && selectedEstatus != "0")
                 F.Add(" PA.KPESTATUS = @selectedEstatus");
             if (!string.IsNullOrEmpty(selectedEscuela) && selectedEscuela != "0")
@@ -1220,6 +1216,82 @@ namespace Servicio_Social
             Response.Redirect("LiberarEstudiante.aspx?nst=" + nst);
 
 
+        }
+        // 1️⃣ BOTÓN PARA EXPORTAR
+        protected void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            ExportToExcelAlumnosPostulados();
+        }
+
+        // 2️⃣ MÉTODO PARA EXPORTAR
+        private void ExportToExcelAlumnosPostulados()
+        {
+            // 🔥 Obtén los datos de Alumnos Postulados
+            DataTable dt = ObtenerDatosExportacionAlumnosPostulados(
+                txtMatricula.Text.Trim(),
+                txtNombre.Text.Trim(),
+                txtPrograma.Text.Trim(),
+                ddlEstatus.SelectedValue,
+                DDLUnidad.SelectedValue,
+                ddlNivel.SelectedValue,
+                ddlPlan.SelectedValue,
+                ddlEscuela.SelectedValue,
+                ddlPeriodo.SelectedValue
+            );
+
+            if (dt.Rows.Count > 0)
+            {
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=AlumnosPostulados.xls");
+                Response.Charset = "utf-8"; // ⚡
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.ContentEncoding = Encoding.UTF8;
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<table border='1'>");
+                sb.Append("<tr>");
+               /* sb.Append("<th>Periodo</th>"); */// 👈 Nuevo encabezado al inicio
+                sb.Append("<th>Fecha de Registro</th>");
+                sb.Append("<th>Matrícula</th>");
+                sb.Append("<th>Alumno</th>");
+                sb.Append("<th>Programa</th>");
+                sb.Append("<th>Plan de Estudios</th>");
+                sb.Append("<th>Escuela</th>");
+                sb.Append("<th>Unidad</th>");
+                sb.Append("<th>Cupo</th>");
+                sb.Append("<th>Estatus</th>");
+                sb.Append("</tr>");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    sb.Append("<tr>");
+                   /* sb.AppendFormat("<td>{0}</td>", row["Periodo"]); */ // 👈 Nuevo dato de periodo
+                    sb.AppendFormat("<td>{0}</td>", row["FECHAREGISTRO"]);
+                    sb.AppendFormat("<td>{0}</td>", row["MATRICULA"]);
+                    sb.AppendFormat("<td>{0}</td>", row["NOMBRE_COMPLETO"]);
+                    sb.AppendFormat("<td>{0}</td>", row["PROGRMA"]);
+                    sb.AppendFormat("<td>{0}</td>", row["PLANEST"]);
+                    sb.AppendFormat("<td>{0}</td>", row["ESCUELA"]);
+                    sb.AppendFormat("<td>{0}</td>", row["UNIDAD"]);
+                    sb.AppendFormat("<td>{0}</td>", row["ICUPO"]);
+                    sb.AppendFormat("<td>{0}</td>", row["ESTATUS"]);
+                    sb.Append("</tr>");
+                }
+
+                sb.Append("</table>");
+                Response.Write("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>");
+                Response.Write(sb.ToString());
+                Response.Flush();
+                Response.End();
+            }
+        }
+
+        // 3️⃣ MÉTODO PARA OBTENER DATOS
+        private DataTable ObtenerDatosExportacionAlumnosPostulados(string matricula, string nombre, string programa, string estatus, string unidad, string nivel, string plan, string escuela, string periodo)
+        {
+            int totalRecords;
+            return ObtenerDatos(0, 100000, matricula, nombre, programa, estatus, unidad, nivel, plan, escuela, periodo, out totalRecords);
         }
         //protected void btnLiberar_Click(object sender, EventArgs e)
         //{

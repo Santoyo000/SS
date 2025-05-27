@@ -143,14 +143,63 @@
                         <h2 class="text-gray-900 mb-4" style="color: #2e5790">Alumnos Registrados</h2>
                     </div>
                     <div class="">
-                        <div class="row mb-3">
+                        <div class="row mb-2">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtBuscarUsuario" class="me-2" style="width: 150px;">Matrícula:</label>
+                                <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" placeholder="Matrícula..." />
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtNombre" class="me-2" style="width: 150px;">Nombre Alumno:</label>
+                                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre..." />
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtCorreo" class="me-2" style="width: 150px;">Correo electrónico:</label>
+                                <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control" placeholder="Correo..." />
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtEstatus" class="me-2" style="width: 150px;">Estatus:</label>
+                               <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > 
+                               </asp:DropDownList>          
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtUnidad" class="me-2" style="width: 150px;">Unidad:</label>
+                                  <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  OnSelectedIndexChanged="DDLUnidad_SelectedIndexChanged " AutoPostBack="true">  
+                                  </asp:DropDownList>
+                            </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtPlan" class="me-2" style="width: 150px;">Nivel:</label>
+                                   <asp:DropDownList ID="ddlNivel" runat="server" CssClass="form-control" placeholder="Seleccione un Nivel..." OnSelectedIndexChanged="DDLPlan_SelectedIndexChanged " AutoPostBack="true">  
+                                   </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtPlan" class="me-2" style="width: 150px;">Plan de estudios:</label>
+                                   <asp:DropDownList ID="ddlPlan" runat="server" CssClass="form-control" placeholder="Seleccione un Plan de Estudios..." DataTextField="Descripcion" DataValueField="idPlanEstudio" OnSelectedIndexChanged="DDLEscuela_SelectedIndexChanged" AutoPostBack="true">  
+                                   </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                 <label for="txtEscuela" class="me-2" style="width: 150px;">Escuela:</label>
+                                   <asp:DropDownList ID="ddlEscuela" runat="server" CssClass="form-control" placeholder="Seleccione una Escuela..." >  
+                                </asp:DropDownList>
+                             </div>
+                             <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtPeriodo" class="me-2" style="width: 150px;">Periodo:</label>
+                                  <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
+                               </asp:DropDownList>
+                            </div>
+                             <div class="col-md-6 d-flex justify-content-end">
+                                 <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-excel me-3" OnClick="btnExportarExcel_Click" />
+                                 <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
+                                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                            </div>
+                          </div>
+                    <%--    <div class="row mb-3">
                             <div class="col-md-3">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                             </div>
                             <div class="col-md-2">
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
-                        </div>
+                        </div>--%>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -212,16 +261,10 @@
                                                 <td>
                                                     <asp:TextBox Style="font-size: 0.9em !important;" CssClass="form-control" runat="server" ID="txtEscuela" Text='<%# Eval("Escuela") %>'></asp:TextBox>
                                                 </td>
-                                                <%-- <td>
-                                        <%# Eval("Estatus") %>
-                                    </td>--%>
                                                 <td>
                                                     <asp:LinkButton runat="server" ID="lnkUpdate" CommandName="Update" CommandArgument='<%# Container.ItemIndex %>'><i class="fas fa-save"></i></asp:LinkButton>
                                                     <asp:LinkButton runat="server" ID="lnkCancel" CommandName="Cancel" CommandArgument='<%# Container.ItemIndex %>'><i class="far fa-window-close"></i></asp:LinkButton>
                                                 </td>
-                                                <%-- <td>
-                                        <asp:HiddenField ID="hdnAutorizado" runat="server" Value='<%# Eval("kpEstatus_Programa") %>' />
-                                    </td>--%>
                                             </asp:Panel>
                                         </tr>
                                     </ItemTemplate>
@@ -233,9 +276,30 @@
                             </tbody>
                         </table>
 
-                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
+                      <%--  <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>
+                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>--%>
+                         <div class="text-center mb-2">
+                              Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
+                              de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                          </div>
+
+                          <div class="d-flex justify-content-center">
+                              <div class="pagination d-flex align-items-center">
+                                  <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
+
+                                  <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                      <ItemTemplate>
+                                          <asp:Button runat="server" Text='<%# Eval("PageNumber") %>' 
+                                                      CommandArgument='<%# Eval("PageIndex") %>' 
+                                                      CommandName="PageChange" 
+                                                      CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                      </ItemTemplate>
+                                  </asp:Repeater>
+
+                                  <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                              </div>
+                          </div>
                         <div style="text-align: left;">
                             <% 
                                 if (Session["filtros"] != null)
@@ -260,5 +324,8 @@
                 </div>
             </div>
         </ContentTemplate>
+<Triggers>
+    <asp:PostBackTrigger ControlID="btnExportarExcel" />
+</Triggers>
     </asp:UpdatePanel>
 </asp:Content>

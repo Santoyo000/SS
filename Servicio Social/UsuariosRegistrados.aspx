@@ -435,6 +435,7 @@
         <asp:LinkButton ID="lbnAlumnosIncorp" runat="server" CssClass="nav-item nav-link" Text="Alumnos Incorporadas" OnClick="lbnAlumnosIncorp_Click"></asp:LinkButton>
         <asp:LinkButton ID="lbnResponsable" runat="server" CssClass="nav-item nav-link" Text="Responsables de Unidad" OnClick="lbnResponsable_Click"></asp:LinkButton>
         <asp:LinkButton ID="lbnEncargadoEsc" runat="server" CssClass="nav-item nav-link" Text="Encargado de Escuela" OnClick="lbnEncargadoEsc_Click"></asp:LinkButton>
+        <asp:LinkButton ID="lbnEncargadoEscInc" runat="server" CssClass="nav-item nav-link" Text="Encargado de Escuela Incorporadas" OnClick="lbnEncargadoEsc_Click"></asp:LinkButton>
         <asp:LinkButton ID="lbnDependencias" runat="server" CssClass="nav-item nav-link" Text="Dependencias" OnClick="lbnDependencias_Click"></asp:LinkButton>
         <asp:LinkButton ID="lbnUsuarios" runat="server" CssClass="nav-item nav-link" Text="+ Crear Usuarios" OnClick="lbnUsuarios_Click"></asp:LinkButton>
     </div>

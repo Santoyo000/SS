@@ -3,20 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\usuariosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\usuariosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\dependenciasregistradas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\dependenciasregistradas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\alumnosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\liberarestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\liberarestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\liberarestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\liberarestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\seleccionarprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\seleccionarprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\seleccionarprograma.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\seleccionarprograma.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\detalleprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\detalleprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\globalconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\globalconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\ss.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\ss.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\informeestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\informeestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\alumnospostulados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\dependenciasregistradas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\dependenciasregistradas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 183,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,29 +78,149 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LiberarEstudiante.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LiberarEstudiante.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\LiberarEstudiante.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LiberarEstudiante.aspx",
+              "RelativeToolTip": "Servicio Social\\LiberarEstudiante.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-20T17:28:07.518Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DependenciasRegistradas.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DependenciasRegistradas.aspx.cs",
-              "RelativeDocumentMoniker": "Servicio Social\\DependenciasRegistradas.aspx.cs",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DependenciasRegistradas.aspx.cs",
-              "RelativeToolTip": "Servicio Social\\DependenciasRegistradas.aspx.cs",
-              "ViewState": "AgIAAGYBAAAAAAAAAAAqwH8BAAANAAAAAAAAAA==",
+              "Title": "AlumnosPostulados.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx.cs",
+              "ViewState": "AgIAAKEDAAAAAAAAAAAIwLoDAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T19:18:02.941Z",
+              "WhenOpened": "2025-04-29T16:35:20.513Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuariosRegistrados.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\UsuariosRegistrados.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\UsuariosRegistrados.aspx",
+              "RelativeToolTip": "Servicio Social\\UsuariosRegistrados.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-21T15:20:08.165Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DependenciasRegistradas.aspx",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DependenciasRegistradas.aspx",
-              "RelativeDocumentMoniker": "Servicio Social\\DependenciasRegistradas.aspx",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DependenciasRegistradas.aspx",
-              "RelativeToolTip": "Servicio Social\\DependenciasRegistradas.aspx",
+              "Title": "LiberarEstudiante.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LiberarEstudiante.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\LiberarEstudiante.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LiberarEstudiante.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\LiberarEstudiante.aspx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T17:28:13.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SeleccionarPrograma.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\SeleccionarPrograma.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\SeleccionarPrograma.aspx.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwCMAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T21:34:06.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SeleccionarPrograma.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\SeleccionarPrograma.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx",
+              "RelativeToolTip": "Servicio Social\\SeleccionarPrograma.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-04-03T19:18:00.403Z",
+              "WhenOpened": "2025-05-18T21:33:46.75Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InformeEstudiante.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\InformeEstudiante.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\InformeEstudiante.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\InformeEstudiante.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\InformeEstudiante.aspx.cs",
+              "ViewState": "AgIAAJQAAAAAAAAAAADwv58AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T19:29:46.853Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\Web.config",
+              "RelativeDocumentMoniker": "Servicio Social\\Web.config",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\Web.config",
+              "RelativeToolTip": "Servicio Social\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-05-06T16:02:58.39Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SS.Master",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SS.Master",
+              "RelativeDocumentMoniker": "Servicio Social\\SS.Master",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SS.Master",
+              "RelativeToolTip": "Servicio Social\\SS.Master",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-05-12T19:21:59.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GlobalConstants.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\GlobalConstants.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\GlobalConstants.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\GlobalConstants.cs",
+              "RelativeToolTip": "Servicio Social\\GlobalConstants.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T16:03:52.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DetallePrograma.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DetallePrograma.aspx.cs",
+              "RelativeDocumentMoniker": "Servicio Social\\DetallePrograma.aspx.cs",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\DetallePrograma.aspx.cs",
+              "RelativeToolTip": "Servicio Social\\DetallePrograma.aspx.cs",
+              "ViewState": "AgIAAPcAAAAAAAAAAAAqwPMAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T18:02:17.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AlumnosPostulados.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
+              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-04-29T16:35:17.248Z"
             }
           ]
         },
@@ -88,12 +244,12 @@
       "Orientation": 0,
       "VerticalTabListWidth": 256,
       "FloatingWindowState": {
-        "Id": "724838ed-717b-44d1-b8bd-d9ae33f685cc",
-        "Display": 1,
-        "X": 189,
-        "Y": 244,
-        "Width": 1170,
-        "Height": 633,
+        "Id": "757fc68c-9f18-41d6-b1a4-60333c9541c4",
+        "Display": 0,
+        "X": 278,
+        "Y": 51,
+        "Width": 920,
+        "Height": 977,
         "WindowState": 2
       },
       "DocumentGroups": [
@@ -103,28 +259,15 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AlumnosPostulados.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
-              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx.cs",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx.cs",
-              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx.cs",
-              "ViewState": "AgIAADkHAAAAAAAAAAAIwFwHAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T17:34:56.488Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AlumnosPostulados.aspx",
-              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
-              "RelativeDocumentMoniker": "Servicio Social\\AlumnosPostulados.aspx",
-              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosPostulados.aspx",
-              "RelativeToolTip": "Servicio Social\\AlumnosPostulados.aspx",
+              "Title": "AlumnosRegistrados.aspx",
+              "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosRegistrados.aspx",
+              "RelativeDocumentMoniker": "Servicio Social\\AlumnosRegistrados.aspx",
+              "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosRegistrados.aspx",
+              "RelativeToolTip": "Servicio Social\\AlumnosRegistrados.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-04-22T18:18:59.403Z",
+              "WhenOpened": "2025-05-18T21:55:39.679Z",
               "EditorCaption": ""
             }
           ]

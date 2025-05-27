@@ -314,7 +314,8 @@
                                   <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
                                </asp:DropDownList>
                             </div>
-                             <div class="col-md-6 d-flex justify-content-end">
+                              <div class="col-md-6 d-flex justify-content-end">
+                                 <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-excel me-3" OnClick="btnExportarExcel_Click" />
                                  <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
@@ -390,7 +391,7 @@
                                <asp:HiddenField ID="hiddenPdfBase64" runat="server" />
                             </tbody>
                         </table>
-                       <%-- <asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
+                       <%---<asp:Button ID="btnExportExcel" runat="server" Text="Exportar a Excel" CssClass="btn-excel" OnClick="btnExportExcel_Click" /> --%>
 <%--                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary" />
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
                         <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary" />--%>
@@ -437,9 +438,11 @@
                 </div>
             </div>
         </ContentTemplate>
+       <Triggers>
+    <asp:PostBackTrigger ControlID="btnExportExcel" />
+</Triggers>
     </asp:UpdatePanel>
-
-              <!-- The Modal -->
+     <!-- The Modal -->
       <div class="modal" id="myModal">
           <div class="modal-dialog modal-xl">
               <div class="modal-content">
@@ -448,12 +451,10 @@
                       <h4 class="modal-title">Detalle Alumno</h4>
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
-
                   <!-- Modal body -->
                   <div class="modal-body" id="modalBody">
                       Loading...
                   </div>
-
                   <!-- Modal footer -->
                   <div class="modal-footer">
                       <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -476,7 +477,6 @@
               <div class="modal-body">
                    <div class="modal-footer">
                        <asp:Button ID="btnUpdate" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
-                       
                  <%-- <iframe id="pdfIframe" style="width: 100%; height: 500px; border: none;" frameborder="0"></iframe>--%>
                 <iframe id="pdfIframe" style="width: 100%; height: 600px; border: none; display: none;" frameborder="0"></iframe>
               </div>

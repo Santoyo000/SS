@@ -186,7 +186,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+                       <%-- <div class="col-md-4">
+                        <div class="card" style="background-color: #6f42c1;" onclick="showLoadingAndRedirect('DetallePrograma.aspx')"> --%> <%--onclick="showLoadingAndRedirect('ReportesSS.aspx') " --%>
+                           <%-- <div class="card-body">
+                                <i class="fas fa-chart-bar card-icon"></i>
+                                <h5 class="card-title">Detalle Programa</h5>
+                                <p class="card-hover-text text-center justify-content-center">Crea reportes personalizados sobre diversas áreas del sistema, incluyendo dependencias y programas (actualmente en desarrollo)</p>
+                            </div>
+                        </div>--%>
+                   <%-- </div>--%>
                     </div>
                 </div>
             </div>

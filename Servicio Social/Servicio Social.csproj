@@ -533,6 +533,7 @@
     <Content Include="css\EstiloProgramas.css" />
     <Content Include="css\style.css" />
     <Content Include="Default.aspx" />
+    <Content Include="DetallePrograma.aspx" />
     <Content Include="EditarDetallePrograma.aspx" />
     <Content Include="EditarPrograma.aspx" />
     <Content Include="EvaluacionEstudiante.aspx" />
@@ -760,6 +761,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePrograma.aspx.cs">
+      <DependentUpon>DetallePrograma.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetallePrograma.aspx.designer.cs">
+      <DependentUpon>DetallePrograma.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditarDetallePrograma.aspx.cs">
       <DependentUpon>EditarDetallePrograma.aspx</DependentUpon>

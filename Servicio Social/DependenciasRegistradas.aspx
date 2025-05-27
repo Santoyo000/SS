@@ -1,38 +1,76 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SS.Master" AutoEventWireup="true" CodeBehind="DependenciasRegistradas.aspx.cs" Inherits="Servicio_Social.DependenciasRegistradas1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+     <!-- Primero jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Luego Bootstrap 5 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function loadModalData(id) {
-            $.ajax({
-                type: "POST",
-                url: '<%= ResolveUrl("DependenciasRegistradas.aspx/llenarDatosModal") %>',
+     <script>
+<%--         function loadModalData(id) {
+             $.ajax({
+                 type: "POST",
+                 url: '<%= ResolveUrl("DependenciasRegistradas.aspx/llenarDatosModal") %>',
                 data: JSON.stringify({ id: id }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     document.getElementById("modalBody").innerHTML = response.d;
+                    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                    myModal.show();
                 },
                 failure: function (response) {
                     document.getElementById("modalBody").innerHTML = "Error loading data";
                 }
             });
-        }
+         }--%>
+         function loadModalData(id) {
+             $.ajax({
+                 type: "POST",
+                 url: '<%= ResolveUrl("DependenciasRegistradas.aspx/llenarDatosModal") %>',
+        data: JSON.stringify({ id: id }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            const checkInterval = setInterval(function () {
+                var modalBody = document.getElementById("modalBody");
+                if (modalBody) {
+                    clearInterval(checkInterval); // Detener la espera
 
-    </script>
-    <script>
-        function cerrarModalEdicion() {
-            $('#editModal').modal('hide');
-        }
+                    modalBody.innerHTML = response.d;
 
-        function cerrarModalDetalle() {
-            $('#myModal').modal('hide');
+                    var modalElement = document.getElementById('myModal');
+                    var myModal = new bootstrap.Modal(modalElement);
+                    myModal.show();
+                }
+            }, 50); // Revisa cada 50ms
+        },
+        failure: function (response) {
+            console.error("Error al cargar datos del modal");
         }
-    </script>
+    });
+       }
+
+         function cerrarModalDetalle() {
+             var modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+             modal.hide();
+         }
+
+         function abrirEditModal() {
+             var modal = new bootstrap.Modal(document.getElementById('editModal'));
+             modal.show();
+         }
+     </script>
+      <!-- Datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        function abrirEditModal() {
-            $('#editModal').modal('show');
-        }
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
     </script>
     <style>
         .custom-header {
@@ -149,19 +187,7 @@
             color: white;
         }
     </style>
-    <!-- Agregar jQuery UI Datepicker -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".datepicker").datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true
-        });
-    });
-</script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
 
@@ -181,7 +207,6 @@
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-
             <asp:Panel ID="pnlDependencias" runat="server" Visible="true">
                 <div class="container-fluid">
                     <div style="text-align: center">
@@ -209,28 +234,15 @@
                                   <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  >  
                                   </asp:DropDownList>
                             </div>
-                            <%-- <div class="col-md-6 d-flex align-items-center">
-                                <label for="txtPeriodo" class="me-2" style="width: 150px;">Periodo:</label>
-                                  <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" placeholder="Seleccione un Periodo..." >
-                               </asp:DropDownList>
-                            </div>--%>
                               <div class="col-md-6 d-flex align-items-center">
                                 <label for="txtFecha" class="me-2" style="width: 150px;">Fecha:</label>
                                 <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control datepicker" placeholder="dd/mm/aa" />
                             </div>
-                             <div class="col-md-6 d-flex justify-content-end">
-                                 <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-2" OnClick="btnBorrar_Click" />
+                             <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
+                                <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-excel me-3" OnClick="btnExportarExcel_Click" />
+                                <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-3" OnClick="btnBorrar_Click" />
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
                             </div>
-                          </div>
-                      <%--      <div class="row mb-3">
-                                <div class="col-md-3">
-                                    <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
-                                </div>
-                                <div class="col-md-2">
-                                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
-                                </div>
-                            </div>--%>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -252,21 +264,20 @@
                                                     <td style="display: none;"><%# Eval("idDependenicaServicio") %></td>
                                                     <td><%# Eval("dFechaRegistroDep") %></td>
                                                     <td><%# Eval("sDescripcion") %></td>
-                                                    <%--                                        <td><%# Eval("sResponsable") %></td>--%>
-                                                    <%--                                        <td><%# Eval("sAreaResponsable") %></td>--%>
                                                     <td><%# Eval("sUnidad") %></td>
-                                                    <%--                                        <td><%# Eval("sOrganismo") %></td>--%>
                                                     <td><%# Eval("sTelefono") %></td>
                                                     <td><%# Eval("sCorreo") %></td>
-                                                    <%--                                        <td><%# Eval("sDomicilio") %></td>--%>
                                                     <td style="display: none;"><%# Eval("bAutorizado") %></td>
                                                     <td><%# Eval("Estatus") %></td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-
-                                                            <asp:LinkButton ID="btnDetalle" runat="server" CommandName="cmdRechazar" CssClass="btn btn-warning" data-toggle="modal" data-target="#myModal" OnClick='<%# "loadModalData(" + Eval("idDependenicaServicio") + ")" %>'><span data-toggle="tooltip" title="Ver detalles" ><i class="fas fa-search"></i></asp:LinkButton>
-                                                            <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Eval("idDependenicaServicio") %>' OnClick="btnEdit_Click"><span data-toggle="tooltip" title="Editar" ><i class="fas fa-edit"></i></span></asp:LinkButton>
-                                                            <asp:LinkButton ID="btnAutorizar" runat="server" CommandName="cmdAutorizar" CommandArgument='<%# Eval("idDependenicaServicio") %>' OnClick="btnAutorizar_Click" OnClientClick='return confirm("El registro cambiará de estatus de Autorizado");' CssClass="btn btn-success btn-sm"><span data-toggle="tooltip" title="Autorizar" ><i class="fas fa-check-square"></i></span></asp:LinkButton>
+                                                            <asp:LinkButton ID="btnDetalle" runat="server" CssClass="btn btn-warning"
+                                                                OnClientClick='<%# "loadModalData(" + Eval("idDependenicaServicio") + "); return false;" %>'>
+                                                                <span data-bs-toggle="tooltip" title="Ver detalles"><i class="fas fa-search"></i></span>
+                                                            </asp:LinkButton>
+                                                            <asp:LinkButton ID="btnEdit" runat="server" CssClass="btn btn-primary btn-sm" CommandArgument='<%# Eval("idDependenicaServicio") %>' OnClick="btnEdit_Click">
+                                                                <span data-bs-toggle="tooltip" title="Editar"><i class="fas fa-edit"></i></span>
+                                                            </asp:LinkButton>                                                            <asp:LinkButton ID="btnAutorizar" runat="server" CommandName="cmdAutorizar" CommandArgument='<%# Eval("idDependenicaServicio") %>' OnClick="btnAutorizar_Click" OnClientClick='return confirm("El registro cambiará de estatus de Autorizado");' CssClass="btn btn-success btn-sm"><span data-toggle="tooltip" title="Autorizar" ><i class="fas fa-check-square"></i></span></asp:LinkButton>
                                                             <asp:LinkButton ID="btnEliminar" runat="server" CommandName="cmdRechazar" CommandArgument='<%# Eval("idDependenicaServicio") %>' OnClick="btnEliminar_Click" OnClientClick='return confirm("El registro cambiará de estatus de NO Autorizado");' CssClass="btn btn-danger btn-sm"><span data-toggle="tooltip" title="No Autorizar" ><i class="fas fa-window-close"></i></asp:LinkButton>
 
                                                         </div>
@@ -318,27 +329,6 @@
                                                     </td>
                                                 </asp:Panel>
                                                 <!-- The Modal -->
-                                                <div class="modal" id="myModal">
-                                                    <div class="modal-dialog modal-xl">
-                                                        <div class="modal-content">
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Datos de la Dependencia</h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body" id="modalBody">
-                                                                Loading...
-                                                            </div>
-
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 </div>
                                             </tr>
                                         </ItemTemplate>
@@ -346,10 +336,7 @@
                                 </tbody>
                             </table>
                             <%-- <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" OnClick="btnExportarExcel_Click" CssClass="btn btn-success" />--%>
-                           <%-- <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary"/>--%>
-                           <%-- <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                            <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>--%>
-                             <div class="text-center mb-2">
+                             <div class="text-center mb-2 ">
                                   Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
                                   de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
                               </div>
@@ -375,70 +362,92 @@
                         </div>
                     </div>
                 </div>
-                <!-- Modal -->
-                <div class="modal" id="editModal" tabindex="-1">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Editar Dependencia</h5>
-                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <asp:HiddenField ID="hfDependenciaId" runat="server" />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="txtNombreDependencia">Dependencia:</label>
-                                            <asp:TextBox ID="txtNombreDependencia" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="txtAreaResponsable">Área Responsable:</label>
-                                            <asp:TextBox ID="txtAreaResponsable" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="txtResponsable">Responsable:</label>
-                                            <asp:TextBox ID="txtResponsable" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="ddlUnidadModal">Unidad:</label>
-                                            <asp:DropDownList ID="ddlUnidadModal" runat="server" CssClass="form-control"></asp:DropDownList>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="ddlOrganismoModal">Organismo:</label>
-                                            <asp:DropDownList ID="ddlOrganismoModal" runat="server" CssClass="form-control"></asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="txtTelefono">Teléfono:</label>
-                                            <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="txtDomicilio">Domicilio:</label>
-                                            <asp:TextBox ID="txtDomicilio" runat="server" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <asp:Button ID="btnUpdate" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
-                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </asp:Panel>
         </ContentTemplate>
-    </asp:UpdatePanel>
+         <Triggers>
+    <asp:PostBackTrigger ControlID="btnExportarExcel" />
+</Triggers>
+</asp:UpdatePanel>
+    <!-- Modal de Detalle (solo una instancia, fuera del Repeater) -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Datos de la Dependencia</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           <div class="modal-body" id="modalBody" runat="server" ClientIDMode="Static">
+                Loading...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+      <!-- Modal -->
+  <div class="modal" id="editModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Editar Dependencia</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <asp:HiddenField ID="hfDependenciaId" runat="server" />
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="txtNombreDependencia">Dependencia:</label>
+                              <asp:TextBox ID="txtNombreDependencia" runat="server" CssClass="form-control"></asp:TextBox>
+                          </div>
+                          <div class="form-group">
+                              <label for="txtAreaResponsable">Área Responsable:</label>
+                              <asp:TextBox ID="txtAreaResponsable" runat="server" CssClass="form-control"></asp:TextBox>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="txtResponsable">Responsable:</label>
+                              <asp:TextBox ID="txtResponsable" runat="server" CssClass="form-control"></asp:TextBox>
+                          </div>
+                          <div class="form-group">
+                              <label for="ddlUnidadModal">Unidad:</label>
+                              <asp:DropDownList ID="ddlUnidadModal" runat="server" CssClass="form-control"></asp:DropDownList>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="ddlOrganismoModal">Organismo:</label>
+                              <asp:DropDownList ID="ddlOrganismoModal" runat="server" CssClass="form-control"></asp:DropDownList>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="txmodalBodytTelefono">Teléfono:</label>
+                              <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              <label for="txtDomicilio">Domicilio:</label>
+                              <asp:TextBox ID="txtDomicilio" runat="server" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <asp:Button ID="btnUpdate" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+<%--   <div class="d-flex justify-content-end mt-2 mb-3">
+    <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-excel" OnClick="btnExportarExcel_Click" />
+</div>--%>
 </asp:Content>

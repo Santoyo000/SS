@@ -33,6 +33,18 @@
             });
         }
     </script>
+      <!-- Datepicker -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>
     <style>
         .custom-header {
             background-color: #343a40; /* Color de fondo personalizado */
@@ -177,13 +189,54 @@
                 </div>
                 <div class="">
                     <div class="container-fluid">
-                        <div class="row mb-3">
-                            <div class="col-md-3">
+                        <div class="row mb-2">
+                         <div class="col-md-6 d-flex align-items-center">
+                             <label for="txtDependencia" class="me-2" style="width: 150px;">Nombre Dependencia:</label>
+                             <asp:TextBox ID="txtDependencia" runat="server" CssClass="form-control" placeholder="Nombre Dependencia..." />
+                         </div>
+                         <div class="col-md-6 d-flex align-items-center">
+                            <label for="txtCorreo" class="me-2" style="width: 150px;">Correo Dependencia:</label>
+                            <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control" placeholder="Correo Dependencia..." />
+                        </div>
+                       <div class="col-md-6 d-flex align-items-center">
+                            <label for="txtPrograma" class="me-2" style="width: 150px;">Nombre Programa:</label>
+                            <asp:TextBox ID="txtPrograma" runat="server" CssClass="form-control" placeholder="Nombre Programa..." />
+                        </div>
+                         <div class="col-md-6 d-flex align-items-center">
+                              <label for="txtResponsable" class="me-2" style="width: 150px;">Responsable del Programa:</label>
+                              <asp:TextBox ID="txtResponsable" runat="server" CssClass="form-control" placeholder="Responsable del Programa..." />
+                         </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                         <label for="txtUnidad" class="me-2" style="width: 150px;">Unidad:</label>
+                           <asp:DropDownList ID="DDLUnidad" runat="server" CssClass="form-control" placeholder="Seleccione una Unidad..."  >  
+                           </asp:DropDownList>
+                       </div>
+                              <div class="col-md-6 d-flex align-items-center">
+                                <label for="txtFecha" class="me-2" style="width: 150px;">Fecha:</label>
+                                <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control datepicker" placeholder="dd/mm/aa" />
+                            </div>
+                         <div class="col-md-6 d-flex align-items-center">
+                            <label for="txtEstatus" class="me-2" style="width: 150px;">Estatus:</label>
+                           <asp:DropDownList ID="ddlEstatus" runat="server" CssClass="form-control" AutoPostBack="true" > 
+                           </asp:DropDownList>          
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label for="txtéropdp" class="me-2" style="width: 150px;">Periodo:</label>
+                           <asp:DropDownList ID="ddlPeriodo" runat="server" CssClass="form-control" AutoPostBack="true" > 
+                           </asp:DropDownList>          
+                        </div>
+                           <%-- <div class="col-md-3">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar..." />
                             </div>
                             <div class="col-md-2">
                                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
-                            </div>
+                            </div>--%>
+                        <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
+                            <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-excel me-3" OnClick="btnExportarExcel_Click" />
+                            <asp:Button ID="btnBorrar" runat="server" Text="Limpiar Filtros" CssClass="btn btn-secondary me-3" OnClick="btnBorrar_Click" />
+                            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+                        </div>
                         </div>
                         <table class="table table-bordered">
                             <thead>
@@ -308,7 +361,7 @@
                                             </div>
 
                                             </div>
-                            </div>
+                                         </div>
                                         </tr>
                                         </tr>
                                     </ItemTemplate>
@@ -320,19 +373,41 @@
                             </tbody>
                         </table>
                         <%-- <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" OnClick ="btnExportarExcel_Click" CssClass="btn btn-success" />--%>
-                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary"/>
+                       <%-- <asp:Button ID="btnPrevious" runat="server" Text="Anterior" OnClick="lnkPrev_Click" CssClass="btn btn-primary"/>
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
                         <asp:Button ID="btnNext" runat="server" Text="Siguiente" OnClick="lnkNext_Click" CssClass="btn btn-primary"/>
 
                         <div style="text-align: left;">
                             <%--<asp:Button ID="Button2" runat="server" Text="Regresar" CssClass="btn btn-primary miBoton"/>--%>
-                            <asp:LinkButton ID="bntRegresar" runat="server" CssClass="btn btn-primary miBoton" CommandName="Edit" Text="Regresar" OnClick="btnRegresar_Click"> </asp:LinkButton>
-                        </div>
+                          <%--  <asp:LinkButton ID="bntRegresar" runat="server" CssClass="btn btn-primary miBoton" CommandName="Edit" Text="Regresar" OnClick="btnRegresar_Click"> </asp:LinkButton>
+                        </div>--%>
+                    <div class="text-center mb-2">
+                             Página <asp:Label ID="lblPageNumber" runat="server"></asp:Label> 
+                             de <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                         </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="pagination d-flex align-items-center">
+                                <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
 
+                                <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" Text='<%# Eval("PageNumber") %>' 
+                                                    CommandArgument='<%# Eval("PageIndex") %>' 
+                                                    CommandName="PageChange" 
+                                                    CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
+                                <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                            </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
         </ContentTemplate>
+                 <Triggers>
+    <asp:PostBackTrigger ControlID="btnExportarExcel" />
+</Triggers>
     </asp:UpdatePanel>
 </asp:Content>
