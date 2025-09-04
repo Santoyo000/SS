@@ -16,8 +16,12 @@ namespace Servicio_Social
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            CargarDatos(0, "");
+
+            if (!IsPostBack)
+            {
+                CurrentPage = 0;
+                CargarDatos(CurrentPage, "");
+            }
         }
         private int CurrentPage
         {
@@ -29,6 +33,17 @@ namespace Servicio_Social
         {
             get { return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;}
             set { ViewState["TotalPages"] = value;}
+        }
+        protected void btnNext_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage < TotalPages - 1) CurrentPage++;
+            CargarDatos(CurrentPage, "");
+        }
+
+        protected void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage > 0) CurrentPage--;
+            CargarDatos(CurrentPage, "");
         }
         public class Programa
         {
@@ -61,64 +76,89 @@ namespace Servicio_Social
         }
         protected DataTable ObtenerDatos(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
         {
+            // Valida la sesión por si acaso
+            if (Session["idDependencia"] == null)
+                throw new InvalidOperationException("La sesión no contiene idDependencia.");
+
             string idDependencia = Session["idDependencia"].ToString().Split('|')[1];
+
             string conString = GlobalConstants.SQL;
             int rowsToSkip = pageIndex * pageSize;
 
-            // Consulta SQL para obtener los datos paginados
-            string query = "SELECT PR.idPrograma,CONVERT(varchar, DFECHAREGISTROP, 103) AS FechaRegistro, DS.sDescripcion AS Dependencia, USU.sCorreo AS Correo , PR.sNombre_Programa AS NombrePrograma," +
-                            " DS.sResponsable AS Responsable, PR.kpEstatus_Programa ,ES.sDescripcion AS Estatus FROM SM_PROGRAMA AS PR JOIN SM_DEPENDENCIA_SERVICIO AS DS ON PR.kpDependencia = DS.idDependenicaServicio " +
-                            " JOIN NP_ESTATUS AS ES ON PR.kpEstatus_Programa = ES.idEstatus " +
-                            " JOIN SM_USUARIO AS USU ON DS.kmUsuario = USU.idUsuario  WHERE DS.idDependenicaServicio  =" + idDependencia;
+            string query = @"
+        SELECT PR.idPrograma,
+               CONVERT(varchar, DFECHAREGISTROP, 103) AS FechaRegistro,
+               DS.sDescripcion AS Dependencia,
+               USU.sCorreo AS Correo,
+               PR.sNombre_Programa AS NombrePrograma,
+               DS.sResponsable AS Responsable,
+               PR.kpEstatus_Programa,
+               ES.sDescripcion AS Estatus
+        FROM SM_PROGRAMA AS PR
+        JOIN SM_DEPENDENCIA_SERVICIO AS DS ON PR.kpDependencia = DS.idDependenicaServicio
+        JOIN NP_ESTATUS AS ES ON PR.kpEstatus_Programa = ES.idEstatus
+        JOIN SM_USUARIO AS USU ON DS.kmUsuario = USU.idUsuario
+        WHERE DS.idDependenicaServicio = @idDependencia";
 
-            // Consulta SQL para contar el total de registros
-            string countQuery = "SELECT COUNT(*)" +
-                            " FROM SM_PROGRAMA AS PR JOIN SM_DEPENDENCIA_SERVICIO AS DS ON PR.kpDependencia = DS.idDependenicaServicio " +
-                            " JOIN NP_ESTATUS AS ES ON PR.kpEstatus_Programa = ES.idEstatus " +
-                            " JOIN SM_USUARIO AS USU ON DS.kmUsuario = USU.idUsuario WHERE DS.idDependenicaServicio  =" + idDependencia;
+            string countQuery = @"
+        SELECT COUNT(*)
+        FROM SM_PROGRAMA AS PR
+        JOIN SM_DEPENDENCIA_SERVICIO AS DS ON PR.kpDependencia = DS.idDependenicaServicio
+        JOIN NP_ESTATUS AS ES ON PR.kpEstatus_Programa = ES.idEstatus
+        JOIN SM_USUARIO AS USU ON DS.kmUsuario = USU.idUsuario
+        WHERE DS.idDependenicaServicio = @idDependencia";
 
-            if (!string.IsNullOrEmpty(searchTerm))
+            if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                string searchCondition = "WHERE DS.sDescripcion LIKE @searchTerm OR ES.sDescripcion LIKE @searchTerm " +
-                                         "OR DS.sResponsable LIKE @searchTerm OR PR.sNombre_Programa LIKE @searchTerm" +
-                                         "OR USU.sCorreo LIKE @searchTerm LIKE @searchTerm ";
+                string searchCondition = @"
+            AND (
+                DS.sDescripcion      LIKE @searchTerm OR
+                ES.sDescripcion      LIKE @searchTerm OR
+                DS.sResponsable      LIKE @searchTerm OR
+                PR.sNombre_Programa  LIKE @searchTerm OR
+                USU.sCorreo          LIKE @searchTerm
+            )";
                 query += searchCondition;
                 countQuery += searchCondition;
             }
 
-            query += " ORDER BY PR.kpEstatus_Programa " +
-                     " OFFSET @rowsToSkip ROWS " +
-                     " FETCH NEXT @pageSize ROWS ONLY;";
+            query += @"
+        ORDER BY DFECHAREGISTROP DESC
+        OFFSET @rowsToSkip ROWS
+        FETCH NEXT @pageSize ROWS ONLY;";
 
             DataTable dt = new DataTable();
             totalRecords = 0;
 
             using (SqlConnection con = new SqlConnection(conString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlCommand countCmd = new SqlCommand(countQuery, con))
             {
-                SqlCommand cmd = new SqlCommand(query, con);
+                // SIEMPRE idDependencia
+                cmd.Parameters.AddWithValue("@idDependencia", idDependencia);
+                countCmd.Parameters.AddWithValue("@idDependencia", idDependencia);
+
+                // Paginación
                 cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
                 cmd.Parameters.AddWithValue("@pageSize", pageSize);
 
-                SqlCommand countCmd = new SqlCommand(countQuery, con);
-                if (!string.IsNullOrEmpty(searchTerm))
+                // Solo si hay término de búsqueda
+                if (!string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
-                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
-
+                    string like = "%" + searchTerm + "%";
+                    cmd.Parameters.AddWithValue("@searchTerm", like);
+                    countCmd.Parameters.AddWithValue("@searchTerm", like);
                 }
 
                 con.Open();
 
-                // Obtener el número total de registros
                 totalRecords = (int)countCmd.ExecuteScalar();
 
-                // Obtener los datos paginados
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
             }
 
             return dt;
-
         }
         protected void btnEditar_Click(object sender, EventArgs e)
         {

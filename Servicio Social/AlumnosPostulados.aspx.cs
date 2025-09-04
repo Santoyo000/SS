@@ -966,7 +966,7 @@ namespace Servicio_Social
             if (!string.IsNullOrEmpty(selectedUnidad) && selectedUnidad != "0")
                 F.Add(" UO.kpUnidad = @selectedUnidad");
             if (!string.IsNullOrEmpty(selectedNivel) && selectedNivel != "0")
-                F.Add(" PE.idPlanEstudio = @selectedNivel");
+                F.Add(" PE.kpNivel = @selectedNivel");
             if (!string.IsNullOrEmpty(selectedEstatus) && selectedEstatus != "0")
                 F.Add(" PA.KPESTATUS = @selectedEstatus");
             if (!string.IsNullOrEmpty(selectedEscuela) && selectedEscuela != "0")
@@ -2013,11 +2013,24 @@ namespace Servicio_Social
 
         }
 
+        //protected void btnEvaluar_Click(object sender, EventArgs e)
+        //{
+        //    LinkButton btn = (LinkButton)(sender);
+        //    string nst = btn.CommandArgument;
+        //    Response.Redirect("EvaluacionEstudiante.aspx?nst=" + nst);
+        //}
         protected void btnEvaluar_Click(object sender, EventArgs e)
         {
-            LinkButton btn = (LinkButton)(sender);
-            string nst = btn.CommandArgument;
-            Response.Redirect("EvaluacionEstudiante.aspx?nst=" + nst);
+            LinkButton btn = (LinkButton)sender;
+            string[] argumentos = btn.CommandArgument.Split('|');
+
+            if (argumentos.Length == 2)
+            {
+                string idAlumno = argumentos[0];
+                string idProgramaAlumno = argumentos[1];
+
+                Response.Redirect($"EvaluacionEstudiante.aspx?nst1={idAlumno}&nst2={idProgramaAlumno}");
+            }
         }
         #endregion
     }

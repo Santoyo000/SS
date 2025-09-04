@@ -100,8 +100,41 @@
            background-color: #fff; /*Color Formulario*/
            border-radius: 5px; /*Esquinas formulario*/
        }
+       .contact-form textarea,
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="number"] {
+    color: #2a2a2a;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    background-color: #f7f8fa;
+    width: 100%;
+    height: 90px;
+    border-radius: 5px;
+    outline: none;
+    padding-top: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+    .checkbox-list table {
+    width: auto !important;
+    margin: 0;
+}
 
-       .contact-form input, .contact-form textarea, .contact-form select {
+.checkbox-list td {
+    vertical-align: top;
+    padding: 4px 20px !important;
+    white-space: nowrap;
+}
+
+.checkbox-list label {
+    font-weight: normal;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+  /*     .contact-form input, .contact-form textarea, .contact-form select {
            color: #2a2a2a;
            font-size: 14px;
            border: 1px solid #ddd;
@@ -117,7 +150,7 @@
            -moz-appearance: none;
            appearance: none;
            margin-bottom: 15px;
-       }
+       }*/
 
    </style>
 </asp:Content>
@@ -246,9 +279,35 @@
        <div class="contact-form" id="contact">
            <asp:Label Text="12. ¿Cuáles son las necesidades que usted como responsable del programa de servicio social detecta que hacen falta en el perfil del alumno asignado a su dependencia?" ID="Label1" runat="server" > </asp:Label>
            <asp:TextBox runat="server"  ID="txtPregunta12" type="text" TextMode="MultiLine"></asp:TextBox>
-            <asp:Label Text="13.- ¿Qué características requiere el prestador de servicio social para el desempeño de sus actividades?" ID="Label2" runat="server" > </asp:Label>
-            <asp:TextBox runat="server"  ID="txtPregunta13" type="text" TextMode="MultiLine"></asp:TextBox>
+           <asp:Label Text="13.- ¿Qué características requiere el prestador de servicio social para el desempeño de sus actividades?" ID="Label2" runat="server" > </asp:Label>
+           <asp:TextBox runat="server"  ID="txtPregunta13" type="text" TextMode="MultiLine"></asp:TextBox>
         </div>
+    <asp:Panel ID="panelHabilidades" runat="server" CssClass="contact-form">
+    <asp:Label ID="lblHabilidades" runat="server" Text="14. Seleccione las habilidades que el estudiante adquirió durante su servicio social:"></asp:Label>
+    <br />
+<table class="table table-borderless">
+    <tr>
+        <td><asp:CheckBox ID="chk1" runat="server" Text="Gestión del tiempo" /></td>
+        <td><asp:CheckBox ID="chk2" runat="server" Text="Puntualidad" /></td>
+        <td><asp:CheckBox ID="chk3" runat="server" Text="Creatividad" /></td>
+    </tr>
+    <tr>
+        <td><asp:CheckBox ID="chk4" runat="server" Text="Negociación" /></td>
+        <td><asp:CheckBox ID="chk5" runat="server" Text="Inteligencia emocional" /></td>
+        <td><asp:CheckBox ID="chk6" runat="server" Text="Flexibilidad" /></td>
+    </tr>
+    <tr>
+        <td><asp:CheckBox ID="chk7" runat="server" Text="Manejo del estrés" /></td>
+        <td><asp:CheckBox ID="chk8" runat="server" Text="Trabajo en equipo" /></td>
+        <td><asp:CheckBox ID="chk9" runat="server" Text="Liderazgo e iniciativa" /></td>
+    </tr>
+    <tr>
+        <td><asp:CheckBox ID="chk10" runat="server" Text="Comunicación efectiva" /></td>
+        <td><asp:CheckBox ID="chk11" runat="server" Text="Orientación a resultados" /></td>
+        <td></td>
+    </tr>
+</table>
+</asp:Panel>
        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary submit-btn" Text="Enviar encuesta" OnClick="GuardarRespuestas"/>   
 </div>
 <!-- Modal exitoso-->

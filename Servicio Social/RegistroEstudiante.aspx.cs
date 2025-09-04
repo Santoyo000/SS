@@ -131,7 +131,7 @@ namespace Servicio_Social
         JOIN AA.GALUMNOS A ON A.MATRICULA = E.MATRICULA
         JOIN PLANESTUDIO.PLAN P ON P.CLAVE = E.CVE_PLAN
         JOIN AA.GUNI_ORG U ON U.UNI_ORG = E.UNI_ORG
-        WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI', 'NI')", connection))
+        WHERE A.MATRICULA = :smatricula AND E.ESTATUS IN ('AR', 'AI') AND P.CLAVE NOT LIKE '742'  ORDER BY E.FEC_ALTA DESC", connection))  // SE QUITO EL NI
                 {
                     command.Parameters.Add(new OracleParameter("smatricula", buscar ?? string.Empty));
                     using (OracleDataReader reader = command.ExecuteReader())
@@ -421,7 +421,7 @@ namespace Servicio_Social
             // **Nueva validación**: Si el idAlumno es null o vacío, no continuar con el registro
             if (string.IsNullOrEmpty(idAlumno))
             {
-                lblError.Text = "No se pudo obtener el ID del alumno. Verifique los datos e intente nuevamente.";
+             //   lblError.Text = "No se pudo obtener el ID del alumno. Verifique los datos e intente nuevamente.";
                 return; // Detener la ejecución del método
             }
 
@@ -796,7 +796,7 @@ namespace Servicio_Social
                             return null; // Si alguna clave no se encontró, retornar null
                         }
 
-                        string insertQuery = "EXEC Oracle_Importar_Alumno_WS @sMatricula, @sClaveEscuela, @sClavePlan;";
+                        string insertQuery = "EXEC Oracle_Importar_Alumno @sMatricula, @sClaveEscuela, @sClavePlan;";
                         using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                         {
                             insertCommand.Parameters.AddWithValue("@sMatricula", matricula);

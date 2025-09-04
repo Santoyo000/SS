@@ -18,6 +18,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using static iText.Signatures.LtvVerification;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using System.Windows.Controls;
+using System.IO;
+using System.Text;
+
 
 namespace Servicio_Social
 {
@@ -46,6 +50,16 @@ namespace Servicio_Social
                 CargarConfiguracion();
                 //cargarPlan();
             }
+        }
+        protected int CurrentPage
+        {
+            get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0; }
+            set { ViewState["CurrentPage"] = value; }
+        }
+        private int TotalPages
+        {
+            get { return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0; }
+            set { ViewState["TotalPages"] = value; }
         }
         private void CargarConfiguracion()
         {
@@ -84,71 +98,122 @@ namespace Servicio_Social
             }
         }
         #region Botones Paginado
-        private int CurrentPage
-        {
-            get
-            {
-                return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0;
-            }
-            set
-            {
-                ViewState["CurrentPage"] = value;
-            }
-        }
-        private int TotalPages
-        {
-            get
-            {
-                return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;
-            }
-            set
-            {
-                ViewState["TotalPages"] = value;
-            }
-        }
+        //private int CurrentPage
+        //{
+        //    get
+        //    {
+        //        return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 0;
+        //    }
+        //    set
+        //    {
+        //        ViewState["CurrentPage"] = value;
+        //    }
+        //}
+        //private int TotalPages
+        //{
+        //    get
+        //    {
+        //        return ViewState["TotalPages"] != null ? (int)ViewState["TotalPages"] : 0;
+        //    }
+        //    set
+        //    {
+        //        ViewState["TotalPages"] = value;
+        //    }
+        //}
+       
         protected void btnPrevious_Click(object sender, EventArgs e)
         {
             string searchTerm = txtDependencias.Text.Trim();
-            if (string.IsNullOrEmpty(searchTerm))
+            if (CurrentPage > 0)
             {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, "");
-                }
+                CurrentPage -= 1;
+                CargarDatos(CurrentPage, searchTerm);
             }
-            else
-            {
-                if (CurrentPage > 0)
-                {
-                    CurrentPage -= 1;
-                    CargarDatos(CurrentPage, searchTerm);
-                }
-            }
+            //string searchTerm = txtDependencias.Text.Trim();
+            //if (string.IsNullOrEmpty(searchTerm))
+            //{
+            //    if (CurrentPage > 0)
+            //    {
+            //        CurrentPage -= 1;
+            //        CargarDatos(CurrentPage, "");
+            //    }
+            //}
+            //else
+            //{
+            //    if (CurrentPage > 0)
+            //    {
+            //        CurrentPage -= 1;
+            //        CargarDatos(CurrentPage, searchTerm);
+            //    }
+            //}
         }
         protected void btnNext_Click(object sender, EventArgs e)
         {
             string searchTerm = txtDependencias.Text.Trim();
-            if (string.IsNullOrEmpty(searchTerm))
+            
+            if (CurrentPage < TotalPages - 1)
             {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, "");
-                }
-            }
-            else
-            {
-                if (CurrentPage < TotalPages - 1) // Asegúrate de no exceder el número total de páginas
-                {
-                    CurrentPage += 1;
-                    CargarDatos(CurrentPage, searchTerm);
-                }
+                CurrentPage += 1;
+                CargarDatos(CurrentPage, searchTerm);
             }
         }
         #endregion
 
         #region Llenar Grid
+        //protected DataTable ObtenerDatos(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
+        //{
+        //    string conString = GlobalConstants.SQL;
+        //    int rowsToSkip = pageIndex * pageSize;
+        //    string idAlumno = Session["tipoUsuario"].ToString().Split('|')[2];
+        //    string nivel = obtenerNivelAcad(idAlumno);
+        //    string unidad = obtenerUnidad(idAlumno).Split('|')[0];
+        //    string escuela = obtenerUnidad(idAlumno).Split('|')[1];
+        //    string plan = Session["plan"].ToString().Split('-')[1].Trim();
+
+        //    DataTable dt = new DataTable();
+        //    totalRecords = 0;
+
+        //    using (SqlConnection con = new SqlConnection(conString))
+        //    {
+        //        // Llamada al procedimiento almacenado para contar registros
+        //        SqlCommand countCmd = new SqlCommand("sp_ContarProgramasElegirAlumno_ss", con);
+        //        countCmd.CommandType = CommandType.StoredProcedure;
+        //        countCmd.Parameters.AddWithValue("@nivel", nivel);
+        //        countCmd.Parameters.AddWithValue("@unidad", unidad);
+        //        countCmd.Parameters.AddWithValue("@escuela", escuela);
+        //        countCmd.Parameters.AddWithValue("@plan", plan);
+        //        if (!string.IsNullOrEmpty(searchTerm))
+        //        {
+        //            countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+        //        }
+
+        //        con.Open();
+
+        //        // Obtener el número total de registros
+        //        totalRecords = (int)countCmd.ExecuteScalar();
+
+        //        // Llamada al procedimiento almacenado para obtener los datos paginados
+        //        SqlCommand cmd = new SqlCommand("sp_obtenerProgramasElegirAlumno_ss", con);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@nivel", nivel);
+        //        cmd.Parameters.AddWithValue("@unidad", unidad);
+        //        cmd.Parameters.AddWithValue("@escuela", escuela);
+        //        cmd.Parameters.AddWithValue("@idAlumno", idAlumno);
+        //        cmd.Parameters.AddWithValue("@plan", plan);
+        //        cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+        //        cmd.Parameters.AddWithValue("@pageSize", pageSize);
+        //        if (!string.IsNullOrEmpty(searchTerm))
+        //        {
+        //            cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+        //        }
+
+        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+        //        adapter.Fill(dt);
+        //    }
+
+        //    return dt;
+
+        //}
         protected DataTable ObtenerDatos(int pageIndex, int pageSize, string searchTerm, out int totalRecords)
         {
             string conString = GlobalConstants.SQL;
@@ -164,47 +229,191 @@ namespace Servicio_Social
 
             using (SqlConnection con = new SqlConnection(conString))
             {
-                // Llamada al procedimiento almacenado para contar registros
-                SqlCommand countCmd = new SqlCommand("sp_ContarProgramasElegirAlumno_ss", con);
-                countCmd.CommandType = CommandType.StoredProcedure;
-                countCmd.Parameters.AddWithValue("@nivel", nivel);
-                countCmd.Parameters.AddWithValue("@unidad", unidad);
-                countCmd.Parameters.AddWithValue("@escuela", escuela);
-                countCmd.Parameters.AddWithValue("@plan", plan);
-                if (!string.IsNullOrEmpty(searchTerm))
-                {
-                    countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
-                }
-
                 con.Open();
 
-                // Obtener el número total de registros
-                totalRecords = (int)countCmd.ExecuteScalar();
+                // 🔹 1. Contar registros
+                string countQuery = @"
+            SELECT COUNT(DISTINCT DP.idDetallePrograma)
+            FROM SM_PROGRAMA P
+            INNER JOIN SM_DETALLE_PROGRAMA DP ON DP.kmPrograma = P.idPrograma
+            INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.idDependenicaServicio = P.kpDependencia
+            INNER JOIN SP_ESCUELA_UAC UO ON UO.idEscuelaUAC = DP.kpEscuela
+            INNER JOIN SP_PLAN_ESTUDIO PE ON PE.idPlanEstudio = DP.kpPlanEstudio
+            INNER JOIN SP_CICLO AS CICL ON P.kpPeriodo = CICL.idCiclo
+            WHERE PE.kpNivel = @nivel 
+              AND UO.kpUnidad = @unidad 
+              AND DP.kpEscuela = @escuela 
+              AND P.kpEstatus_Programa = 11
+              AND CICL.bServicioSocial = 1 ";
 
-                // Llamada al procedimiento almacenado para obtener los datos paginados
-                SqlCommand cmd = new SqlCommand("sp_obtenerProgramasElegirAlumno_ss", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nivel", nivel);
-                cmd.Parameters.AddWithValue("@unidad", unidad);
-                cmd.Parameters.AddWithValue("@escuela", escuela);
-                cmd.Parameters.AddWithValue("@idAlumno", idAlumno);
-                cmd.Parameters.AddWithValue("@plan", plan);
-                cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
-                cmd.Parameters.AddWithValue("@pageSize", pageSize);
-                if (!string.IsNullOrEmpty(searchTerm))
+                if (nivel == "2")
                 {
-                    cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                    countQuery += @"AND (PE.sDescripcion LIKE @plan
+                              OR PE.sDescripcion LIKE REPLACE(@plan,'INGENIERO','INGENIERÍA')
+                              OR PE.sDescripcion LIKE REPLACE(@plan,'INGENIERÍA','INGENIERO')
+                              OR PE.sDescripcion LIKE REPLACE(@plan,'LICENCIADO','LICENCIATURA')
+                              OR PE.sDescripcion LIKE REPLACE(@plan,'LICENCIATURA','LICENCIADO')) ";
+                }
+                else
+                {
+                    countQuery += "AND PE.sDescripcion LIKE '%BACHILLERATO%' ";
                 }
 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    countQuery += @"AND (
+                               DS.sDescripcion LIKE @searchTerm 
+                            OR P.sNombre_Programa LIKE @searchTerm 
+                            OR (UO.sClave + ' - ' + UO.sDescripcion) LIKE @searchTerm
+                            OR (PE.sClave + ' - ' + PE.sDescripcion) LIKE @searchTerm
+                         ) ";
+                }
+
+                using (SqlCommand countCmd = new SqlCommand(countQuery, con))
+                {
+                    countCmd.Parameters.AddWithValue("@nivel", nivel);
+                    countCmd.Parameters.AddWithValue("@unidad", unidad);
+                    countCmd.Parameters.AddWithValue("@escuela", escuela);
+                    countCmd.Parameters.AddWithValue("@plan", "%" + plan + "%");
+
+                    if (!string.IsNullOrEmpty(searchTerm))
+                        countCmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                    totalRecords = (int)countCmd.ExecuteScalar();
+                }
+
+                // 🔹 2. Obtener registros paginados
+                string dataQuery = @"
+            SELECT DP.idDetallePrograma, 
+                   DS.sDescripcion AS Dependencia, 
+                   P.sNombre_Programa, 
+                   UO.sClave + ' - ' + UO.sDescripcion AS Escuela, 
+                   PE.sClave + ' - ' + PE.sDescripcion AS Planes,  
+                   DP.iCupo,  
+                   DP.iCupo - COUNT(CASE WHEN PA.kpEstatus IN (20707,21522,21523,21526) THEN 1 END) AS CuposDisponibles,
+                   (SELECT TOP 1 PA2.kpEstatus 
+                    FROM SM_PROGRAMA_ALUMNO PA2 
+                    WHERE PA2.kmDetallePrograma = DP.idDetallePrograma AND PA2.kmAlumno = @idAlumno) AS Inscrito
+            FROM SM_PROGRAMA P  
+            INNER JOIN SM_DETALLE_PROGRAMA DP ON DP.kmPrograma = P.idPrograma  
+            INNER JOIN SM_DEPENDENCIA_SERVICIO DS ON DS.idDependenicaServicio = P.kpDependencia  
+            INNER JOIN SP_ESCUELA_UAC UO ON UO.idEscuelaUAC = DP.kpEscuela  
+            INNER JOIN SP_PLAN_ESTUDIO PE ON PE.idPlanEstudio = DP.kpPlanEstudio  
+            LEFT JOIN SM_PROGRAMA_ALUMNO PA ON PA.kmDetallePrograma = DP.idDetallePrograma
+            INNER JOIN SP_CICLO AS CICL ON P.kpPeriodo = CICL.idCiclo
+            WHERE PE.kpNivel = @nivel 
+              AND UO.kpUnidad = @unidad 
+              AND DP.kpEscuela = @escuela 
+              AND P.kpEstatus_Programa= 11  
+              AND CICL.bServicioSocial = 1 ";
+
+                if (nivel == "2")
+                {
+                    dataQuery += @"AND (PE.sDescripcion LIKE @plan
+                             OR PE.sDescripcion LIKE REPLACE(@plan,'INGENIERO','INGENIERÍA')
+                             OR PE.sDescripcion LIKE REPLACE(@plan,'INGENIERÍA','INGENIERO')
+                             OR PE.sDescripcion LIKE REPLACE(@plan,'LICENCIADO','LICENCIATURA')
+                             OR PE.sDescripcion LIKE REPLACE(@plan,'LICENCIATURA','LICENCIADO')) ";
+                }
+                else
+                {
+                    dataQuery += "AND PE.sDescripcion LIKE '%BACHILLERATO%' ";
+                }
+
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    dataQuery += @"AND (
+                               DS.sDescripcion LIKE @searchTerm 
+                            OR P.sNombre_Programa LIKE @searchTerm 
+                            OR (UO.sClave + ' - ' + UO.sDescripcion) LIKE @searchTerm
+                            OR (PE.sClave + ' - ' + PE.sDescripcion) LIKE @searchTerm
+                         ) ";
+                }
+
+                dataQuery += @"GROUP BY DP.idDetallePrograma, DS.sDescripcion, 
+                               P.sNombre_Programa, UO.sClave, UO.sDescripcion, 
+                               PE.sClave, PE.sDescripcion, DP.iCupo 
+                        ORDER BY DP.iCupo DESC
+                        OFFSET @rowsToSkip ROWS FETCH NEXT @pageSize ROWS ONLY;";
+
+                using (SqlCommand cmd = new SqlCommand(dataQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@nivel", nivel);
+                    cmd.Parameters.AddWithValue("@unidad", unidad);
+                    cmd.Parameters.AddWithValue("@escuela", escuela);
+                    cmd.Parameters.AddWithValue("@idAlumno", idAlumno);
+                    cmd.Parameters.AddWithValue("@plan", "%" + plan + "%");
+                    cmd.Parameters.AddWithValue("@rowsToSkip", rowsToSkip);
+                    cmd.Parameters.AddWithValue("@pageSize", pageSize);
+
+                    if (!string.IsNullOrEmpty(searchTerm))
+                        cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dt);
+                }
             }
 
             return dt;
+        }
+        private void BindPagination()
+        {
+            List<object> pagination = new List<object>();
+            int maxPagesToShow = 10; // Máximo de números a mostrar en la paginación
 
+            int startPage = Math.Max(0, CurrentPage - (maxPagesToShow / 2));
+            int endPage = Math.Min(TotalPages, startPage + maxPagesToShow);
+
+            for (int i = startPage; i < endPage; i++)
+            {
+                pagination.Add(new { PageNumber = i + 1, PageIndex = i });
+            }
+
+            rptPagination.DataSource = pagination;
+            rptPagination.DataBind();
+
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // Habilita o deshabilita los botones de anterior y siguiente
+            btnPrevious.Enabled = CurrentPage > 0;
+            btnNext.Enabled = CurrentPage < TotalPages - 1;
+        }
+        protected void rptPagination_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "PageChange")
+            {
+                // Convertir el argumento de la página seleccionada
+                int newPage;
+                if (int.TryParse(e.CommandArgument.ToString(), out newPage))
+                {
+                    CurrentPage = newPage; // Actualiza la página actual
+                    string searchTerm = txtDependencias.Text.Trim();
+                  
+
+                    // Recargar los datos con los filtros actuales
+                    CargarDatos(CurrentPage, searchTerm);
+                }
+            }
         }
         protected void CargarDatos(int pageIndex, string searchTerm)
         {
+            //int pageSize = 10; // Cantidad de registros por página
+            //int totalRecords;
+
+            //DataTable dt = ObtenerDatos(pageIndex, pageSize, searchTerm, out totalRecords);
+
+            //RepeaterProgramas.DataSource = dt;
+            //RepeaterProgramas.DataBind();
+
+            //// Calcula el número total de páginas
+            //TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            //// Configura el estado de los botones
+            //btnPrevious.Enabled = pageIndex > 0;
+            //btnNext.Enabled = pageIndex < TotalPages - 1;
+
+            //// Actualiza la etiqueta de número de página
+            //lblPageNumber.Text = $"Página {pageIndex + 1} de {TotalPages}";
             int pageSize = 10; // Cantidad de registros por página
             int totalRecords;
 
@@ -220,8 +429,12 @@ namespace Servicio_Social
             btnPrevious.Enabled = pageIndex > 0;
             btnNext.Enabled = pageIndex < TotalPages - 1;
 
-            // Actualiza la etiqueta de número de página
-            lblPageNumber.Text = $"Página {pageIndex + 1} de {TotalPages}";
+            // Etiquetas de paginación
+            lblPageNumber.Text = (pageIndex + 1).ToString();
+            lblTotalPages.Text = TotalPages.ToString();
+
+            // 🔹 Actualiza la paginación
+            BindPagination();
         }
         protected void RepeaterProgramas_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {

@@ -44,16 +44,16 @@ namespace Servicio_Social
         {
             string id = Session["tipoUsuario"].ToString().Split('|')[2];
             string conStrin = GlobalConstants.SQL;
-            string query = "SELECT UN.sCiudad, UO.SCLAVE + ' - '  + UO.sDescripcion AS sEscuela, PE.sClave + ' - ' + PE.sDescripcion AS sPlan, AL.sMatricula, " +
-                "P.sNombres, P.sApellido_paterno, P.sApellido_materno, P.kpSexo, U.sCorreo, P.sTelefono, p.idPersona " +
-                "FROM SM_USUARIOS_ALUMNOS UA " +
-                "INNER JOIN SM_USUARIO U ON U.idUsuario = UA.kmUsuario " +
-                "INNER JOIN SM_ALUMNO AL ON AL.idAlumno = UA.kmAlumno " +
-                "INNER JOIN NM_PERSONA P ON P.idPersona = AL.kmPersona " +
-                "INNER JOIN SP_ESCUELA_UAC UO ON UO.idEscuelaUAC = UA.kpEscuela " +
-                "INNER JOIN SP_PLAN_ESTUDIO PE ON PE.idPlanEstudio = UA.kpPlan " +
-                "INNER JOIN NP_UNIDAD UN ON UN.idUnidad = UO.kpUnidad " +
-                "WHERE UA.ID = @id; ";
+            string query = @"SELECT UN.sCiudad, UO.SCLAVE + ' - '  + UO.sDescripcion AS sEscuela, PE.sClave + ' - ' + PE.sDescripcion AS sPlan, AL.sMatricula, 
+                P.sNombres, P.sApellido_paterno, P.sApellido_materno, P.kpSexo, U.sCorreo, P.sTelefono, p.idPersona
+                FROM SM_USUARIOS_ALUMNOS UA 
+                INNER JOIN SM_USUARIO U ON U.idUsuario = UA.kmUsuario 
+                INNER JOIN SM_ALUMNO AL ON AL.idAlumno = UA.kmAlumno
+                INNER JOIN NM_PERSONA P ON P.idPersona = AL.kmPersona 
+                INNER JOIN SP_ESCUELA_UAC UO ON UO.idEscuelaUAC = UA.kpEscuela 
+                INNER JOIN SP_PLAN_ESTUDIO PE ON PE.idPlanEstudio = UA.kpPlan 
+                INNER JOIN NP_UNIDAD UN ON UN.idUnidad = UO.kpUnidad
+                WHERE UA.ID = @id; ";
 
             using (SqlConnection connection = new SqlConnection(conStrin))
             {

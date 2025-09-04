@@ -6,7 +6,7 @@
     <!-- Luego Bootstrap 5 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
      <script>
-         function loadModalData(id) {
+<%--         function loadModalData(id) {
              $.ajax({
                  type: "POST",
                  url: '<%= ResolveUrl("DependenciasRegistradas.aspx/llenarDatosModal") %>',
@@ -22,12 +22,33 @@
                     document.getElementById("modalBody").innerHTML = "Error loading data";
                 }
             });
-         }
+         }--%>
+         function loadModalData(id) {
+             $.ajax({
+                 type: "POST",
+                 url: '<%= ResolveUrl("DependenciasRegistradas.aspx/llenarDatosModal") %>',
+        data: JSON.stringify({ id: id }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            const checkInterval = setInterval(function () {
+                var modalBody = document.getElementById("modalBody");
+                if (modalBody) {
+                    clearInterval(checkInterval); // Detener la espera
 
-         function cerrarModalEdicion() {
-             var modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-             modal.hide();
-         }
+                    modalBody.innerHTML = response.d;
+
+                    var modalElement = document.getElementById('myModal');
+                    var myModal = new bootstrap.Modal(modalElement);
+                    myModal.show();
+                }
+            }, 50); // Revisa cada 50ms
+        },
+        failure: function (response) {
+            console.error("Error al cargar datos del modal");
+        }
+    });
+       }
 
          function cerrarModalDetalle() {
              var modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
@@ -346,7 +367,7 @@
          <Triggers>
     <asp:PostBackTrigger ControlID="btnExportarExcel" />
 </Triggers>
-    </asp:UpdatePanel>
+</asp:UpdatePanel>
     <!-- Modal de Detalle (solo una instancia, fuera del Repeater) -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -355,7 +376,7 @@
                 <h4 class="modal-title">Datos de la Dependencia</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modalBody">
+           <div class="modal-body" id="modalBody" runat="server" ClientIDMode="Static">
                 Loading...
             </div>
             <div class="modal-footer">
@@ -405,7 +426,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label for="txtTelefono">Teléfono:</label>
+                              <label for="txmodalBodytTelefono">Teléfono:</label>
                               <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
                           </div>
                       </div>

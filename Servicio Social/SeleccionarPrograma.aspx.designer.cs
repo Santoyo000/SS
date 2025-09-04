@@ -96,6 +96,24 @@ namespace Servicio_Social
         protected global::System.Web.UI.WebControls.Repeater RepeaterProgramas;
 
         /// <summary>
+        /// Control lblPageNumber.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPageNumber;
+
+        /// <summary>
+        /// Control lblTotalPages.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalPages;
+
+        /// <summary>
         /// Control btnPrevious.
         /// </summary>
         /// <remarks>
@@ -105,13 +123,13 @@ namespace Servicio_Social
         protected global::System.Web.UI.WebControls.Button btnPrevious;
 
         /// <summary>
-        /// Control lblPageNumber.
+        /// Control rptPagination.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageNumber;
+        protected global::System.Web.UI.WebControls.Repeater rptPagination;
 
         /// <summary>
         /// Control btnNext.

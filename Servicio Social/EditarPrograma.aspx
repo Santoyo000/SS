@@ -200,13 +200,15 @@
                 <td>
                     <div class="form-group">
                         <asp:Label ID="Label39" runat="server" AssociatedControlID="" CssClass="label-derecha">Objetivos:</asp:Label>
-                        <asp:TextBox ID="txtObjetivos" runat="server" TextMode="MultiLine" CssClass="textbox-estilo2" Rows="3"></asp:TextBox>
+                        <asp:TextBox ID="txtObjetivos" runat="server" TextMode="MultiLine" CssClass="textbox-estilo2" Rows="3" MaxLength="2000"></asp:TextBox>
+                         <small id="countObjetivos" class="form-text text-muted">0 / 2000 caracteres</small>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
                         <asp:Label ID="Label40" runat="server" AssociatedControlID="" CssClass="label-derecha">Actividades:</asp:Label>
-                        <asp:TextBox ID="txtActividades" runat="server" TextMode="MultiLine" CssClass="textbox-estilo2" Rows="3"></asp:TextBox>
+                        <asp:TextBox ID="txtActividades" runat="server" TextMode="MultiLine" CssClass="textbox-estilo2" Rows="3" MaxLength="2000"></asp:TextBox>
+                        <small id="countActividades" class="form-text text-muted">0 / 2000 caracteres</small>
                     </div>
                 </td>
             </tr>
@@ -245,4 +247,25 @@
             <a class="miBoton" href="Dependencias.aspx">Regresar</a>
         </div>
     </asp:Panel>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Objetivos (2000 caracteres)
+            const txtObjetivos = document.getElementById('<%= txtObjetivos.ClientID %>');
+        const counterObjetivos = document.getElementById("countObjetivos");
+        if (txtObjetivos && counterObjetivos) {
+            txtObjetivos.addEventListener("input", function () {
+                counterObjetivos.textContent = `${txtObjetivos.value.length} / 2000 caracteres`;
+            });
+        }
+
+        // Actividades (2000 caracteres)
+        const txtActividades = document.getElementById('<%= txtActividades.ClientID %>');
+        const counterActividades = document.getElementById("countActividades");
+        if (txtActividades && counterActividades) {
+            txtActividades.addEventListener("input", function () {
+                counterActividades.textContent = `${txtActividades.value.length} / 2000 caracteres`;
+            });
+        }
+    });
+    </script>
 </asp:Content>

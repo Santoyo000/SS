@@ -2,8 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       <%--  function loadModalData(id) {
            $.ajax({
@@ -28,32 +28,105 @@
             $.ajax({
                 type: "POST",
                 url: '<%= ResolveUrl("SeleccionarPrograma.aspx/llenarDatosModal") %>',
-        data: JSON.stringify({ id: id }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            $("#modalBody").html(response.d); // Inserta el HTML recibido
-            $("#myModal").modal("show"); // Asegura que el modal se muestra
-        },
-        error: function () {
-            $("#modalBody").html("Error al cargar los datos."); // Mensaje de error en el modal
-        }
-    });
+                data: JSON.stringify({ id: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#modalBody").html(response.d); // Inserta el HTML recibido
+                    $("#myModal").modal("show"); // Asegura que el modal se muestra
+                },
+                error: function () {
+                    $("#modalBody").html("Error al cargar los datos."); // Mensaje de error en el modal
+                }
+            });
         }
     </script>
     <style>
+        .custom-header {
+            background-color: #343a40; /* Color de fondo personalizado */
+            color: white; /* Color del texto */
+        }
+
         .table td {
+            font-size: 12px; /* Tamaño de fuente más pequeño para las celdas de datos */
+        }
+
+        .table tr {
             font-size: 13px; /* Tamaño de fuente más pequeño para las celdas de datos */
         }
 
-        .small-text {
-            font-size: 13px; /* Tamaño de letra */
-            line-height: 1.5; /* Altura de línea */
-            color: #333; /* Color del texto */
+        /*AQUI COMIENZA CODIGO NUEVO*/
+
+        .container-tabla {
+            margin-top: 50px; /* Para asegurarte de que no se sobreponga al menú */
+            padding: 20px;
+            max-width: 100%; /* Para asegurar que ocupe todo el ancho disponible */
         }
+        /* Tabla */
+        .table {
+            width: 100%; /* Para que la tabla ocupe todo el espacio disponible */
+            margin-bottom: 30px; /* Espacio debajo de la tabla */
+            border-collapse: collapse;
+            background-color: #fff; /* Fondo blanco para la tabla */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+        }
+            /* Bordes de la tabla */
+            .table th,
+            .table td {
+                padding: 12px 15px; /* Espaciado interno */
+                border: 1px solid #ddd; /* Bordes ligeros */
+                text-align: left; /* Texto alineado a la izquierda */
+                font-size: 14px; /* Tamaño de fuente */
+            }
+            /* Cabecera de la tabla */
+            .table thead th {
+                background-color: #516e96; /*    Color de fondo de la cabecera */
+                color: #fff; /* Color de texto blanco */
+                font-weight: 400; /* Negrita */
+                text-transform: uppercase; /* Texto en mayúsculas */
+                text-align: center;
+            }
+            /* Filas alternas para mayor legibilidad */
+            .table tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            /* Resaltar filas al pasar el ratón */
+            .table tbody tr:hover {
+                background-color: #f1f1f1;
+            }
+
+        .form-control {
+            /* padding: 10px;*/
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-right: 10px; /* Espacio a la derecha */
+            width: 100%;
+        }
+
+
+            .form-control:focus {
+                border-color: #4086b1;
+                outline: none;
+                box-shadow: 0 0 5px rgba(64, 134, 177, 0.5);
+            }
+
+        /* Botón de búsqueda */
+        .btn-primary {
+            /* background-color: #f7d05a;*/
+            border-color: #f7d05a;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #f1c40f;
+                border-color: #f1c40f;
+            }
     </style>
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
     <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="0">
@@ -68,17 +141,17 @@
     </asp:UpdateProgress>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-              <asp:Panel ID="PanelCerrado" runat="server" Visible="false">
-                  <div style="text-align: center">
-                <div class="form-group">
-                    <br />
-                    <h3 id="mensajeCierre" class="text-gray-900 mb-4" style="color: #2e5790">
-                     <asp:Label ID="lblMensajeProgramas" runat="server"></asp:Label>
-                    </h3>
-                     <a href="Home.aspx" cssclass="btn btn-primary">Volver a la página principal</a>
+            <asp:Panel ID="PanelCerrado" runat="server" Visible="false">
+                <div style="text-align: center">
+                    <div class="form-group">
+                        <br />
+                        <h3 id="mensajeCierre" class="text-gray-900 mb-4" style="color: #2e5790">
+                            <asp:Label ID="lblMensajeProgramas" runat="server"></asp:Label>
+                        </h3>
+                        <a href="Home.aspx" cssclass="btn btn-primary">Volver a la página principal</a>
+                    </div>
                 </div>
-            </div>
-              </asp:Panel>
+            </asp:Panel>
             <asp:Panel ID="PanelProgramas" runat="server" Visible="true">
                 <div style="text-align: center">
                     <div class="form-group">
@@ -144,12 +217,28 @@
                             </asp:Repeater>
                         </tbody>
                     </table>
-                    <div style="text-align: center">
-                        <asp:Button ID="btnPrevious" runat="server" Text="Anterior" CssClass="btn btn-primary" OnClick="btnPrevious_Click" />
+                    <div class="text-center mb-2">
+                        Página
                         <asp:Label ID="lblPageNumber" runat="server"></asp:Label>
-                        <asp:Button ID="btnNext" runat="server" Text="Siguiente" CssClass="btn btn-primary" OnClick="btnNext_Click" />
-                        <br />
-                        <br />
+                        de
+                        <asp:Label ID="lblTotalPages" runat="server"></asp:Label>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="pagination d-flex align-items-center">
+                            <asp:Button ID="btnPrevious" runat="server" Text="&#9665;" OnClick="btnPrevious_Click" CssClass="btn btn-light me-2" />
+
+                            <asp:Repeater ID="rptPagination" runat="server" OnItemCommand="rptPagination_ItemCommand">
+                                <ItemTemplate>
+                                    <asp:Button runat="server" Text='<%# Eval("PageNumber") %>'
+                                        CommandArgument='<%# Eval("PageIndex") %>'
+                                        CommandName="PageChange"
+                                        CssClass='<%# Convert.ToInt32(Eval("PageIndex")) == CurrentPage ? "btn btn-dark me-1" : "btn btn-light me-1" %>' />
+                                </ItemTemplate>
+                            </asp:Repeater>
+
+                            <asp:Button ID="btnNext" runat="server" Text="&#9655;" OnClick="btnNext_Click" CssClass="btn btn-light ms-2" />
+                        </div>
                     </div>
                 </div>
                 <!-- The Modal -->
@@ -177,6 +266,5 @@
                 </div>
             </asp:Panel>
         </ContentTemplate>
-
     </asp:UpdatePanel>
 </asp:Content>
