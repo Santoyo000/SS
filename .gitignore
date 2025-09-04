@@ -35,6 +35,10 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -54,6 +58,17 @@ nunit-*.xml
 [Dd]ebugPS/
 [Rr]eleasePS/
 dlldata.c
+x64/
+x86/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+
+# IIS Express
+applicationhost.config
+
+# Logs
+*.log
 
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
@@ -194,6 +209,11 @@ PublishScripts/
 
 # NuGet Packages
 *.nupkg
+*.snupkg
+project.lock.json
+artifacts/
+packages/
+
 # NuGet Symbol Packages
 *.snupkg
 # The packages folder can be ignored because of Package Restore
@@ -226,6 +246,9 @@ _pkginfo.txt
 # Visual Studio cache files
 # files ending in .cache can be ignored
 *.[Cc]ache
+*.cache
+*.ide/
+*.dbmdl
 # but keep track of directories ending in .cache
 !?*.[Cc]ache/
 
@@ -239,6 +262,11 @@ ClientBin/
 *.pfx
 *.publishsettings
 orleans.codegen.cs
+*.pdb
+*.tmp
+*.bak
+*.swp
+*.FileListAbsolute.txt
 
 # Including strong name files can present a security risk
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
