@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\loginestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\loginestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\loginestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\loginestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\seleccionarprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\seleccionarprograma.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\loginestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\loginestudiante.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|c:\\users\\cecys\\source\\repos\\serviciosocial\\servicio social\\loginestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|solutionrelative:servicio social\\loginestudiante.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D91D8BE-05A8-4295-9245-EAC44B992F7C}|Servicio Social\\Servicio Social.csproj|C:\\Users\\cecys\\source\\repos\\ServicioSocial\\servicio social\\alumnosregistrados.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
@@ -54,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 183,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,7 +70,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "LoginEstudiante.aspx",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LoginEstudiante.aspx",
               "RelativeDocumentMoniker": "Servicio Social\\LoginEstudiante.aspx",
@@ -83,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SeleccionarPrograma.aspx.cs",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx.cs",
               "RelativeDocumentMoniker": "Servicio Social\\SeleccionarPrograma.aspx.cs",
@@ -96,7 +96,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "SeleccionarPrograma.aspx",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\SeleccionarPrograma.aspx",
               "RelativeDocumentMoniker": "Servicio Social\\SeleccionarPrograma.aspx",
@@ -109,20 +109,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "LoginEstudiante.aspx.cs",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LoginEstudiante.aspx.cs",
               "RelativeDocumentMoniker": "Servicio Social\\LoginEstudiante.aspx.cs",
               "ToolTip": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\LoginEstudiante.aspx.cs",
               "RelativeToolTip": "Servicio Social\\LoginEstudiante.aspx.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAAAC8AAABEAAAAAAAAAA==",
+              "ViewState": "AgIAADsBAAAAAAAAAAAAAC8AAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-26T17:20:12.509Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Web.config",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\Web.config",
               "RelativeDocumentMoniker": "Servicio Social\\Web.config",
@@ -208,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "AlumnosRegistrados.aspx.cs",
               "DocumentMoniker": "C:\\Users\\cecys\\source\\repos\\ServicioSocial\\Servicio Social\\AlumnosRegistrados.aspx.cs",
               "RelativeDocumentMoniker": "Servicio Social\\AlumnosRegistrados.aspx.cs",
