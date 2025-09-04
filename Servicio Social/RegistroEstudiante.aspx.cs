@@ -881,7 +881,7 @@ namespace Servicio_Social
             // Buscar registros en SM_ALUMNO con diferente kpEscuela y kpPlan
             string searchQuery = "SELECT idAlumno, kpPlan_estudios, kpEscuelasUadeC " +
                 "FROM SM_ALUMNO " +
-                "WHERE sMatricula = @sMatricula AND (kpEscuelasUadeC <> @kpEscuela OR kpPlan_estudios <> @kpPlan) AND kpPlan_estudios <> 584 AND kpEstatus_Alumno IN (1,2,6); ";
+                "WHERE sMatricula = @sMatricula AND (kpEscuelasUadeC <> @kpEscuela OR kpPlan_estudios <> @kpPlan) AND kpPlan_estudios <> 584 AND kpEstatus_Alumno IN (1,2); ";
 
             List<(string idAlumno, string kpPlan, string kpEscuela)> registros = new List<(string idAlumno, string kpPlan, string kpEscuela)>();
 
