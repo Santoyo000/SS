@@ -4,3 +4,5 @@ git rm -r --cached .vs bin obj applicationhost.config
 
 # Confirmar la limpieza
 git commit -m "Agregado .gitignore y limpieza de archivos locales/temporales"
+
+git push origin master
