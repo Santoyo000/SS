@@ -167,7 +167,7 @@
                             </div>
                         </div>
                          <!-- Configuración de página -->
-                   <%--  <div class="col-md-4">
+                     <div class="col-md-4">
                          <div class="card" style="background-color: #09aaa1;" onclick="showLoadingAndRedirect('ConfiguracionPagina.aspx')">
                              <div class="card-body">
                                  <i class="fas fa-screwdriver-wrench card-icon"></i>
@@ -175,7 +175,7 @@
                                  <p class="card-hover-text text-center justify-content-center"> Configuración de la página de Servicio Social</p>
                              </div>
                          </div>
-                     </div>--%>
+                     </div>
                         <!-- Configuración de página -->
                       <%--  <div class="col-md-4">
                             <div class="card" style="background-color: #6f42c1;"" > --%> <%--onclick="showLoadingAndRedirect('ReportesSS.aspx') " --%>
